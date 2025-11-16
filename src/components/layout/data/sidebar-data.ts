@@ -179,7 +179,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Service Wise Bill Distribute',
+          title: 'Service Bill Distribution',
           icon: Settings,
           items: [
             {
