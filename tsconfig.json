@@ -8,6 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+     "noUnusedLocals": false, // Disable warning for unused local variables
+    "noUnusedParameters": false, // Disable warning for unused function parameters
   }
 }
