@@ -1,23 +1,12 @@
 import {
-  Construction,
   LayoutDashboard,
-  Monitor,
-  Bug,
-  ListTodo,
-  FileX,
-  HelpCircle,
-  Lock,
   Bell,
-  Package,
   Palette,
-  ServerOff,
   Settings,
   Wrench,
   UserCog,
-  UserX,
   Users,
   MessagesSquare,
-  ShieldCheck,
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
@@ -34,19 +23,28 @@ export const sidebarData: SidebarData = {
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: 'Super Admin',
       logo: Command,
-      plan: 'Vite + ShadcnUI',
-    },
+      plan: 'Role',},
     {
-      name: 'Acme Inc',
+      name: 'Manager',
       logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
+      plan: 'Role',
     },
     {
-      name: 'Acme Corp.',
+      name: 'Receptionist',
       logo: AudioWaveform,
-      plan: 'Startup',
+      plan: 'Role',
+    },
+    {
+      name: 'Pathologist',
+      logo: LineChart,
+      plan: 'Role',
+    },
+    {
+      name: 'Accountant',
+      logo: Users,
+      plan: 'Role',
     },
   ],
   navGroups: [
@@ -64,17 +62,17 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: 'App Configuration',
-              url: '#',
+              url: '/settings',
               icon: UserCog,
             },
             {
               title: 'System Preferences',
-              url: '#',
+              url: '/settings/appearance',
               icon: Wrench,
             },
             {
               title: 'Language Settings',
-              url: '#',
+              url: '/settings/display',
               icon: Palette,
             },
           ],
@@ -85,22 +83,22 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: 'List of Test',
-              url: '#',
+              url: '/tests',
               icon: UserCog,
             },
             {
               title: 'List of Department',
-              url: '#',
+              url: '/departments',
               icon: Wrench,
             },
             {
               title: 'List of Category',
-              url: '#',
+              url: '/categories',
               icon: Palette,
             },
             {
               title: 'List of Doctor',
-              url: '#',
+              url: '/doctors',
               icon: List,
             },
           ],
@@ -179,7 +177,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Service Wise Bill Distribute',
+          title: 'Service Bill Distribution',
           icon: Settings,
           items: [
             {

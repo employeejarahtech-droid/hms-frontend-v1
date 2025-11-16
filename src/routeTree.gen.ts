@@ -26,11 +26,14 @@ import { Route as ClerkAuthenticatedRouteRouteImport } from './routes/clerk/_aut
 import { Route as ClerkauthRouteRouteImport } from './routes/clerk/(auth)/route'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
-import { Route as AuthenticatedTestIndexRouteImport } from './routes/_authenticated/test/index'
+import { Route as AuthenticatedTestsIndexRouteImport } from './routes/_authenticated/tests/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
+import { Route as AuthenticatedDoctorsIndexRouteImport } from './routes/_authenticated/doctors/index'
+import { Route as AuthenticatedDepartmentsIndexRouteImport } from './routes/_authenticated/departments/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
+import { Route as AuthenticatedCategoriesIndexRouteImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
@@ -124,9 +127,9 @@ const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedTestIndexRoute = AuthenticatedTestIndexRouteImport.update({
-  id: '/test/',
-  path: '/test/',
+const AuthenticatedTestsIndexRoute = AuthenticatedTestsIndexRouteImport.update({
+  id: '/tests/',
+  path: '/tests/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTasksIndexRoute = AuthenticatedTasksIndexRouteImport.update({
@@ -146,11 +149,29 @@ const AuthenticatedHelpCenterIndexRoute =
     path: '/help-center/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDoctorsIndexRoute =
+  AuthenticatedDoctorsIndexRouteImport.update({
+    id: '/doctors/',
+    path: '/doctors/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDepartmentsIndexRoute =
+  AuthenticatedDepartmentsIndexRouteImport.update({
+    id: '/departments/',
+    path: '/departments/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
   id: '/chats/',
   path: '/chats/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCategoriesIndexRoute =
+  AuthenticatedCategoriesIndexRouteImport.update({
+    id: '/categories/',
+    path: '/categories/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   id: '/apps/',
   path: '/apps/',
@@ -226,11 +247,14 @@ export interface FileRoutesByFullPath {
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
+  '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
+  '/departments': typeof AuthenticatedDepartmentsIndexRoute
+  '/doctors': typeof AuthenticatedDoctorsIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/test': typeof AuthenticatedTestIndexRoute
+  '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -255,11 +279,14 @@ export interface FileRoutesByTo {
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
+  '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
+  '/departments': typeof AuthenticatedDepartmentsIndexRoute
+  '/doctors': typeof AuthenticatedDoctorsIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/test': typeof AuthenticatedTestIndexRoute
+  '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -289,11 +316,14 @@ export interface FileRoutesById {
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
+  '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
+  '/_authenticated/departments/': typeof AuthenticatedDepartmentsIndexRoute
+  '/_authenticated/doctors/': typeof AuthenticatedDoctorsIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
-  '/_authenticated/test/': typeof AuthenticatedTestIndexRoute
+  '/_authenticated/tests/': typeof AuthenticatedTestsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -321,11 +351,14 @@ export interface FileRouteTypes {
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
+    | '/categories'
     | '/chats'
+    | '/departments'
+    | '/doctors'
     | '/help-center'
     | '/settings/'
     | '/tasks'
-    | '/test'
+    | '/tests'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -350,11 +383,14 @@ export interface FileRouteTypes {
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
+    | '/categories'
     | '/chats'
+    | '/departments'
+    | '/doctors'
     | '/help-center'
     | '/settings'
     | '/tasks'
-    | '/test'
+    | '/tests'
     | '/users'
   id:
     | '__root__'
@@ -383,11 +419,14 @@ export interface FileRouteTypes {
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
     | '/_authenticated/apps/'
+    | '/_authenticated/categories/'
     | '/_authenticated/chats/'
+    | '/_authenticated/departments/'
+    | '/_authenticated/doctors/'
     | '/_authenticated/help-center/'
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
-    | '/_authenticated/test/'
+    | '/_authenticated/tests/'
     | '/_authenticated/users/'
   fileRoutesById: FileRoutesById
 }
@@ -527,11 +566,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/test/': {
-      id: '/_authenticated/test/'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof AuthenticatedTestIndexRouteImport
+    '/_authenticated/tests/': {
+      id: '/_authenticated/tests/'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof AuthenticatedTestsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tasks/': {
@@ -555,11 +594,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/doctors/': {
+      id: '/_authenticated/doctors/'
+      path: '/doctors'
+      fullPath: '/doctors'
+      preLoaderRoute: typeof AuthenticatedDoctorsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departments/': {
+      id: '/_authenticated/departments/'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof AuthenticatedDepartmentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/chats/': {
       id: '/_authenticated/chats/'
       path: '/chats'
       fullPath: '/chats'
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/categories/': {
+      id: '/_authenticated/categories/'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof AuthenticatedCategoriesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/apps/': {
@@ -656,10 +716,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
+  AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
+  AuthenticatedDepartmentsIndexRoute: typeof AuthenticatedDepartmentsIndexRoute
+  AuthenticatedDoctorsIndexRoute: typeof AuthenticatedDoctorsIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
-  AuthenticatedTestIndexRoute: typeof AuthenticatedTestIndexRoute
+  AuthenticatedTestsIndexRoute: typeof AuthenticatedTestsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
 }
 
@@ -668,10 +731,13 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
+  AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
+  AuthenticatedDepartmentsIndexRoute: AuthenticatedDepartmentsIndexRoute,
+  AuthenticatedDoctorsIndexRoute: AuthenticatedDoctorsIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
-  AuthenticatedTestIndexRoute: AuthenticatedTestIndexRoute,
+  AuthenticatedTestsIndexRoute: AuthenticatedTestsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
 }
 
