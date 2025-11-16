@@ -137,7 +137,8 @@ function SidebarMenuRecursiveCollapsible({
   href: string
   depth?: number
 }) {
-  const { setOpenMobile } = useSidebar()
+  
+  // const { setOpenMobile } = useSidebar()
   const isDefaultOpen = checkIsActive(href, item, true)
   const [open, setOpen] = useState(isDefaultOpen) // track open state locally
 
