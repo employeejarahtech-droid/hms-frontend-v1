@@ -25,7 +25,8 @@ export const sidebarData: SidebarData = {
     {
       name: 'Super Admin',
       logo: Command,
-      plan: 'Role',},
+      plan: 'Role',
+    },
     {
       name: 'Manager',
       logo: GalleryVerticalEnd,
@@ -55,6 +56,29 @@ export const sidebarData: SidebarData = {
           title: 'Dashboard',
           url: '/',
           icon: LayoutDashboard,
+        },
+        {
+          title: 'Users',
+          url: '/users',
+          icon: Users,
+          items: [
+            {
+              title: 'List of Users',
+              url: "#",
+            },
+            {
+              title: 'List of Roles',
+              url: "#",
+            },
+            {
+              title: 'User Wise Themes',
+              url: "#",
+            },
+            {
+              title: 'User Wise Menus',
+              url: "#",
+            },
+          ]
         },
         {
           title: 'Settings',
@@ -108,8 +132,23 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Profile',
-              url: '/settings',
+              title: 'Create Invoice',
+              url: '/invoices/create',
+              icon: UserCog,
+            },
+            {
+              title: 'Due Collection',
+              url: '/due-collection',
+              icon: UserCog,
+            },
+            {
+              title: 'List of Patients',
+              url: '/patients',
+              icon: UserCog,
+            },
+            {
+              title: 'List of Invoices',
+              url: '/invoices/list',
               icon: UserCog,
             },
           ],
@@ -120,7 +159,22 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: 'List of Services',
-              url: '#',
+              url: '/services',
+              icon: UserCog,
+            },
+            {
+              title: 'List of Services Category',
+              url: '/services-category',
+              icon: UserCog,
+            },
+            {
+              title: 'Treatment Outcome List',
+              url: '/treatment-outcome-list',
+              icon: UserCog,
+            },
+            {
+              title: 'List of Operation Type',
+              url: '/operation-type-list',
               icon: UserCog,
             },
           ],
@@ -177,7 +231,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Service Bill Distribution',
+          title: 'Service Bill',
           icon: Settings,
           items: [
             {
@@ -198,12 +252,290 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology',
+          title: 'Pathology:Biochemical',
           icon: Settings,
           items: [
             {
-              title: 'Profile',
+              title: 'All Reports',
+              url: '/pathology/biochemical/all-reports',
+              icon: UserCog,
+            },
+            {
+              title: 'Lipid Profile',
+              url: '/pathology/biochemical/lipid-profile',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Pathology:Hematology',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Reports',
               url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'Blood For TCDC',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'Blood For BT & CT',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'CBC Short',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'CBC Detail',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'Prothom Bin Time Short',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Peripheral Blood Film',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'CBC With PBF',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Prothom Bin Time Full',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Pathology:Immunuology',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Reports',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'Widal Test',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'Blood Group',
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: 'MT',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Beta HCG',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Pathology:Urine',
+          icon: Settings,
+          items: [
+            {
+              title: 'Urine For R/E Short',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Urine For R/E Full',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Urine For Sugar',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Urine For Albumin',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Pathology:Stool',
+          icon: Settings,
+          items: [
+            {
+              title: 'Stool For R/E',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Ocult Blood Test(O.B.T)',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Reducing Substance',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Pathology:Special',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Hormon',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Sputum',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Semen',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Electrolytes',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Skin Scrapping For Fungus',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'T3T4TSH',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'X-Ray',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Hormon',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Sputum',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Semen',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Electrolytes',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Skin Scrapping For Fungus',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'T3T4TSH',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'Ultra Sound',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Hormon',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Sputum',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Semen',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Electrolytes',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Skin Scrapping For Fungus',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'T3T4TSH',
+              url: '#',
+              icon: UserCog,
+            },
+          ],
+        },
+        {
+          title: 'ECG',
+          icon: Settings,
+          items: [
+            {
+              title: 'All Hormon',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Sputum',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Semen',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Electrolytes',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'Skin Scrapping For Fungus',
+              url: '#',
+              icon: UserCog,
+            },
+            {
+              title: 'T3T4TSH',
+              url: '#',
               icon: UserCog,
             },
           ],
@@ -322,33 +654,6 @@ export const sidebarData: SidebarData = {
           url: '/chats',
           badge: '3',
           icon: MessagesSquare,
-        },
-        {
-          title: 'Users',
-          url: '/users',
-          icon: Users,
-          items: [
-            {
-              title: 'Add New User',
-              url: "#",
-            },
-            {
-              title: 'View All Users',
-              url: "#",
-            },
-            {
-              title: 'Edit User Profile',
-              url: "#",
-            },
-            {
-              title: 'User Activity Log',
-              url: "#",
-            },
-            {
-              title: 'Deactivated Users',
-              url: "#",
-            },
-          ]
         },
         {
           title: 'Reports',

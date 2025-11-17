@@ -42,5 +42,90 @@ export const doctorsData = [
     { id: "6", name: "Devendra Nath", title: "Dr.", qualification: "MBBS, MCPS", speciality: "N/A", country: "Bangladesh", city: "N/A", phone: "789", mobile: "01819986616", email: "www" },
     { id: "7", name: "Ranenra Nath", title: "Dr.", qualification: "MBBS, MCPS", speciality: "N/A", country: "America", city: "N/A", phone: "54657687", mobile: "01712112345", email: "www" },
     { id: "8", name: "A.K.M. Nurunnoor", title: "Prof.Dr.", qualification: "MBBS, D.D.V, FCPS", speciality: "Health", country: "Bangladesh", city: "N/A", phone: "45576788", mobile: "01712123457", email: "www" },
-    // Continue adding doctors as needed...
 ];
+
+
+export const reportsData = [
+  {
+    id: "1",
+    receiptId: "RPT-1001",
+    patientName: "John Doe",
+    tests: ["CBC", "Lipid Profile", "Blood Sugar (Fasting)"],
+    date: "2025-01-12",
+    status: "passed"
+  },
+  {
+    id: "2",
+    receiptId: "RPT-1002",
+    patientName: "Emily Carter",
+    tests: ["Urine Routine", "TSH"],
+    date: "2025-01-15",
+    status: "pending"
+  },
+  {
+    id: "3",
+    receiptId: "RPT-1003",
+    patientName: "Michael Johnson",
+    tests: ["CBC", "Vitamin D", "HbA1c"],
+    date: "2025-02-01",
+    status: "passed"
+  },
+  {
+    id: "4",
+    receiptId: "RPT-1004",
+    patientName: "Sophia Williams",
+    tests: ["LFT", "KFT", "Electrolytes Panel"],
+    date: "2025-02-04",
+    status: "failed"
+  },
+  {
+    id: "5",
+    receiptId: "RPT-1005",
+    patientName: "Daniel Smith",
+    tests: ["Thyroid Profile (T3, T4, TSH)"],
+    date: "2025-02-10",
+    status: "pending"
+  },
+  {
+    id: "6",
+    receiptId: "RPT-1006",
+    patientName: "Olivia Brown",
+    tests: ["CBC", "Urine Culture"],
+    date: "2025-02-18",
+    status: "passed"
+  },
+  {
+    id: "7",
+    receiptId: "RPT-1007",
+    patientName: "Liam Davis",
+    tests: ["Blood Sugar (Random)", "ESR"],
+    date: "2025-02-20",
+    status: "failed"
+  },
+  {
+    id: "8",
+    receiptId: "RPT-1008",
+    patientName: "Ava Wilson",
+    tests: ["Lipid Profile", "ECG"],
+    date: "2025-03-01",
+    status: "pending"
+  },
+  {
+    id: "9",
+    receiptId: "RPT-1009",
+    patientName: "James Miller",
+    tests: ["CBC", "CRP", "D-Dimer"],
+    date: "2025-03-05",
+    status: "passed"
+  },
+  {
+    id: "10",
+    receiptId: "RPT-1010",
+    patientName: "Isabella Martinez",
+    tests: ["KFT", "Electrolytes Panel", "Blood Sugar (Fasting)"],
+    date: "2025-03-08",
+    status: "pending"
+  }
+];
+
+
