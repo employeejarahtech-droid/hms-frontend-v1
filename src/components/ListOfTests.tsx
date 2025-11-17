@@ -52,8 +52,16 @@ export default function ListOfTests() {
             header: "Test Name",
         },
         {
-            accessorKey: "category",
-            header: "Category",
+            accessorKey: "NormalRange",
+            header: "Normal Range",
+        },
+         {
+            accessorKey: "TestCharge",
+            header: "Charge",
+        },
+         {
+            accessorKey: "unit",
+            header: "Unit",
         },
 
         {
@@ -70,11 +78,6 @@ export default function ListOfTests() {
 
                 return <Badge className={color + " text-white"}>{status}</Badge>;
             },
-        },
-
-        {
-            accessorKey: "score",
-            header: "Score",
         },
 
         // Actions Column

@@ -108,7 +108,22 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Profile',
+              title: 'Create Invoice',
+              url: '/create-invoice',
+              icon: UserCog,
+            },
+             {
+              title: 'Due Collection',
+              url: '/settings',
+              icon: UserCog,
+            },
+             {
+              title: 'List of Patients',
+              url: '/settings',
+              icon: UserCog,
+            },
+             {
+              title: 'List of Invoices',
               url: '/settings',
               icon: UserCog,
             },

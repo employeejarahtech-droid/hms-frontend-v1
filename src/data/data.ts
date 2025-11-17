@@ -23,13 +23,20 @@ export const categoryData = [
 ];
 
 
+// export const testData = [
+//     { id: "1", name: "Complete Blood Count (CBC)", category: "Hematology", status: "passed" as "passed" | "failed" | "pending", score: 98 },
+//     { id: "2", name: "Lipid Profile", category: "Cardiology", status: "failed" as "passed" | "failed" | "pending", score: 55 },
+//     { id: "3", name: "Liver Function Test (LFT)", category: "Biochemistry", status: "pending" as "passed" | "failed" | "pending", score: 0 },
+//     { id: "4", name: "Thyroid Panel (TSH/T3/T4)", category: "Endocrinology", status: "passed" as "passed" | "failed" | "pending", score: 92 },
+//     { id: "5", name: "Urinalysis", category: "Pathology", status: "failed" as "passed" | "failed" | "pending", score: 45 },
+//     { id: "6", name: "Electrocardiogram (ECG)", category: "Cardiology", status: "pending" as "passed" | "failed" | "pending", score: 0 },
+// ];
+
 export const testData = [
-    { id: "1", name: "Complete Blood Count (CBC)", category: "Hematology", status: "passed" as "passed" | "failed" | "pending", score: 98 },
-    { id: "2", name: "Lipid Profile", category: "Cardiology", status: "failed" as "passed" | "failed" | "pending", score: 55 },
-    { id: "3", name: "Liver Function Test (LFT)", category: "Biochemistry", status: "pending" as "passed" | "failed" | "pending", score: 0 },
-    { id: "4", name: "Thyroid Panel (TSH/T3/T4)", category: "Endocrinology", status: "passed" as "passed" | "failed" | "pending", score: 92 },
-    { id: "5", name: "Urinalysis", category: "Pathology", status: "failed" as "passed" | "failed" | "pending", score: 45 },
-    { id: "6", name: "Electrocardiogram (ECG)", category: "Cardiology", status: "pending" as "passed" | "failed" | "pending", score: 0 },
+    { id: 4, name: "Fasting Blood Sugar (F.B.S.)", category: "Hematology", NormalRange: "65-110mg/dl", TestCharge: 150, CategoryID: 4, unit: "mg/dl", TableName: "BIOALLID", TableField: "BIOALLID",  status: "passed" as "passed" | "failed" | "pending" },
+    { id: 5, name: "ExperimentAny2", NormalRange: "N/A", category: "Hematology", TestCharge: 0, CategoryID: 4, unit: "----mg/dl", TableName: "BIOALLID", TableField: "BIOALLID",  status: "passed" as "passed" | "failed" | "pending" },
+    { id: 6, name: "Blood Sugar 1.5 hours after Breakfast", category: "Hematology", NormalRange: "<140mg/dl", TestCharge: 150, CategoryID: 4, unit: "mg/dl", TableName: "BIOALLID", TableField: "BIOALLID",  status: "passed" as "passed" | "failed" | "pending" },
+    { id: 7, name: "Blood Sugar 2 hours after Breakfast", category: "Hematology", NormalRange: "<140 mg/dl", TestCharge: 150, CategoryID: 4, unit: "mg/dl", TableName: "BIOALLID", TableField: "BIOALLID",  status: "passed" as "passed" | "failed" | "pending" },
 ];
 
 
