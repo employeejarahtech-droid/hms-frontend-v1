@@ -16,11 +16,6 @@ import {
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
-  user: {
-    name: 'satnaing',
-    email: 'satnaingdev@gmail.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   teams: [
     {
       name: 'Super Admin',
@@ -252,12 +247,12 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Biochemical',
+          title: 'Path:Biochemical',
           icon: Settings,
           items: [
             {
               title: 'All Reports',
-              url: '/pathology/biochemical/all-reports',
+              url: '/pathology/biochemical/reports',
               icon: UserCog,
             },
             {
@@ -268,22 +263,22 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Hematology',
+          title: 'Path:Hematology',
           icon: Settings,
           items: [
             {
               title: 'All Reports',
-              url: '/settings',
+              url: '/pathology/hematology/reports',
               icon: UserCog,
             },
             {
               title: 'Blood For TCDC',
-              url: '/settings',
+              url: '/pathology/hematology/blood-for-tcdc',
               icon: UserCog,
             },
             {
               title: 'Blood For BT & CT',
-              url: '/settings',
+              url: '/pathology/hematology/blood-for-bt-ct',
               icon: UserCog,
             },
             {
@@ -319,7 +314,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Immunuology',
+          title: 'Path:Immunuology',
           icon: Settings,
           items: [
             {
@@ -350,7 +345,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Urine',
+          title: 'Path:Urine',
           icon: Settings,
           items: [
             {
@@ -376,7 +371,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Stool',
+          title: 'Path:Stool',
           icon: Settings,
           items: [
             {
@@ -397,7 +392,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Pathology:Special',
+          title: 'Path:Special',
           icon: Settings,
           items: [
             {
@@ -673,24 +668,6 @@ export const sidebarData: SidebarData = {
             },
           ]
         },
-        // {
-        //   title: 'Secured by Clerk',
-        //   icon: ClerkLogo,
-        //   items: [
-        //     {
-        //       title: 'Sign In',
-        //       url: '/clerk/sign-in',
-        //     },
-        //     {
-        //       title: 'Sign Up',
-        //       url: '/clerk/sign-up',
-        //     },
-        //     {
-        //       title: 'User Management',
-        //       url: '/clerk/user-management',
-        //     },
-        //   ],
-        // },
       ],
     },
   ],

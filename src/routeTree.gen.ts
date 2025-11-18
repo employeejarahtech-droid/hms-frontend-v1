@@ -47,9 +47,12 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
 import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
+import { Route as AuthenticatedPathologyHematologyReportsIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/index'
+import { Route as AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-tcdc/index'
+import { Route as AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-bt-ct/index'
+import { Route as AuthenticatedPathologyBiochemicalReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/reports/index'
 import { Route as AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport } from './routes/_authenticated/pathology/biochemical/lipid-profile/index'
-import { Route as AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/index'
-import { Route as AuthenticatedPathologyBiochemicalAllReportsIdRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/$id'
+import { Route as AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport } from './routes/_authenticated/pathology/biochemical/reports/edit/$reportId'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -254,22 +257,40 @@ const AuthenticatedInvoicesCreateIndexRoute =
     path: '/invoices/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologyHematologyReportsIndexRoute =
+  AuthenticatedPathologyHematologyReportsIndexRouteImport.update({
+    id: '/pathology/hematology/reports/',
+    path: '/pathology/hematology/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyBloodForTcdcIndexRoute =
+  AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport.update({
+    id: '/pathology/hematology/blood-for-tcdc/',
+    path: '/pathology/hematology/blood-for-tcdc/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyBloodForBtCtIndexRoute =
+  AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport.update({
+    id: '/pathology/hematology/blood-for-bt-ct/',
+    path: '/pathology/hematology/blood-for-bt-ct/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyBiochemicalReportsIndexRoute =
+  AuthenticatedPathologyBiochemicalReportsIndexRouteImport.update({
+    id: '/pathology/biochemical/reports/',
+    path: '/pathology/biochemical/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyBiochemicalLipidProfileIndexRoute =
   AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport.update({
     id: '/pathology/biochemical/lipid-profile/',
     path: '/pathology/biochemical/lipid-profile/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyBiochemicalAllReportsIndexRoute =
-  AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport.update({
-    id: '/pathology/biochemical/all-reports/',
-    path: '/pathology/biochemical/all-reports/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyBiochemicalAllReportsIdRoute =
-  AuthenticatedPathologyBiochemicalAllReportsIdRouteImport.update({
-    id: '/pathology/biochemical/all-reports/$id',
-    path: '/pathology/biochemical/all-reports/$id',
+const AuthenticatedPathologyBiochemicalReportsEditReportIdRoute =
+  AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport.update({
+    id: '/pathology/biochemical/reports/edit/$reportId',
+    path: '/pathology/biochemical/reports/edit/$reportId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -310,9 +331,12 @@ export interface FileRoutesByFullPath {
   '/users': typeof AuthenticatedUsersIndexRoute
   '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
   '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
-  '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
-  '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
+  '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
+  '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -349,9 +373,12 @@ export interface FileRoutesByTo {
   '/users': typeof AuthenticatedUsersIndexRoute
   '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
   '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
-  '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
-  '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
+  '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
+  '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -393,9 +420,12 @@ export interface FileRoutesById {
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/invoices/create/': typeof AuthenticatedInvoicesCreateIndexRoute
   '/_authenticated/invoices/list/': typeof AuthenticatedInvoicesListIndexRoute
-  '/_authenticated/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
-  '/_authenticated/pathology/biochemical/all-reports/': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/_authenticated/pathology/biochemical/lipid-profile/': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/_authenticated/pathology/biochemical/reports/': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
+  '/_authenticated/pathology/hematology/blood-for-bt-ct/': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
+  '/_authenticated/pathology/hematology/blood-for-tcdc/': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/_authenticated/pathology/hematology/reports/': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/_authenticated/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -436,9 +466,12 @@ export interface FileRouteTypes {
     | '/users'
     | '/invoices/create'
     | '/invoices/list'
-    | '/pathology/biochemical/all-reports/$id'
-    | '/pathology/biochemical/all-reports'
     | '/pathology/biochemical/lipid-profile'
+    | '/pathology/biochemical/reports'
+    | '/pathology/hematology/blood-for-bt-ct'
+    | '/pathology/hematology/blood-for-tcdc'
+    | '/pathology/hematology/reports'
+    | '/pathology/biochemical/reports/edit/$reportId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -475,9 +508,12 @@ export interface FileRouteTypes {
     | '/users'
     | '/invoices/create'
     | '/invoices/list'
-    | '/pathology/biochemical/all-reports/$id'
-    | '/pathology/biochemical/all-reports'
     | '/pathology/biochemical/lipid-profile'
+    | '/pathology/biochemical/reports'
+    | '/pathology/hematology/blood-for-bt-ct'
+    | '/pathology/hematology/blood-for-tcdc'
+    | '/pathology/hematology/reports'
+    | '/pathology/biochemical/reports/edit/$reportId'
   id:
     | '__root__'
     | '/_authenticated'
@@ -518,9 +554,12 @@ export interface FileRouteTypes {
     | '/_authenticated/users/'
     | '/_authenticated/invoices/create/'
     | '/_authenticated/invoices/list/'
-    | '/_authenticated/pathology/biochemical/all-reports/$id'
-    | '/_authenticated/pathology/biochemical/all-reports/'
     | '/_authenticated/pathology/biochemical/lipid-profile/'
+    | '/_authenticated/pathology/biochemical/reports/'
+    | '/_authenticated/pathology/hematology/blood-for-bt-ct/'
+    | '/_authenticated/pathology/hematology/blood-for-tcdc/'
+    | '/_authenticated/pathology/hematology/reports/'
+    | '/_authenticated/pathology/biochemical/reports/edit/$reportId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -806,6 +845,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/hematology/reports/': {
+      id: '/_authenticated/pathology/hematology/reports/'
+      path: '/pathology/hematology/reports'
+      fullPath: '/pathology/hematology/reports'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/blood-for-tcdc/': {
+      id: '/_authenticated/pathology/hematology/blood-for-tcdc/'
+      path: '/pathology/hematology/blood-for-tcdc'
+      fullPath: '/pathology/hematology/blood-for-tcdc'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/blood-for-bt-ct/': {
+      id: '/_authenticated/pathology/hematology/blood-for-bt-ct/'
+      path: '/pathology/hematology/blood-for-bt-ct'
+      fullPath: '/pathology/hematology/blood-for-bt-ct'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/biochemical/reports/': {
+      id: '/_authenticated/pathology/biochemical/reports/'
+      path: '/pathology/biochemical/reports'
+      fullPath: '/pathology/biochemical/reports'
+      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/biochemical/lipid-profile/': {
       id: '/_authenticated/pathology/biochemical/lipid-profile/'
       path: '/pathology/biochemical/lipid-profile'
@@ -813,18 +880,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/biochemical/all-reports/': {
-      id: '/_authenticated/pathology/biochemical/all-reports/'
-      path: '/pathology/biochemical/all-reports'
-      fullPath: '/pathology/biochemical/all-reports'
-      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/biochemical/all-reports/$id': {
-      id: '/_authenticated/pathology/biochemical/all-reports/$id'
-      path: '/pathology/biochemical/all-reports/$id'
-      fullPath: '/pathology/biochemical/all-reports/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIdRouteImport
+    '/_authenticated/pathology/biochemical/reports/edit/$reportId': {
+      id: '/_authenticated/pathology/biochemical/reports/edit/$reportId'
+      path: '/pathology/biochemical/reports/edit/$reportId'
+      fullPath: '/pathology/biochemical/reports/edit/$reportId'
+      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -870,9 +930,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedInvoicesCreateIndexRoute: typeof AuthenticatedInvoicesCreateIndexRoute
   AuthenticatedInvoicesListIndexRoute: typeof AuthenticatedInvoicesListIndexRoute
-  AuthenticatedPathologyBiochemicalAllReportsIdRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
-  AuthenticatedPathologyBiochemicalAllReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  AuthenticatedPathologyBiochemicalReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
+  AuthenticatedPathologyHematologyBloodForBtCtIndexRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
+  AuthenticatedPathologyHematologyBloodForTcdcIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  AuthenticatedPathologyHematologyReportsIndexRoute: typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  AuthenticatedPathologyBiochemicalReportsEditReportIdRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -892,12 +955,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
   AuthenticatedInvoicesCreateIndexRoute: AuthenticatedInvoicesCreateIndexRoute,
   AuthenticatedInvoicesListIndexRoute: AuthenticatedInvoicesListIndexRoute,
-  AuthenticatedPathologyBiochemicalAllReportsIdRoute:
-    AuthenticatedPathologyBiochemicalAllReportsIdRoute,
-  AuthenticatedPathologyBiochemicalAllReportsIndexRoute:
-    AuthenticatedPathologyBiochemicalAllReportsIndexRoute,
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute:
     AuthenticatedPathologyBiochemicalLipidProfileIndexRoute,
+  AuthenticatedPathologyBiochemicalReportsIndexRoute:
+    AuthenticatedPathologyBiochemicalReportsIndexRoute,
+  AuthenticatedPathologyHematologyBloodForBtCtIndexRoute:
+    AuthenticatedPathologyHematologyBloodForBtCtIndexRoute,
+  AuthenticatedPathologyHematologyBloodForTcdcIndexRoute:
+    AuthenticatedPathologyHematologyBloodForTcdcIndexRoute,
+  AuthenticatedPathologyHematologyReportsIndexRoute:
+    AuthenticatedPathologyHematologyReportsIndexRoute,
+  AuthenticatedPathologyBiochemicalReportsEditReportIdRoute:
+    AuthenticatedPathologyBiochemicalReportsEditReportIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

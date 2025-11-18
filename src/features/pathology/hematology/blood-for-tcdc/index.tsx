@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
-import { Link } from "@tanstack/react-router";
 import { ColumnDef } from "@tanstack/react-table";
 
 const topNav = [
@@ -50,7 +49,7 @@ type ReportsItem = {
 
 const reports: ReportsItem[] = reportsData;
 
-export default function AllReportsBiochemical() {
+export default function BloodForTcdc() {
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -124,10 +123,10 @@ export default function AllReportsBiochemical() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-
-            <Link to={`/pathology/biochemical/reports/edit/$reportId`} params={{ reportId: item.id }}>
+{/* 
+            <Link to={editReportRoute} params={{ id: item.id }}>
               <Button size="sm" variant="default">Edit</Button>
-            </Link>
+            </Link> */}
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -152,7 +151,7 @@ export default function AllReportsBiochemical() {
       </Header>
       <Main>
         <div className="mb-4">
-          <h1 className='text-2xl font-bold tracking-tight'>All Reports (Biochemical)</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>Blood For TCDC</h1>
         </div>
         <DataTable columns={columns} data={reports} />
       </Main>
