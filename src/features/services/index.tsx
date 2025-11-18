@@ -5,31 +5,26 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ColumnDef } from "@tanstack/react-table";
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
-import { doctorsData } from '@/data/data'
-import { CreateDoctorForm } from './components/CreateDoctorForm'
+import { testData } from '@/data/data'
 
 
-type DoctorItem = {
+type TestItem = {
     id: string;
     name: string;
-    title: string;
-    qualification: string;
-    speciality: string;
-    country: string;
-    city: string;
-    phone: string;
-    mobile: string;
-    email: string;
+    category: string;
+    status: "passed" | "failed" | "pending";
+    score: number;
 };
 
-const doctors: DoctorItem[] = doctorsData;
+const tests: TestItem[] = testData;
 
 
-export default function Doctors() {
-    const columns: ColumnDef<DoctorItem>[] = [
+export default function ListOfServices() {
+    const columns: ColumnDef<TestItem>[] = [
         // Row selection
         {
             id: "select",
@@ -50,46 +45,32 @@ export default function Doctors() {
             enableSorting: false,
             enableHiding: false,
         },
- {
-            accessorKey: "id",
-            header: "ID",
-        },
+
         {
             accessorKey: "name",
-            header: "Doctor's Name",
+            header: "Test Name",
         },
         {
-            accessorKey: "title",
-            header: "Title",
+            accessorKey: "category",
+            header: "Category",
         },
+
         {
-            accessorKey: "qualification",
-            header: "Qualification",
+            accessorKey: "status",
+            header: "Status",
+            cell: ({ row }) => {
+                const status = row.getValue("status") as string;
+                const color =
+                    status === "passed"
+                        ? "bg-green-500"
+                        : status === "failed"
+                            ? "bg-red-500"
+                            : "bg-yellow-500";
+
+                return <Badge className={color + " text-white"}>{status}</Badge>;
+            },
         },
-        {
-            accessorKey: "speciality",
-            header: "Speciality",
-        },
-        {
-            accessorKey: "country",
-            header: "Country",
-        },
-        {
-            accessorKey: "city",
-            header: "City",
-        },
-        {
-            accessorKey: "phone",
-            header: "Phone",
-        },
-        {
-            accessorKey: "mobile",
-            header: "Mobile",
-        },
-        {
-            accessorKey: "email",
-            header: "Email",
-        },
+
         {
             accessorKey: "score",
             header: "Score",
@@ -129,11 +110,11 @@ export default function Doctors() {
         </Header>
 
         <Main>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                <h1 className="text-2xl font-bold tracking-tight">List of Doctor</h1>
-                <CreateDoctorForm />
+            <div className="flex flex-wrap items-end justify-between gap-2">
+                <h1 className="text-2xl font-bold tracking-tight mb-4">List of Tests</h1>
+                {/* <CreateTestForm /> */}
             </div>
-            <DataTable columns={columns} data={doctors} />
+            <DataTable columns={columns} data={tests} />
         </Main>
     </>
 }

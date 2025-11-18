@@ -29,7 +29,9 @@ import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedTestsIndexRouteImport } from './routes/_authenticated/tests/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
+import { Route as AuthenticatedServicesIndexRouteImport } from './routes/_authenticated/services/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
+import { Route as AuthenticatedDueCollectionIndexRouteImport } from './routes/_authenticated/due-collection/index'
 import { Route as AuthenticatedDoctorsIndexRouteImport } from './routes/_authenticated/doctors/index'
 import { Route as AuthenticatedDepartmentsIndexRouteImport } from './routes/_authenticated/departments/index'
 import { Route as AuthenticatedCreateInvoiceIndexRouteImport } from './routes/_authenticated/create-invoice/index'
@@ -44,6 +46,11 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
+import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
+import { Route as AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport } from './routes/_authenticated/pathology/biochemical/lipid-profile/index'
+import { Route as AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/index'
+import { Route as AuthenticatedPathologyBiochemicalAllReportsIdRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/$id'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -144,10 +151,22 @@ const AuthenticatedSettingsIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedServicesIndexRoute =
+  AuthenticatedServicesIndexRouteImport.update({
+    id: '/services/',
+    path: '/services/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHelpCenterIndexRoute =
   AuthenticatedHelpCenterIndexRouteImport.update({
     id: '/help-center/',
     path: '/help-center/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDueCollectionIndexRoute =
+  AuthenticatedDueCollectionIndexRouteImport.update({
+    id: '/due-collection/',
+    path: '/due-collection/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDoctorsIndexRoute =
@@ -230,10 +249,41 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedInvoicesListIndexRoute =
+  AuthenticatedInvoicesListIndexRouteImport.update({
+    id: '/invoices/list/',
+    path: '/invoices/list/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInvoicesCreateIndexRoute =
+  AuthenticatedInvoicesCreateIndexRouteImport.update({
+    id: '/invoices/create/',
+    path: '/invoices/create/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyBiochemicalLipidProfileIndexRoute =
+  AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport.update({
+    id: '/pathology/biochemical/lipid-profile/',
+    path: '/pathology/biochemical/lipid-profile/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyBiochemicalAllReportsIndexRoute =
+  AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport.update({
+    id: '/pathology/biochemical/all-reports/',
+    path: '/pathology/biochemical/all-reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyBiochemicalAllReportsIdRoute =
+  AuthenticatedPathologyBiochemicalAllReportsIdRouteImport.update({
+    id: '/pathology/biochemical/all-reports/$id',
+    path: '/pathology/biochemical/all-reports/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
+  '/clerk/': typeof ClerkauthRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -259,11 +309,18 @@ export interface FileRoutesByFullPath {
   '/create-invoice': typeof AuthenticatedCreateInvoiceIndexRoute
   '/departments': typeof AuthenticatedDepartmentsIndexRoute
   '/doctors': typeof AuthenticatedDoctorsIndexRoute
+  '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/services': typeof AuthenticatedServicesIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
+  '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
+  '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
+  '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
+  '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -292,11 +349,18 @@ export interface FileRoutesByTo {
   '/create-invoice': typeof AuthenticatedCreateInvoiceIndexRoute
   '/departments': typeof AuthenticatedDepartmentsIndexRoute
   '/doctors': typeof AuthenticatedDoctorsIndexRoute
+  '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/services': typeof AuthenticatedServicesIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
+  '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
+  '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
+  '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
+  '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -330,17 +394,25 @@ export interface FileRoutesById {
   '/_authenticated/create-invoice/': typeof AuthenticatedCreateInvoiceIndexRoute
   '/_authenticated/departments/': typeof AuthenticatedDepartmentsIndexRoute
   '/_authenticated/doctors/': typeof AuthenticatedDoctorsIndexRoute
+  '/_authenticated/due-collection/': typeof AuthenticatedDueCollectionIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/_authenticated/services/': typeof AuthenticatedServicesIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/tests/': typeof AuthenticatedTestsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/invoices/create/': typeof AuthenticatedInvoicesCreateIndexRoute
+  '/_authenticated/invoices/list/': typeof AuthenticatedInvoicesListIndexRoute
+  '/_authenticated/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
+  '/_authenticated/pathology/biochemical/all-reports/': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
+  '/_authenticated/pathology/biochemical/lipid-profile/': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/clerk'
     | '/settings'
+    | '/clerk/'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -366,11 +438,18 @@ export interface FileRouteTypes {
     | '/create-invoice'
     | '/departments'
     | '/doctors'
+    | '/due-collection'
     | '/help-center'
+    | '/services'
     | '/settings/'
     | '/tasks'
     | '/tests'
     | '/users'
+    | '/invoices/create'
+    | '/invoices/list'
+    | '/pathology/biochemical/all-reports/$id'
+    | '/pathology/biochemical/all-reports'
+    | '/pathology/biochemical/lipid-profile'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -399,11 +478,18 @@ export interface FileRouteTypes {
     | '/create-invoice'
     | '/departments'
     | '/doctors'
+    | '/due-collection'
     | '/help-center'
+    | '/services'
     | '/settings'
     | '/tasks'
     | '/tests'
     | '/users'
+    | '/invoices/create'
+    | '/invoices/list'
+    | '/pathology/biochemical/all-reports/$id'
+    | '/pathology/biochemical/all-reports'
+    | '/pathology/biochemical/lipid-profile'
   id:
     | '__root__'
     | '/_authenticated'
@@ -436,11 +522,18 @@ export interface FileRouteTypes {
     | '/_authenticated/create-invoice/'
     | '/_authenticated/departments/'
     | '/_authenticated/doctors/'
+    | '/_authenticated/due-collection/'
     | '/_authenticated/help-center/'
+    | '/_authenticated/services/'
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/tests/'
     | '/_authenticated/users/'
+    | '/_authenticated/invoices/create/'
+    | '/_authenticated/invoices/list/'
+    | '/_authenticated/pathology/biochemical/all-reports/$id'
+    | '/_authenticated/pathology/biochemical/all-reports/'
+    | '/_authenticated/pathology/biochemical/lipid-profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -560,8 +653,8 @@ declare module '@tanstack/react-router' {
     }
     '/clerk/(auth)': {
       id: '/clerk/(auth)'
-      path: ''
-      fullPath: '/clerk'
+      path: '/'
+      fullPath: '/clerk/'
       preLoaderRoute: typeof ClerkauthRouteRouteImport
       parentRoute: typeof ClerkRouteRoute
     }
@@ -600,11 +693,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/services/': {
+      id: '/_authenticated/services/'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof AuthenticatedServicesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
       fullPath: '/help-center'
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/due-collection/': {
+      id: '/_authenticated/due-collection/'
+      path: '/due-collection'
+      fullPath: '/due-collection'
+      preLoaderRoute: typeof AuthenticatedDueCollectionIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/doctors/': {
@@ -705,6 +812,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/invoices/list/': {
+      id: '/_authenticated/invoices/list/'
+      path: '/invoices/list'
+      fullPath: '/invoices/list'
+      preLoaderRoute: typeof AuthenticatedInvoicesListIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/invoices/create/': {
+      id: '/_authenticated/invoices/create/'
+      path: '/invoices/create'
+      fullPath: '/invoices/create'
+      preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/biochemical/lipid-profile/': {
+      id: '/_authenticated/pathology/biochemical/lipid-profile/'
+      path: '/pathology/biochemical/lipid-profile'
+      fullPath: '/pathology/biochemical/lipid-profile'
+      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/biochemical/all-reports/': {
+      id: '/_authenticated/pathology/biochemical/all-reports/'
+      path: '/pathology/biochemical/all-reports'
+      fullPath: '/pathology/biochemical/all-reports'
+      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/biochemical/all-reports/$id': {
+      id: '/_authenticated/pathology/biochemical/all-reports/$id'
+      path: '/pathology/biochemical/all-reports/$id'
+      fullPath: '/pathology/biochemical/all-reports/$id'
+      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -741,10 +883,17 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCreateInvoiceIndexRoute: typeof AuthenticatedCreateInvoiceIndexRoute
   AuthenticatedDepartmentsIndexRoute: typeof AuthenticatedDepartmentsIndexRoute
   AuthenticatedDoctorsIndexRoute: typeof AuthenticatedDoctorsIndexRoute
+  AuthenticatedDueCollectionIndexRoute: typeof AuthenticatedDueCollectionIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
+  AuthenticatedServicesIndexRoute: typeof AuthenticatedServicesIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedTestsIndexRoute: typeof AuthenticatedTestsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+  AuthenticatedInvoicesCreateIndexRoute: typeof AuthenticatedInvoicesCreateIndexRoute
+  AuthenticatedInvoicesListIndexRoute: typeof AuthenticatedInvoicesListIndexRoute
+  AuthenticatedPathologyBiochemicalAllReportsIdRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
+  AuthenticatedPathologyBiochemicalAllReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
+  AuthenticatedPathologyBiochemicalLipidProfileIndexRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -757,10 +906,20 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCreateInvoiceIndexRoute: AuthenticatedCreateInvoiceIndexRoute,
   AuthenticatedDepartmentsIndexRoute: AuthenticatedDepartmentsIndexRoute,
   AuthenticatedDoctorsIndexRoute: AuthenticatedDoctorsIndexRoute,
+  AuthenticatedDueCollectionIndexRoute: AuthenticatedDueCollectionIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
+  AuthenticatedServicesIndexRoute: AuthenticatedServicesIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedTestsIndexRoute: AuthenticatedTestsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedInvoicesCreateIndexRoute: AuthenticatedInvoicesCreateIndexRoute,
+  AuthenticatedInvoicesListIndexRoute: AuthenticatedInvoicesListIndexRoute,
+  AuthenticatedPathologyBiochemicalAllReportsIdRoute:
+    AuthenticatedPathologyBiochemicalAllReportsIdRoute,
+  AuthenticatedPathologyBiochemicalAllReportsIndexRoute:
+    AuthenticatedPathologyBiochemicalAllReportsIndexRoute,
+  AuthenticatedPathologyBiochemicalLipidProfileIndexRoute:
+    AuthenticatedPathologyBiochemicalLipidProfileIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

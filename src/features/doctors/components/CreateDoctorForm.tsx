@@ -75,7 +75,7 @@ export function CreateDoctorForm({ onCreate }: { onCreate?: (values: DoctorItem)
         <Button onClick={() => setOpen(true)}>Create Doctor</Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-[400px] sm:w-[450px] overflow-y-auto">
+      <SheetContent side="right" className="max-w-[400px] sm:max-w-[450px] w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Create New Doctor</SheetTitle>
         </SheetHeader>
