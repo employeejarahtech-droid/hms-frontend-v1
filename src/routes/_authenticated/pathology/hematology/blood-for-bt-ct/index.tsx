@@ -11,8 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
-import { Link } from "@tanstack/react-router";
 import { ColumnDef } from "@tanstack/react-table";
+import { EditBloodForBTCTForm } from '@/features/pathology/hematology/blood-for-bt-ct/_components/EditBloodForBTCTForm';
+import { useState } from 'react';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/blood-for-bt-ct/',
@@ -58,6 +59,10 @@ type ReportsItem = {
 const reports: ReportsItem[] = reportsData;
 
 export default function BloodForBTCT() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const handleOpenEditForm = () => {
+    setIsDrawerOpen(true);
+  }
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -132,9 +137,7 @@ export default function BloodForBTCT() {
               View
             </Button>
 
-            <Link to={`/pathology/biochemical/reports/edit/$reportId`} params={{ reportId: item.id }}>
-              <Button size="sm" variant="default">Edit</Button>
-            </Link>
+            <Button size="sm" variant="default" onClick={() => handleOpenEditForm()}>Edit</Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -159,9 +162,10 @@ export default function BloodForBTCT() {
       </Header>
       <Main>
         <div className="mb-4">
-          <h1 className='text-2xl font-bold tracking-tight'>Blood</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>Blood For BT/CT</h1>
         </div>
         <DataTable columns={columns} data={reports} />
+        <EditBloodForBTCTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>
 

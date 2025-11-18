@@ -298,7 +298,7 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Peripheral Blood Film',
-              url: '#',
+              url: '/pathology/hematology/peripheral-blood-film',
               icon: UserCog,
             },
             {
@@ -314,7 +314,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Path:Immunuology',
+          title: 'Path:Immunology',
           icon: Settings,
           items: [
             {
@@ -324,17 +324,17 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Widal Test',
-              url: '/settings',
+              url: '/pathology/immunology/widal-test',
               icon: UserCog,
             },
             {
               title: 'Blood Group',
-              url: '/settings',
+              url: '/pathology/immunology/blood-group',
               icon: UserCog,
             },
             {
               title: 'MT',
-              url: '#',
+              url: '/pathology/immunology/mt',
               icon: UserCog,
             },
             {

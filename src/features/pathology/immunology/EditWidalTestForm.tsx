@@ -24,29 +24,34 @@ import { Button } from "@/components/ui/button";
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
  
 // --- Schema ---
-const btctSchema = z.object({
-    bt: z.string().min(1, { message: "Required" }), // Bleeding Time
-    ct: z.string().min(1, { message: "Required" }), // Clotting Time
+const widalSchema = z.object({
+    typhiO: z.string().min(1, { message: "Required" }),
+    typhiH: z.string().min(1, { message: "Required" }),
+    paratyphiAH: z.string().min(1, { message: "Required" }),
+    paratyphiBH: z.string().min(1, { message: "Required" }),
 });
  
-type BTCTFormValues = z.infer<typeof btctSchema>;
+type WidalFormValues = z.infer<typeof widalSchema>;
  
-interface BTCTFormProps {
+interface WidalTestFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
  
-export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
-    const form = useForm<BTCTFormValues>({
-        resolver: zodResolver(btctSchema),
+
+export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
+    const form = useForm<WidalFormValues>({
+        resolver: zodResolver(widalSchema),
         defaultValues: {
-            bt: "",
-            ct: "",
+            typhiO: "",
+            typhiH: "",
+            paratyphiAH: "",
+            paratyphiBH: "",
         },
     });
  
-    function onSubmit(values: BTCTFormValues) {
-        console.log("BT & CT Report:", values);
+    function onSubmit(values: WidalFormValues) {
+        console.log("Widal Test Report:", values);
         setOpen(false);
     }
  
@@ -57,14 +62,14 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="max-w-[450px] w-full overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Edit BT & CT Report</SheetTitle>
+                    <SheetTitle>Edit Widal Test</SheetTitle>
                 </SheetHeader>
  
                 <PatientInvoiceInfo
                     invoiceInfo={{
-                        invoiceNo: "RPT-1004",
-                        patientName: "Nur Mohammad",
-                        age: "32 Years",
+                        invoiceNo: "RPT-1007",
+                        patientName: "Shakil Hasan",
+                        age: "33 Years",
                         gender: "Male",
                     }}
                 />
@@ -75,30 +80,60 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                         className="space-y-6 mt-4 p-4"
                     >
  
-                        {/* BT Field */}
+                        {/* S. Typhi O */}
                         <FormField
                             control={form.control}
-                            name="bt"
+                            name="typhiO"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Bleeding Time (BT)</FormLabel>
+                                    <FormLabel>S. Typhi O (titer)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter BT (minutes)" {...field} />
+                                        <Input placeholder="e.g., 1:80" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
  
-                        {/* CT Field */}
+                        {/* S. Typhi H */}
                         <FormField
                             control={form.control}
-                            name="ct"
+                            name="typhiH"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Clotting Time (CT)</FormLabel>
+                                    <FormLabel>S. Typhi H (titer)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter CT (minutes)" {...field} />
+                                        <Input placeholder="e.g., 1:160" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+ 
+                        {/* S. Paratyphi A (AH) */}
+                        <FormField
+                            control={form.control}
+                            name="paratyphiAH"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>S. Paratyphi A (AH) (titer)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., 1:40" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+ 
+                        {/* S. Paratyphi B (BH) */}
+                        <FormField
+                            control={form.control}
+                            name="paratyphiBH"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>S. Paratyphi B (BH) (titer)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., 1:40" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -123,6 +158,7 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                                 View
                             </Button>
                         </div>
+ 
                     </form>
                 </Form>
             </SheetContent>

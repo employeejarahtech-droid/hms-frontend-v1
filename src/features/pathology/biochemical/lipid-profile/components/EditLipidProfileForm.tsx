@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form"; // Adjust import path as needed
 import { Input } from "@/components/ui/input"; // Adjust import path as needed
 import { Button } from "@/components/ui/button"; // Assuming Button is available
+import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
 
 // --- 1. Define the Schema using Zod ---
 // This schema defines the shape and validation rules for your form data.
@@ -74,38 +75,7 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                     <SheetTitle>Edit Lipid Profile</SheetTitle>
                 </SheetHeader>
 
-                <div className="bg-white w-full px-4 rounded-xl mx-auto">
-
-                    <div className="text-center text-lg font-semibold mb-5">
-                        Invoice Details
-                    </div>
-
-                    <div className="flex gap-4 mb-4">
-                        <div className="flex-1">
-                            <div className="text-sm text-gray-600 mb-1">Invoice No</div>
-                            <div className="bg-gray-50 p-2 rounded-md border border-gray-200 text-sm">RPT-1001</div>
-                        </div>
-
-                        <div className="flex-1">
-                            <div className="text-sm text-gray-600 mb-1">Patient Name</div>
-                            <div className="bg-gray-50 p-2 rounded-md border border-gray-200 text-sm">Maksudul Haque</div>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-4 mb-4">
-                        <div className="flex-1">
-                            <div className="text-sm text-gray-600 mb-1">Age</div>
-                            <div className="bg-gray-50 p-2 rounded-md border border-gray-200 text-sm">40 Years</div>
-                        </div>
-
-                        <div className="flex-1">
-                            <div className="text-sm text-gray-600 mb-1">Gender</div>
-                            <div className="bg-gray-50 p-2 rounded-md border border-gray-200 text-sm">Male</div>
-                        </div>
-                    </div>
-
-                </div>
-
+                <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1001", patientName: "Maksudul Haque", age: "40 Years", gender: "Male" }} />
                 {/* --- 4. Wrap the form content with the <Form> component --- */}
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4 p-4">

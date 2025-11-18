@@ -24,29 +24,33 @@ import { Button } from "@/components/ui/button";
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
  
 // --- Schema ---
-const btctSchema = z.object({
-    bt: z.string().min(1, { message: "Required" }), // Bleeding Time
-    ct: z.string().min(1, { message: "Required" }), // Clotting Time
+const pbfSchema = z.object({
+    rbcMorphology: z.string().min(1, { message: "Required" }),
+    wbcMorphology: z.string().min(1, { message: "Required" }),
+    platelet: z.string().min(1, { message: "Required" }),
+    comments: z.string().optional(),
 });
  
-type BTCTFormValues = z.infer<typeof btctSchema>;
+type PBFFormValues = z.infer<typeof pbfSchema>;
  
-interface BTCTFormProps {
+interface PeripheralBloodFilmFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
  
-export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
-    const form = useForm<BTCTFormValues>({
-        resolver: zodResolver(btctSchema),
+export function EditPeripheralBloodFilmForm({ open, setOpen }: PeripheralBloodFilmFormProps) {
+    const form = useForm<PBFFormValues>({
+        resolver: zodResolver(pbfSchema),
         defaultValues: {
-            bt: "",
-            ct: "",
+            rbcMorphology: "",
+            wbcMorphology: "",
+            platelet: "",
+            comments: "",
         },
     });
  
-    function onSubmit(values: BTCTFormValues) {
-        console.log("BT & CT Report:", values);
+    function onSubmit(values: PBFFormValues) {
+        console.log("Peripheral Blood Film Report:", values);
         setOpen(false);
     }
  
@@ -57,14 +61,14 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="max-w-[450px] w-full overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Edit BT & CT Report</SheetTitle>
+                    <SheetTitle>Edit Peripheral Blood Film (PBF)</SheetTitle>
                 </SheetHeader>
  
                 <PatientInvoiceInfo
                     invoiceInfo={{
-                        invoiceNo: "RPT-1004",
-                        patientName: "Nur Mohammad",
-                        age: "32 Years",
+                        invoiceNo: "RPT-1006",
+                        patientName: "Sabbir Hossain",
+                        age: "27 Years",
                         gender: "Male",
                     }}
                 />
@@ -75,30 +79,60 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                         className="space-y-6 mt-4 p-4"
                     >
  
-                        {/* BT Field */}
+                        {/* RBC Morphology */}
                         <FormField
                             control={form.control}
-                            name="bt"
+                            name="rbcMorphology"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Bleeding Time (BT)</FormLabel>
+                                    <FormLabel>RBC Morphology</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter BT (minutes)" {...field} />
+                                        <Input placeholder="e.g., Normocytic, Microcytic, Hypochromic" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
  
-                        {/* CT Field */}
+                        {/* WBC Morphology */}
                         <FormField
                             control={form.control}
-                            name="ct"
+                            name="wbcMorphology"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Clotting Time (CT)</FormLabel>
+                                    <FormLabel>WBC Morphology</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter CT (minutes)" {...field} />
+                                        <Input placeholder="e.g., Neutrophilia, Lymphocytosis" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+ 
+                        {/* Platelet Count / Morphology */}
+                        <FormField
+                            control={form.control}
+                            name="platelet"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Platelet Count / Morphology</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Adequate, Decreased" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+ 
+                        {/* Comments */}
+                        <FormField
+                            control={form.control}
+                            name="comments"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Comments / Impression (Optional)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter additional notes..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -123,6 +157,7 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                                 View
                             </Button>
                         </div>
+ 
                     </form>
                 </Form>
             </SheetContent>

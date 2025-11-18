@@ -47,7 +47,12 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
 import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
+import { Route as AuthenticatedPathologyImmunologyWidalTestIndexRouteImport } from './routes/_authenticated/pathology/immunology/widal-test/index'
+import { Route as AuthenticatedPathologyImmunologyMtIndexRouteImport } from './routes/_authenticated/pathology/immunology/mt/index'
+import { Route as AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport } from './routes/_authenticated/pathology/immunology/blood-group/index'
+import { Route as AuthenticatedPathologyHematologyWidalTestIndexRouteImport } from './routes/_authenticated/pathology/hematology/widal-test/index'
 import { Route as AuthenticatedPathologyHematologyReportsIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/index'
+import { Route as AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport } from './routes/_authenticated/pathology/hematology/peripheral-blood-film/index'
 import { Route as AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-tcdc/index'
 import { Route as AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-bt-ct/index'
 import { Route as AuthenticatedPathologyBiochemicalReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/reports/index'
@@ -257,10 +262,40 @@ const AuthenticatedInvoicesCreateIndexRoute =
     path: '/invoices/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologyImmunologyWidalTestIndexRoute =
+  AuthenticatedPathologyImmunologyWidalTestIndexRouteImport.update({
+    id: '/pathology/immunology/widal-test/',
+    path: '/pathology/immunology/widal-test/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyImmunologyMtIndexRoute =
+  AuthenticatedPathologyImmunologyMtIndexRouteImport.update({
+    id: '/pathology/immunology/mt/',
+    path: '/pathology/immunology/mt/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyImmunologyBloodGroupIndexRoute =
+  AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport.update({
+    id: '/pathology/immunology/blood-group/',
+    path: '/pathology/immunology/blood-group/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyWidalTestIndexRoute =
+  AuthenticatedPathologyHematologyWidalTestIndexRouteImport.update({
+    id: '/pathology/hematology/widal-test/',
+    path: '/pathology/hematology/widal-test/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyHematologyReportsIndexRoute =
   AuthenticatedPathologyHematologyReportsIndexRouteImport.update({
     id: '/pathology/hematology/reports/',
     path: '/pathology/hematology/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute =
+  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport.update({
+    id: '/pathology/hematology/peripheral-blood-film/',
+    path: '/pathology/hematology/peripheral-blood-film/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedPathologyHematologyBloodForTcdcIndexRoute =
@@ -335,7 +370,12 @@ export interface FileRoutesByFullPath {
   '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/pathology/hematology/widal-test': typeof AuthenticatedPathologyHematologyWidalTestIndexRoute
+  '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
+  '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
   '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRoutesByTo {
@@ -377,7 +417,12 @@ export interface FileRoutesByTo {
   '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/pathology/hematology/widal-test': typeof AuthenticatedPathologyHematologyWidalTestIndexRoute
+  '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
+  '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
   '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRoutesById {
@@ -424,7 +469,12 @@ export interface FileRoutesById {
   '/_authenticated/pathology/biochemical/reports/': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/_authenticated/pathology/hematology/blood-for-bt-ct/': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/_authenticated/pathology/hematology/blood-for-tcdc/': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  '/_authenticated/pathology/hematology/peripheral-blood-film/': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/_authenticated/pathology/hematology/reports/': typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  '/_authenticated/pathology/hematology/widal-test/': typeof AuthenticatedPathologyHematologyWidalTestIndexRoute
+  '/_authenticated/pathology/immunology/blood-group/': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
+  '/_authenticated/pathology/immunology/mt/': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/_authenticated/pathology/immunology/widal-test/': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
   '/_authenticated/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 export interface FileRouteTypes {
@@ -470,7 +520,12 @@ export interface FileRouteTypes {
     | '/pathology/biochemical/reports'
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
+    | '/pathology/hematology/peripheral-blood-film'
     | '/pathology/hematology/reports'
+    | '/pathology/hematology/widal-test'
+    | '/pathology/immunology/blood-group'
+    | '/pathology/immunology/mt'
+    | '/pathology/immunology/widal-test'
     | '/pathology/biochemical/reports/edit/$reportId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -512,7 +567,12 @@ export interface FileRouteTypes {
     | '/pathology/biochemical/reports'
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
+    | '/pathology/hematology/peripheral-blood-film'
     | '/pathology/hematology/reports'
+    | '/pathology/hematology/widal-test'
+    | '/pathology/immunology/blood-group'
+    | '/pathology/immunology/mt'
+    | '/pathology/immunology/widal-test'
     | '/pathology/biochemical/reports/edit/$reportId'
   id:
     | '__root__'
@@ -558,7 +618,12 @@ export interface FileRouteTypes {
     | '/_authenticated/pathology/biochemical/reports/'
     | '/_authenticated/pathology/hematology/blood-for-bt-ct/'
     | '/_authenticated/pathology/hematology/blood-for-tcdc/'
+    | '/_authenticated/pathology/hematology/peripheral-blood-film/'
     | '/_authenticated/pathology/hematology/reports/'
+    | '/_authenticated/pathology/hematology/widal-test/'
+    | '/_authenticated/pathology/immunology/blood-group/'
+    | '/_authenticated/pathology/immunology/mt/'
+    | '/_authenticated/pathology/immunology/widal-test/'
     | '/_authenticated/pathology/biochemical/reports/edit/$reportId'
   fileRoutesById: FileRoutesById
 }
@@ -845,11 +910,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/immunology/widal-test/': {
+      id: '/_authenticated/pathology/immunology/widal-test/'
+      path: '/pathology/immunology/widal-test'
+      fullPath: '/pathology/immunology/widal-test'
+      preLoaderRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/immunology/mt/': {
+      id: '/_authenticated/pathology/immunology/mt/'
+      path: '/pathology/immunology/mt'
+      fullPath: '/pathology/immunology/mt'
+      preLoaderRoute: typeof AuthenticatedPathologyImmunologyMtIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/immunology/blood-group/': {
+      id: '/_authenticated/pathology/immunology/blood-group/'
+      path: '/pathology/immunology/blood-group'
+      fullPath: '/pathology/immunology/blood-group'
+      preLoaderRoute: typeof AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/widal-test/': {
+      id: '/_authenticated/pathology/hematology/widal-test/'
+      path: '/pathology/hematology/widal-test'
+      fullPath: '/pathology/hematology/widal-test'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyWidalTestIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/hematology/reports/': {
       id: '/_authenticated/pathology/hematology/reports/'
       path: '/pathology/hematology/reports'
       fullPath: '/pathology/hematology/reports'
       preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/peripheral-blood-film/': {
+      id: '/_authenticated/pathology/hematology/peripheral-blood-film/'
+      path: '/pathology/hematology/peripheral-blood-film'
+      fullPath: '/pathology/hematology/peripheral-blood-film'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/pathology/hematology/blood-for-tcdc/': {
@@ -934,7 +1034,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPathologyBiochemicalReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   AuthenticatedPathologyHematologyBloodForBtCtIndexRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   AuthenticatedPathologyHematologyBloodForTcdcIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
+  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   AuthenticatedPathologyHematologyReportsIndexRoute: typeof AuthenticatedPathologyHematologyReportsIndexRoute
+  AuthenticatedPathologyHematologyWidalTestIndexRoute: typeof AuthenticatedPathologyHematologyWidalTestIndexRoute
+  AuthenticatedPathologyImmunologyBloodGroupIndexRoute: typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
+  AuthenticatedPathologyImmunologyMtIndexRoute: typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  AuthenticatedPathologyImmunologyWidalTestIndexRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
   AuthenticatedPathologyBiochemicalReportsEditReportIdRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
 }
 
@@ -963,8 +1068,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyHematologyBloodForBtCtIndexRoute,
   AuthenticatedPathologyHematologyBloodForTcdcIndexRoute:
     AuthenticatedPathologyHematologyBloodForTcdcIndexRoute,
+  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute:
+    AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute,
   AuthenticatedPathologyHematologyReportsIndexRoute:
     AuthenticatedPathologyHematologyReportsIndexRoute,
+  AuthenticatedPathologyHematologyWidalTestIndexRoute:
+    AuthenticatedPathologyHematologyWidalTestIndexRoute,
+  AuthenticatedPathologyImmunologyBloodGroupIndexRoute:
+    AuthenticatedPathologyImmunologyBloodGroupIndexRoute,
+  AuthenticatedPathologyImmunologyMtIndexRoute:
+    AuthenticatedPathologyImmunologyMtIndexRoute,
+  AuthenticatedPathologyImmunologyWidalTestIndexRoute:
+    AuthenticatedPathologyImmunologyWidalTestIndexRoute,
   AuthenticatedPathologyBiochemicalReportsEditReportIdRoute:
     AuthenticatedPathologyBiochemicalReportsEditReportIdRoute,
 }
