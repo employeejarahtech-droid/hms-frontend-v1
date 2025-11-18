@@ -48,6 +48,7 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
 import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
+import { Route as AuthenticatedPathologyHematologyBloodForTCDCIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-TCDC/index'
 import { Route as AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport } from './routes/_authenticated/pathology/biochemical/lipid-profile/index'
 import { Route as AuthenticatedPathologyBiochemicalAllReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/index'
 import { Route as AuthenticatedPathologyBiochemicalAllReportsIdRouteImport } from './routes/_authenticated/pathology/biochemical/all-reports/$id'
@@ -261,6 +262,12 @@ const AuthenticatedInvoicesCreateIndexRoute =
     path: '/invoices/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologyHematologyBloodForTCDCIndexRoute =
+  AuthenticatedPathologyHematologyBloodForTCDCIndexRouteImport.update({
+    id: '/pathology/hematology/blood-for-TCDC/',
+    path: '/pathology/hematology/blood-for-TCDC/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyBiochemicalLipidProfileIndexRoute =
   AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport.update({
     id: '/pathology/biochemical/lipid-profile/',
@@ -320,6 +327,7 @@ export interface FileRoutesByFullPath {
   '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
   '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/pathology/hematology/blood-for-TCDC': typeof AuthenticatedPathologyHematologyBloodForTCDCIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -360,6 +368,7 @@ export interface FileRoutesByTo {
   '/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
   '/pathology/biochemical/all-reports': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/pathology/hematology/blood-for-TCDC': typeof AuthenticatedPathologyHematologyBloodForTCDCIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -405,6 +414,7 @@ export interface FileRoutesById {
   '/_authenticated/pathology/biochemical/all-reports/$id': typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
   '/_authenticated/pathology/biochemical/all-reports/': typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   '/_authenticated/pathology/biochemical/lipid-profile/': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  '/_authenticated/pathology/hematology/blood-for-TCDC/': typeof AuthenticatedPathologyHematologyBloodForTCDCIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -448,6 +458,7 @@ export interface FileRouteTypes {
     | '/pathology/biochemical/all-reports/$id'
     | '/pathology/biochemical/all-reports'
     | '/pathology/biochemical/lipid-profile'
+    | '/pathology/hematology/blood-for-TCDC'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -488,6 +499,7 @@ export interface FileRouteTypes {
     | '/pathology/biochemical/all-reports/$id'
     | '/pathology/biochemical/all-reports'
     | '/pathology/biochemical/lipid-profile'
+    | '/pathology/hematology/blood-for-TCDC'
   id:
     | '__root__'
     | '/_authenticated'
@@ -532,6 +544,7 @@ export interface FileRouteTypes {
     | '/_authenticated/pathology/biochemical/all-reports/$id'
     | '/_authenticated/pathology/biochemical/all-reports/'
     | '/_authenticated/pathology/biochemical/lipid-profile/'
+    | '/_authenticated/pathology/hematology/blood-for-TCDC/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -824,6 +837,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/hematology/blood-for-TCDC/': {
+      id: '/_authenticated/pathology/hematology/blood-for-TCDC/'
+      path: '/pathology/hematology/blood-for-TCDC'
+      fullPath: '/pathology/hematology/blood-for-TCDC'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyBloodForTCDCIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/biochemical/lipid-profile/': {
       id: '/_authenticated/pathology/biochemical/lipid-profile/'
       path: '/pathology/biochemical/lipid-profile'
@@ -892,6 +912,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPathologyBiochemicalAllReportsIdRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIdRoute
   AuthenticatedPathologyBiochemicalAllReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalAllReportsIndexRoute
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
+  AuthenticatedPathologyHematologyBloodForTCDCIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTCDCIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -918,6 +939,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyBiochemicalAllReportsIndexRoute,
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute:
     AuthenticatedPathologyBiochemicalLipidProfileIndexRoute,
+  AuthenticatedPathologyHematologyBloodForTCDCIndexRoute:
+    AuthenticatedPathologyHematologyBloodForTCDCIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

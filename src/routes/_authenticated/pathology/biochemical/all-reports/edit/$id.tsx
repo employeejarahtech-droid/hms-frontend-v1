@@ -1,7 +1,7 @@
 // routes/_authenticated/pathology/biochemical/all-reports/edit/$id.tsx
 import { createFileRoute } from '@tanstack/react-router';
 
-export const editReportRoute = createFileRoute('/_authenticated/pathology/biochemical/all-reports/edit/$id')({
+export const editReportRoute = createFileRoute('/_authenticated/athology/biochemical/all-reports/edit/$id')({
   component: RouteComponent,
 });
 

@@ -125,8 +125,8 @@ export default function AllReportsBiochemical() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-
-            <Link to={editReportRoute} params={{ id: item.id }}>
+            
+            <Link to={`/pathology/biochemical/all-reports/edit/${item.id}`}>
               <Button size="sm" variant="default">Edit</Button>
             </Link>
 

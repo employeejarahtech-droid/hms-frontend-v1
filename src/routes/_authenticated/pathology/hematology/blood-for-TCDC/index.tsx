@@ -1,12 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/_authenticated/pathology/biochemical/all-reports/$id'
+  '/_authenticated/pathology/hematology/blood-for-TCDC/',
 )({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { id } = Route.useParams()
-  return <div>Editing Report ID: {id}</div>
+  return (
+    <div>Hello "/_authenticated/pathology/hematology/blood-for-TCDC/"!</div>
+  )
 }
