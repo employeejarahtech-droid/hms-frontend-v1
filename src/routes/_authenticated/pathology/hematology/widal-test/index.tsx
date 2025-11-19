@@ -13,7 +13,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
-import { EditPeripheralBloodFilmForm } from '@/features/pathology/hematology/peripheral-blood-film/EditPeripheralBloodFilmForm';
 import { WidalTestForm } from '@/features/pathology/hematology/widal-test/EditWidalTestForm';
 
 export const Route = createFileRoute(

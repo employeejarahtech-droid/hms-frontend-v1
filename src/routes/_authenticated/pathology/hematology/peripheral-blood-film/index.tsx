@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
-import { EditBloodForBTCTForm } from '@/features/pathology/hematology/blood-for-bt-ct/_components/EditBloodForBTCTForm';
 import { useState } from 'react';
 import { EditPeripheralBloodFilmForm } from '@/features/pathology/hematology/peripheral-blood-film/EditPeripheralBloodFilmForm';
 
