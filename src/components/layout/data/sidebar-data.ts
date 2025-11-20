@@ -283,12 +283,12 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'CBC Short',
-              url: '/settings',
+              url: '/pathology/hematology/cbc-short',
               icon: UserCog,
             },
             {
               title: 'CBC Detail',
-              url: '/settings',
+              url: '/pathology/hematology/cbc-detail',
               icon: UserCog,
             },
             {
@@ -339,7 +339,7 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Beta HCG',
-              url: '#',
+              url: '/pathology/immunology/beta-hcg',
               icon: UserCog,
             },
           ],
@@ -355,17 +355,17 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Urine For R/E Full',
-              url: '#',
+              url: '/pathology/urine/urine-for-re-full',
               icon: UserCog,
             },
             {
               title: 'Urine For Sugar',
-              url: '#',
+              url: '/pathology/urine/urine-for-sugar',
               icon: UserCog,
             },
             {
               title: 'Urine For Albumin',
-              url: '#',
+              url: '/pathology/urine/urine-for-albumin',
               icon: UserCog,
             },
           ],
@@ -376,17 +376,17 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: 'Stool For R/E',
-              url: '#',
+              url: '/pathology/stool/stool-re',
               icon: UserCog,
             },
             {
               title: 'Ocult Blood Test(O.B.T)',
-              url: '#',
+              url: '/pathology/stool/ocult-blood-test',
               icon: UserCog,
             },
             {
               title: 'Reducing Substance',
-              url: '#',
+              url: '/pathology/stool/reducing-substance',
               icon: UserCog,
             },
           ],
@@ -402,17 +402,17 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Sputum',
-              url: '#',
+              url: '/pathology/special/sputum',
               icon: UserCog,
             },
             {
               title: 'Semen',
-              url: '#',
+              url: '/pathology/special/semen',
               icon: UserCog,
             },
             {
               title: 'Electrolytes',
-              url: '#',
+              url: '/pathology/special/electrolytes',
               icon: UserCog,
             },
             {
@@ -422,7 +422,7 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'T3T4TSH',
-              url: '#',
+              url: '/pathology/special/t3t4tsh',
               icon: UserCog,
             },
           ],

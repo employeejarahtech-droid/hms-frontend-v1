@@ -13,12 +13,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
-import { WidalTestForm } from '@/features/pathology/immunology/EditWidalTestForm';
+import { EditBetaHCGTestForm } from '@/features/pathology/immunology/EditBetaHcgForm';
 
 export const Route = createFileRoute(
-  '/_authenticated/pathology/immunology/widal-test/',
+  '/_authenticated/pathology/immunology/beta-hcg/',
 )({
-  component: WidalTest,
+  component: BetaHcg,
 })
 
 const topNav = [
@@ -58,11 +58,14 @@ type ReportsItem = {
 
 const reports: ReportsItem[] = reportsData;
 
-function WidalTest() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const handleOpenEditForm = () => {
-    setIsDrawerOpen(true);
-  }
+function BetaHcg() {
+
+    const [open, setOpen] = useState<boolean>(false);
+
+    const handleEditForm = () => {
+      setOpen(!open);
+    };
+
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -136,8 +139,9 @@ function WidalTest() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-
-            <Button size="sm" variant="default" onClick={() => handleOpenEditForm()}>Edit</Button>
+              <Button size="sm" variant="default" onClick={() => handleEditForm()}>
+                Edit
+              </Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -146,7 +150,6 @@ function WidalTest() {
         );
       },
     },
-
   ];
 
   return (
@@ -162,12 +165,16 @@ function WidalTest() {
       </Header>
       <Main>
         <div className="mb-4">
-          <h1 className='text-2xl font-bold tracking-tight'>Widal Test</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>Beta HCG</h1>
         </div>
         <DataTable columns={columns} data={reports} />
-        <WidalTestForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
+        <EditBetaHCGTestForm open={open} setOpen={setOpen} />
       </Main>
     </>
 
   )
 }
+
+
+
+

@@ -58,7 +58,7 @@ type ReportsItem = {
 
 const reports: ReportsItem[] = reportsData;
 
-export default function PeripheralBloodFilm() {
+function PeripheralBloodFilm() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const handleOpenEditForm = () => {
     setIsDrawerOpen(true);

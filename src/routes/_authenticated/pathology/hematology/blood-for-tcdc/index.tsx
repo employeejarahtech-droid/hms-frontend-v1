@@ -59,7 +59,7 @@ type ReportsItem = {
 
 const reports: ReportsItem[] = reportsData;
 
-export default function BloodForTcdc() {
+function BloodForTcdc() {
   const [open, setOpen] = useState<boolean>(false);
 
    const handleOpenEditForm = () => {
