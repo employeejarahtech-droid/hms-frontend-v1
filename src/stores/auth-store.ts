@@ -1,53 +1,38 @@
-import { create } from 'zustand'
-import { getCookie, setCookie, removeCookie } from '@/lib/cookies'
+import { create } from "zustand";
+import { getCookie, setCookie, removeCookie } from "@/lib/cookies";
 
-const ACCESS_TOKEN = 'thisisjustarandomstring'
+const ACCESS_TOKEN = "accessToken";
 
 interface AuthUser {
-  accountNo: string
-  email: string
-  role: string[]
-  exp: number
+  id: number;
+  name: string;
+  email: string;
+  role_id: number;
 }
 
 interface AuthState {
-  auth: {
-    user: AuthUser | null
-    setUser: (user: AuthUser | null) => void
-    accessToken: string
-    setAccessToken: (accessToken: string) => void
-    resetAccessToken: () => void
-    reset: () => void
-  }
+  user: AuthUser | null;
+  accessToken: string;
+
+  setAuth: (user: AuthUser, token: string) => void;
+  logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>()((set) => {
-  const cookieState = getCookie(ACCESS_TOKEN)
-  const initToken = cookieState ? JSON.parse(cookieState) : ''
+export const useAuthStore = create<AuthState>((set) => {
+  const token = getCookie(ACCESS_TOKEN) || "";
+
   return {
-    auth: {
-      user: null,
-      setUser: (user) =>
-        set((state) => ({ ...state, auth: { ...state.auth, user } })),
-      accessToken: initToken,
-      setAccessToken: (accessToken) =>
-        set((state) => {
-          setCookie(ACCESS_TOKEN, JSON.stringify(accessToken))
-          return { ...state, auth: { ...state.auth, accessToken } }
-        }),
-      resetAccessToken: () =>
-        set((state) => {
-          removeCookie(ACCESS_TOKEN)
-          return { ...state, auth: { ...state.auth, accessToken: '' } }
-        }),
-      reset: () =>
-        set((state) => {
-          removeCookie(ACCESS_TOKEN)
-          return {
-            ...state,
-            auth: { ...state.auth, user: null, accessToken: '' },
-          }
-        }),
+    user: null,
+    accessToken: token,
+
+    setAuth: (user, token) => {
+      setCookie(ACCESS_TOKEN, token); // store raw string
+      set(() => ({ user, accessToken: token }));
     },
-  }
-})
+
+    logout: () => {
+      removeCookie(ACCESS_TOKEN);
+      set(() => ({ user: null, accessToken: "" }));
+    },
+  };
+});

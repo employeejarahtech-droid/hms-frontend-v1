@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input"; // Adjust import path as needed
 import { Button } from "@/components/ui/button"; // Assuming Button is available
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // --- 1. Define the Schema using Zod ---
 // This schema defines the shape and validation rules for your form data.
@@ -27,6 +28,7 @@ const formSchema = z.object({
     ldl: z.string().min(1, { message: "Required" }),
     hdl: z.string().min(1, { message: "Required" }),
     triglycerides: z.string().min(1, { message: "Required" }),
+    testCarriedOutBy: z.string().min(1, "Select a machine"),
 });
 
 // Infer the TypeScript type from the Zod schema
@@ -67,6 +69,15 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
     // Helper to handle the other button actions
     const handlePrint = () => alert("Print action triggered.");
     const handleView = () => alert("View action triggered.");
+
+
+    const machineList = [
+        "Sysmex XN-1000",
+        "Sysmex XP-300",
+        "Mindray BC-20",
+        "Abbott CELL-DYN Ruby",
+        "Nihon Kohden MEK-9100",
+    ];
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -140,6 +151,35 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                 </FormItem>
                             )}
                         />
+
+
+                        {/* TEST CARRIED OUT BY */}
+                        <FormField
+                            control={form.control}
+                            name="testCarriedOutBy"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Test carried out by</FormLabel>
+                                    <FormControl>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select lab technician" />
+                                            </SelectTrigger>
+
+                                            <SelectContent>
+                                                {machineList.map((machine) => (
+                                                    <SelectItem key={machine} value={machine}>
+                                                        {machine}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
 
                         {/* --- Action Buttons --- */}
                         <div className="flex justify-center gap-2 pt-4">

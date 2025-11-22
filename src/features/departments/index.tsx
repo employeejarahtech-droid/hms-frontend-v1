@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 import { CreateDepartmentForm } from './components/CreateDepartmentForm'
+import { EditDepartmentForm } from './components/EditDepartmentForm'
+import { useState } from 'react'
 
 
 type DepartmentItem = {
@@ -25,6 +27,8 @@ const tests: DepartmentItem[] = [
 
 
 export default function Departments() {
+    const [openEditForm, setOpenEditForm] = useState<boolean>(false);
+
     const columns: ColumnDef<DepartmentItem>[] = [
         // Row selection
         {
@@ -64,7 +68,7 @@ export default function Departments() {
 
                 return (
                     <div className="flex gap-2">
-                        <Button size="sm" variant="default" onClick={() => alert("Edit " + item.id)}>
+                        <Button size="sm" variant="default" onClick={() => setOpenEditForm(true)}>
                             Edit
                         </Button>
                         <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
@@ -91,6 +95,7 @@ export default function Departments() {
                 <CreateDepartmentForm />
             </div>
             <DataTable columns={columns} data={tests} />
+            <EditDepartmentForm open={openEditForm} setOpen={setOpenEditForm} />
         </Main>
     </>
 }

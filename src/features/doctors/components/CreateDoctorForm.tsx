@@ -1,149 +1,247 @@
-"use client";
-
-import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { showSubmittedData } from "@/lib/show-submitted-data";
 
-type DoctorItem = {
-  id: string;
-  name: string;
-  title: string;
-  qualification: string;
-  speciality: string;
-  country: string;
-  city: string;
-  phone: string;
-  mobile: string;
-  email: string;
-  score: number;
-};
+const doctorSchema = z.object({
+  name: z.string().min(1, { message: "Required" }),
+  title: z.string().min(1, { message: "Required" }),
+  qualification: z.string().min(1, { message: "Required" }),
+  speciality: z.string().min(1, { message: "Required" }),
+  country: z.string().min(1, { message: "Required" }),
+  city: z.string().min(1, { message: "Required" }),
+  phone: z.string().min(1, { message: "Required" }),
+  mobile: z.string().min(1, { message: "Required" }),
+  email: z.string().min(1, { message: "Required" }),
+  score: z.number().min(1, { message: "Required" }),
+});
 
-export function CreateDoctorForm({ onCreate }: { onCreate?: (values: DoctorItem) => void }) {
+export function CreateDoctorForm() {
   const [open, setOpen] = useState(false);
 
-  // Form state
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [qualification, setQualification] = useState("");
-  const [speciality, setSpeciality] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [phone, setPhone] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [score, setScore] = useState(0);
+  const form = useForm<z.infer<typeof doctorSchema>>({
+    resolver: zodResolver(doctorSchema),
+    defaultValues: {
+      name: "",
+      title: "",
+      qualification: "",
+      speciality: "",
+      country: "",
+      city: "",
+      phone: "",
+      mobile: "",
+      email: "",
+      score: 0,
+    },
+  });
 
-  const handleSubmit = () => {
-    const newDoctor: DoctorItem = {
-      id: Date.now().toString(),
-      name,
-      title,
-      qualification,
-      speciality,
-      country,
-      city,
-      phone,
-      mobile,
-      email,
-      score: Number(score),
-    };
-
-    if (onCreate) onCreate(newDoctor);
-
-    // Close sheet
+  function handleSubmit(data: z.infer<typeof doctorSchema>) {
+    console.log("Submitted Data", data);
     setOpen(false);
+    showSubmittedData(data);
+    form.reset();
+  }
 
-    // Reset form
-    setName("");
-    setTitle("");
-    setQualification("");
-    setSpeciality("");
-    setCountry("");
-    setCity("");
-    setPhone("");
-    setMobile("");
-    setEmail("");
-    setScore(0);
-  };
+  console.log(import.meta.env.VITE_API_URL);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      {/* Trigger Button */}
       <SheetTrigger asChild>
-        <Button onClick={() => setOpen(true)}>Create Doctor</Button>
+        <Button onClick={() => setOpen(true)}>
+          <Plus className="h-4 w-4" />
+          Add Doctor
+        </Button>
       </SheetTrigger>
 
       <SheetContent side="right" className="max-w-[400px] sm:max-w-[450px] w-full overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>Create New Doctor</SheetTitle>
+          <SheetTitle>Add New Doctor</SheetTitle>
         </SheetHeader>
 
-        <div className="space-y-4 mt-4 p-4">
+        <div className="mt-4 p-4">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
 
-          {/* Name */}
-          <div className="space-y-2">
-            <Label>Doctor's Name</Label>
-            <Input placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
-          </div>
+              {/* Name */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Doctor's Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Title */}
-          <div className="space-y-2">
-            <Label>Title</Label>
-            <Input placeholder="Dr., Prof., etc." value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
+              {/* Title */}
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Dr., Prof., etc." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Qualification */}
-          <div className="space-y-2">
-            <Label>Qualification</Label>
-            <Input placeholder="MBBS, MD, etc." value={qualification} onChange={(e) => setQualification(e.target.value)} />
-          </div>
+              {/* Qualification */}
+              <FormField
+                control={form.control}
+                name="qualification"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Qualification</FormLabel>
+                    <FormControl>
+                      <Input placeholder="MBBS, MD, etc." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Speciality */}
-          <div className="space-y-2">
-            <Label>Speciality</Label>
-            <Input placeholder="Cardiology, Neurology, etc." value={speciality} onChange={(e) => setSpeciality(e.target.value)} />
-          </div>
+              {/* Speciality */}
+              <FormField
+                control={form.control}
+                name="speciality"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Speciality</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Cardiology, Neurology, etc." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Country */}
-          <div className="space-y-2">
-            <Label>Country</Label>
-            <Input placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
-          </div>
+              {/* Country */}
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Country</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Country" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* City */}
-          <div className="space-y-2">
-            <Label>City</Label>
-            <Input placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-          </div>
+              {/* City */}
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input placeholder="City" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Phone */}
-          <div className="space-y-2">
-            <Label>Phone</Label>
-            <Input placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-          </div>
+              {/* Phone */}
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Phone" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Mobile */}
-          <div className="space-y-2">
-            <Label>Mobile</Label>
-            <Input placeholder="Mobile" value={mobile} onChange={(e) => setMobile(e.target.value)} />
-          </div>
+              {/* Mobile */}
+              <FormField
+                control={form.control}
+                name="mobile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mobile</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Mobile" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Email */}
-          <div className="space-y-2">
-            <Label>Email</Label>
-            <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
+              {/* Email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Score */}
-          <div className="space-y-2">
-            <Label>Score</Label>
-            <Input type="number" placeholder="0–100" value={score} onChange={(e) => setScore(Number(e.target.value))} />
-          </div>
+              {/* Score */}
+              <FormField
+                control={form.control}
+                name="score"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Score</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0–100"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* Submit */}
-          <Button className="w-full" onClick={handleSubmit}>Create Doctor</Button>
+              {/* Submit */}
+              <Button type="submit" className="w-full">
+                Add Doctor
+              </Button>
+            </form>
+          </Form>
         </div>
       </SheetContent>
     </Sheet>

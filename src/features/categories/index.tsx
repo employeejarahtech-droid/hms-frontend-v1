@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 import { CreateCategoryForm } from './components/CreateCategoryForm'
 import { categoryData } from '@/data/data'
+import { useState } from 'react'
+import { EditCategoryForm } from './components/EditCategoryForm'
 
 type DepartmentItem = {
     id: string;
@@ -47,6 +49,7 @@ const mappedCategories = mapCategoriesToDepartments(categories, tests);
 
 
 export default function Categories() {
+    const [openEditForm, setOpenEditForm] = useState<boolean>(false);
     const columns: ColumnDef<TestCategory>[] = [
         // Row selection
         {
@@ -91,7 +94,7 @@ export default function Categories() {
 
                 return (
                     <div className="flex gap-2">
-                        <Button size="sm" variant="default" onClick={() => alert("Edit " + item.id)}>
+                        <Button size="sm" variant="default" onClick={() => setOpenEditForm(true)}>
                             Edit
                         </Button>
                         <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
@@ -118,6 +121,7 @@ export default function Categories() {
                 <CreateCategoryForm />
             </div>
             <DataTable columns={columns} data={mappedCategories} />
+            <EditCategoryForm open={openEditForm} setOpen={setOpenEditForm} />
         </Main>
     </>
 }

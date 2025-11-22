@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 import { doctorsData } from '@/data/data'
 import { CreateDoctorForm } from './components/CreateDoctorForm'
+import { EditDoctorForm } from './components/EditDoctorForm'
+import { useState } from 'react'
 
 
 type DoctorItem = {
@@ -29,6 +31,8 @@ const doctors: DoctorItem[] = doctorsData;
 
 
 export default function Doctors() {
+    const [open, setOpen] = useState<boolean>(false);
+
     const columns: ColumnDef<DoctorItem>[] = [
         // Row selection
         {
@@ -50,7 +54,7 @@ export default function Doctors() {
             enableSorting: false,
             enableHiding: false,
         },
- {
+        {
             accessorKey: "id",
             header: "ID",
         },
@@ -107,7 +111,7 @@ export default function Doctors() {
                         <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
                             View
                         </Button>
-                        <Button size="sm" variant="default" onClick={() => alert("Edit " + item.id)}>
+                        <Button size="sm" variant="default" onClick={() => setOpen(true)}>
                             Edit
                         </Button>
                         <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
@@ -134,6 +138,7 @@ export default function Doctors() {
                 <CreateDoctorForm />
             </div>
             <DataTable columns={columns} data={doctors} />
+            <EditDoctorForm open={open} setOpen={setOpen} />
         </Main>
     </>
 }

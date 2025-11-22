@@ -23,6 +23,7 @@ import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { ConfigDrawer } from "@/components/config-drawer";
 import { ProfileDropdown } from "@/components/profile-dropdown";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/urine/urine-for-re-full/edit/$id',
@@ -73,6 +74,7 @@ const urineSchema = z.object({
   ascorbicAcid: z.string().optional(),
 
   comments: z.string().optional(),
+  testCarriedOutBy: z.string().min(1, "Select a machine"),
 });
 
 type UrineFormValues = z.infer<typeof urineSchema>;
@@ -92,6 +94,14 @@ function EditUrineForReFull() {
   const onSubmit = (values: UrineFormValues) => {
     console.log("Urine Examination Report:", values);
   };
+
+  const machineList = [
+    "Sysmex XN-1000",
+    "Sysmex XP-300",
+    "Mindray BC-20",
+    "Abbott CELL-DYN Ruby",
+    "Nihon Kohden MEK-9100",
+  ];
 
   return (
     <>
@@ -311,6 +321,37 @@ function EditUrineForReFull() {
                     </FormItem>
                   )}
                 />
+
+
+
+                {/* TEST CARRIED OUT BY */}
+                <FormField
+                  control={form.control}
+                  name="testCarriedOutBy"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Test carried out by</FormLabel>
+                      <FormControl>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select lab technician" />
+                          </SelectTrigger>
+
+                          <SelectContent>
+                            {machineList.map((machine) => (
+                              <SelectItem key={machine} value={machine}>
+                                {machine}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+
 
                 {/* BUTTONS */}
                 <div className="flex justify-between gap-3 pt-4">

@@ -1,17 +1,13 @@
 import {
   LayoutDashboard,
   Bell,
-  Palette,
   Settings,
-  Wrench,
-  UserCog,
   Users,
   MessagesSquare,
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
   LineChart,
-  List,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -58,19 +54,19 @@ export const sidebarData: SidebarData = {
           icon: Users,
           items: [
             {
-              title: 'List of Users',
+              title: '- List of Users',
               url: "#",
             },
             {
-              title: 'List of Roles',
+              title: '- List of Roles',
               url: "#",
             },
             {
-              title: 'User Wise Themes',
+              title: '- User Wise Themes',
               url: "#",
             },
             {
-              title: 'User Wise Menus',
+              title: '- User Wise Menus',
               url: "#",
             },
           ]
@@ -80,19 +76,16 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'App Configuration',
+              title: '- App Configuration',
               url: '/settings',
-              icon: UserCog,
             },
             {
-              title: 'System Preferences',
+              title: '- System Preferences',
               url: '/settings/appearance',
-              icon: Wrench,
             },
             {
-              title: 'Language Settings',
+              title: '- Language Settings',
               url: '/settings/display',
-              icon: Palette,
             },
           ],
         },
@@ -101,24 +94,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'List of Test',
+              title: '- List of Test',
               url: '/tests',
-              icon: UserCog,
             },
             {
-              title: 'List of Department',
+              title: '- List of Department',
               url: '/departments',
-              icon: Wrench,
             },
             {
-              title: 'List of Category',
+              title: '- List of Category',
               url: '/categories',
-              icon: Palette,
             },
             {
-              title: 'List of Doctor',
+              title: '- List of Doctor',
               url: '/doctors',
-              icon: List,
             },
           ],
         },
@@ -127,24 +116,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Create Invoice',
+              title: '- Create Invoice',
               url: '/invoices/create',
-              icon: UserCog,
             },
             {
-              title: 'Due Collection',
+              title: '- Due Collection',
               url: '/due-collection',
-              icon: UserCog,
             },
             {
-              title: 'List of Patients',
+              title: '- List of Patients',
               url: '/patients',
-              icon: UserCog,
             },
             {
-              title: 'List of Invoices',
+              title: '- List of Invoices',
               url: '/invoices/list',
-              icon: UserCog,
             },
           ],
         },
@@ -153,24 +138,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'List of Services',
+              title: '- Services',
               url: '/services',
-              icon: UserCog,
             },
             {
-              title: 'List of Services Category',
+              title: '- Service Categories',
               url: '/services-category',
-              icon: UserCog,
             },
             {
-              title: 'Treatment Outcome List',
+              title: '- Treatment Outcomes',
               url: '/treatment-outcome-list',
-              icon: UserCog,
             },
             {
-              title: 'List of Operation Type',
+              title: '- Operation Type List',
               url: '/operation-type-list',
-              icon: UserCog,
             },
           ],
         },
@@ -179,49 +160,40 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'New Admission',
+              title: '- New Admission',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Advance Payment',
+              title: '- Advance Payment',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'First Time Service',
+              title: '- First Time Service',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Finalise Services',
+              title: '- Finalise Services',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'First Time Create Bill',
+              title: '- First Time Bill',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Second Time Create Bill',
+              title: '- Second Time Bill',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Create Invoice',
+              title: '- Create Invoice',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Due Collection',
+              title: '- Due Collection',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Bed/Cabin Change',
+              title: '- Bed/Cabin Change',
               url: '#',
-              icon: UserCog,
             },
           ],
         },
@@ -230,19 +202,16 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Bill Distribute',
+              title: '- Bill Distribute',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Account Balance',
+              title: '- Account Balance',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Balance Distribute',
+              title: '- Balance Distribute',
               url: '#',
-              icon: UserCog,
             },
           ],
         },
@@ -251,14 +220,12 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Reports',
+              title: '- All Reports',
               url: '/pathology/biochemical/reports',
-              icon: UserCog,
             },
             {
-              title: 'Lipid Profile',
+              title: '- Lipid Profile',
               url: '/pathology/biochemical/lipid-profile',
-              icon: UserCog,
             },
           ],
         },
@@ -267,49 +234,40 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Reports',
+              title: '- All Reports',
               url: '/pathology/hematology/reports',
-              icon: UserCog,
             },
             {
-              title: 'Blood For TCDC',
+              title: '- Blood For TCDC',
               url: '/pathology/hematology/blood-for-tcdc',
-              icon: UserCog,
             },
             {
-              title: 'Blood For BT & CT',
+              title: '- Blood For BT & CT',
               url: '/pathology/hematology/blood-for-bt-ct',
-              icon: UserCog,
             },
             {
-              title: 'CBC Short',
+              title: '- CBC Short',
               url: '/pathology/hematology/cbc-short',
-              icon: UserCog,
             },
             {
-              title: 'CBC Detail',
+              title: '- CBC Detail',
               url: '/pathology/hematology/cbc-detail',
-              icon: UserCog,
             },
             {
-              title: 'Prothom Bin Time Short',
+              title: '- Prothom Bin Time Short',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Peripheral Blood Film',
+              title: '- Peripheral Blood Film',
               url: '/pathology/hematology/peripheral-blood-film',
-              icon: UserCog,
             },
             {
-              title: 'CBC With PBF',
+              title: '- CBC With PBF',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Prothom Bin Time Full',
-              url: '#',
-              icon: UserCog,
+              title: '- Prothom Bin Time Full',
+              url: '/pathology/hematology/prothom-bin-time-full',
             },
           ],
         },
@@ -318,29 +276,24 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Reports',
-              url: '/settings',
-              icon: UserCog,
+              title: '- All Reports',
+              url: '/pathology/immunology/reports',
             },
             {
-              title: 'Widal Test',
+              title: '- Widal Test',
               url: '/pathology/immunology/widal-test',
-              icon: UserCog,
             },
             {
-              title: 'Blood Group',
+              title: '- Blood Group',
               url: '/pathology/immunology/blood-group',
-              icon: UserCog,
             },
             {
-              title: 'MT',
+              title: '- MT',
               url: '/pathology/immunology/mt',
-              icon: UserCog,
             },
             {
-              title: 'Beta HCG',
+              title: '- Beta HCG',
               url: '/pathology/immunology/beta-hcg',
-              icon: UserCog,
             },
           ],
         },
@@ -349,24 +302,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Urine For R/E Short',
+              title: '- Urine For R/E Short',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Urine For R/E Full',
+              title: '- Urine For R/E Full',
               url: '/pathology/urine/urine-for-re-full',
-              icon: UserCog,
             },
             {
-              title: 'Urine For Sugar',
+              title: '- Urine For Sugar',
               url: '/pathology/urine/urine-for-sugar',
-              icon: UserCog,
             },
             {
-              title: 'Urine For Albumin',
+              title: '- Urine For Albumin',
               url: '/pathology/urine/urine-for-albumin',
-              icon: UserCog,
             },
           ],
         },
@@ -375,19 +324,16 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Stool For R/E',
+              title: '- Stool For R/E',
               url: '/pathology/stool/stool-re',
-              icon: UserCog,
             },
             {
-              title: 'Ocult Blood Test(O.B.T)',
+              title: '- Ocult Blood Test(O.B.T)',
               url: '/pathology/stool/ocult-blood-test',
-              icon: UserCog,
             },
             {
-              title: 'Reducing Substance',
+              title: '- Reducing Substance',
               url: '/pathology/stool/reducing-substance',
-              icon: UserCog,
             },
           ],
         },
@@ -396,34 +342,28 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Hormon',
-              url: '#',
-              icon: UserCog,
+              title: '- All Hormones',
+              url: '/pathology/special/all-hormones',
             },
             {
-              title: 'Sputum',
+              title: '- Sputum',
               url: '/pathology/special/sputum',
-              icon: UserCog,
             },
             {
-              title: 'Semen',
+              title: '- Semen',
               url: '/pathology/special/semen',
-              icon: UserCog,
             },
             {
-              title: 'Electrolytes',
+              title: '- Electrolytes',
               url: '/pathology/special/electrolytes',
-              icon: UserCog,
             },
             {
-              title: 'Skin Scrapping For Fungus',
-              url: '#',
-              icon: UserCog,
+              title: '- Skin Scrapping For Fungus',
+              url: '/pathology/special/skin-scrapping-for-fungus',
             },
             {
-              title: 'T3T4TSH',
+              title: '- T3T4TSH',
               url: '/pathology/special/t3t4tsh',
-              icon: UserCog,
             },
           ],
         },
@@ -432,70 +372,18 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Hormon',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Sputum',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Semen',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Electrolytes',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Skin Scrapping For Fungus',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'T3T4TSH',
-              url: '#',
-              icon: UserCog,
+              title: '- All Reports',
+              url: '/x-ray/all-reports',
             },
           ],
         },
         {
-          title: 'Ultra Sound',
+          title: 'Ultrasonogram',
           icon: Settings,
           items: [
             {
-              title: 'All Hormon',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Sputum',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Semen',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Electrolytes',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Skin Scrapping For Fungus',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'T3T4TSH',
-              url: '#',
-              icon: UserCog,
+              title: '- All Reports',
+              url: '/ultrasonogram/all-reports',
             },
           ],
         },
@@ -504,34 +392,8 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'All Hormon',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Sputum',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Semen',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Electrolytes',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Skin Scrapping For Fungus',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'T3T4TSH',
-              url: '#',
-              icon: UserCog,
+              title: '- All Reports',
+              url: '/ecg/all-reports',
             },
           ],
         },
@@ -540,34 +402,28 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Daily Debit',
+              title: '- Daily Debit',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Daily Credit',
+              title: '- Daily Credit',
               url: '#',
-              icon: Wrench,
             },
             {
-              title: 'Payment to Surgeon',
+              title: '- Payment to Surgeon',
               url: '#',
-              icon: Palette,
             },
             {
-              title: 'Payment to Anaesthetist',
+              title: '- Payment to Anaesthetist',
               url: '#',
-              icon: Palette,
             },
             {
-              title: 'Payment to Assistant',
+              title: '- Payment to Assistant',
               url: '#',
-              icon: Palette,
             },
             {
-              title: 'Payment to Consultant',
+              title: '- Payment to Consultant',
               url: '#',
-              icon: Palette,
             },
           ],
         },
@@ -576,24 +432,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'Bank Accounts',
+              title: '- Bank Accounts',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Bank Transactions',
+              title: '- Bank Transactions',
               url: '#',
-              icon: Wrench,
             },
             {
-              title: 'Bank Deposits',
+              title: '- Bank Deposits',
               url: '#',
-              icon: Palette,
             },
             {
-              title: 'Bank Withdrawals',
+              title: '- Bank Withdrawals',
               url: '#',
-              icon: Palette,
             },
           ],
         },
@@ -602,24 +454,20 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
-              title: 'View Salary Slips',
+              title: '- View Salary Slips',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Create Payroll',
+              title: '- Create Payroll',
               url: '#',
-              icon: Wrench,
             },
             {
-              title: 'Manage Deductions',
+              title: '- Manage Deductions',
               url: '#',
-              icon: Palette,
             },
             {
-              title: 'Bonuses & Allowances',
+              title: '- Bonuses & Allowances',
               url: '#',
-              icon: Bell,
             },
           ],
         },
@@ -628,19 +476,16 @@ export const sidebarData: SidebarData = {
           icon: Bell,
           items: [
             {
-              title: 'Email Notifications',
+              title: '- Email Notifications',
               url: '#',
-              icon: UserCog,
             },
             {
-              title: 'Push Notifications',
+              title: '- Push Notifications',
               url: '#',
-              icon: Wrench,
             },
             {
-              title: 'SMS Settings',
+              title: '- SMS Settings',
               url: '#',
-              icon: Palette,
             },
           ],
         },

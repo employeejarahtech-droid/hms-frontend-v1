@@ -9,8 +9,10 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
-import { CreateTestForm } from './CreateTestForm'
+// import { CreateTestForm } from './CreateTestForm'
 import { testData } from '@/data/data'
+import { Link } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 
 
 type TestItem = {
@@ -25,6 +27,7 @@ const tests: TestItem[] = testData;
 
 
 export default function ListOfTests() {
+
     const columns: ColumnDef<TestItem>[] = [
         // Row selection
         {
@@ -89,9 +92,11 @@ export default function ListOfTests() {
                         <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
                             View
                         </Button>
-                        <Button size="sm" variant="default" onClick={() => alert("Edit " + item.id)}>
-                            Edit
-                        </Button>
+                        <Link to="/tests/edit/$id" params={{ id: item.id }} className="">
+                            <Button size="sm" variant="default">
+                                Edit
+                            </Button>
+                        </Link>
                         <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
                             Delete
                         </Button>
@@ -113,7 +118,8 @@ export default function ListOfTests() {
         <Main>
             <div className="flex flex-wrap items-end justify-between gap-2">
                 <h1 className="text-2xl font-bold tracking-tight mb-4">List of Tests</h1>
-                <CreateTestForm />
+                <Link to="/tests/create"><Button>Create New Test</Button></Link>
+                {/* <CreateTestForm /> */}
             </div>
             <DataTable columns={columns} data={tests} />
         </Main>

@@ -5,70 +5,74 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { showSubmittedData } from "@/lib/show-submitted-data";
+import { Form } from "@/components/ui/form";
 
-export function CreateDepartmentForm({ onCreate }: { onCreate?: (values: any) => void }) {
+const departmentSchema = z.object({
+    name: z.string().min(1, {
+        message: "Required",
+    }),
+});
+
+type data = z.infer<typeof departmentSchema>;
+
+export function CreateDepartmentForm() {
     const [open, setOpen] = useState(false);
 
-    // form state
-    const [name, setName] = useState("");
-    const [category, setCategory] = useState("");
-    const [status, setStatus] = useState("pending");
-    const [score, setScore] = useState(0);
+    const form = useForm<z.infer<typeof departmentSchema>>({
+        resolver: zodResolver(departmentSchema),
+        defaultValues: {
+            name: "",
+        },
+    });
 
-    const handleSubmit = () => {
-        const newTest = {
-            id: Date.now().toString(),
-            name,
-            category,
-            status,
-            score: Number(score),
-        };
-
-        if (onCreate) onCreate(newTest);
-
-        // close sheet
+    async function handleSubmit(data: data) {
+        console.log('Submitted Data', data);
         setOpen(false);
-
-        // reset form
-        setName("");
-        setCategory("");
-        setStatus("pending");
-        setScore(0);
-    };
+        showSubmittedData(data);
+        form.reset();
+    }
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             {/* Trigger Button */}
             <SheetTrigger asChild>
-                <Button onClick={() => setOpen(true)}>Create Department</Button>
+                <Button onClick={() => setOpen(true)}>
+                    <Plus size={18} />
+                    Add New
+                </Button>
             </SheetTrigger>
 
             <SheetContent side="right" className="w-[400px] sm:w-[450px] overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Create New Deparment</SheetTitle>
+                    <SheetTitle>Add New Deparment</SheetTitle>
                 </SheetHeader>
 
                 <div className="space-y-6 mt-6 p-4">
 
-                    {/* Test Name */}
-                    <div className="space-y-2">
-                        <Label>Department Name</Label>
-                        <Input
-                            placeholder="Enter test name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-
-                    {/* Submit */}
-                    <div className="flex justify-center gap-5">
-                        <Button onClick={handleSubmit} variant="outline">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleSubmit}>
-                            Create
-                        </Button>
-                    </div>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+                            <div className="space-y-2">
+                                <Label>Department Name</Label>
+                                <Input
+                                    placeholder="Enter department name"
+                                    {...form.register("name")}
+                                />
+                            </div>
+                            <div className="flex justify-center gap-5">
+                                <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                                    Cancel
+                                </Button>
+                                <Button type="submit">
+                                    Add
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </div>
             </SheetContent>
         </Sheet>

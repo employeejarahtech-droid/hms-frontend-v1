@@ -1,19 +1,6 @@
 import PatientInvoiceInfo from '@/components/pathology/PatientInvoiceInfo'
 import { createFileRoute } from '@tanstack/react-router'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod';
 import { Main } from '@/components/layout/main';
 import { Header } from '@/components/layout/header';
 import { TopNav } from '@/components/layout/top-nav';
@@ -21,6 +8,7 @@ import { Search } from '@/components/search';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { ConfigDrawer } from '@/components/config-drawer';
 import { ProfileDropdown } from '@/components/profile-dropdown';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/biochemical/reports/edit/$reportId',
@@ -54,41 +42,26 @@ const topNav = [
     disabled: true,
   },
 ]
+ type LabTest = {
+  id: string
+  testName: string
+  testResult: string
+  range: string
+}
 
-// --- Schema ---
-const thyroidFunctionSchema = z.object({
-  t3: z.string().min(1, { message: "Required" }),
-  t4: z.string().min(1, { message: "Required" }),
-  tsh: z.string().min(1, { message: "Required" }),
-  comments: z.string().optional(),
-});
 
-type ThyroidFunctionFormValues = z.infer<typeof thyroidFunctionSchema>;
+const testData: LabTest[] = [
+  { id: "1", testName: "Hemoglobin", testResult: "13.2 g/dL", range: "12–16 g/dL" },
+  { id: "2", testName: "WBC Count", testResult: "7,500 /µL", range: "4,000–11,000 /µL" },
+  { id: "3", testName: "Platelet Count", testResult: "220,000 /µL", range: "150,000–400,000 /µL" },
+]
 
 function EditReport() {
-  //const { reportId } = Route.useParams();
-
-  const form = useForm<ThyroidFunctionFormValues>({
-    resolver: zodResolver(thyroidFunctionSchema),
-    defaultValues: {
-      t3: "",
-      t4: "",
-      tsh: "",
-      comments: "",
-    },
-  });
-
-  const onSubmit = (values: ThyroidFunctionFormValues) => {
-    console.log("Thyroid Function Test Report:", values);
-  };
-
-  const handlePrint = () => alert("Print triggered.");
-  const handleView = () => alert("View triggered.");
 
   return (
     <>
       {/* Header */}
-      <Header className="bg-white shadow-sm">
+      <Header>
         <TopNav links={topNav} />
         <div className="ms-auto flex items-center space-x-4">
           <Search />
@@ -99,115 +72,70 @@ function EditReport() {
       </Header>
 
       {/* Main */}
-      <Main className="px-6 py-8 max-w-4xl mx-auto">
+    <Main>
+        <h1 className="text-2xl font-bold tracking-tight mb-6">Edit Report - Biochemical</h1>
+        <Card>
+          <CardContent>
+            <PatientInvoiceInfo
+              invoiceInfo={{
+                invoiceNo: "RPT-1017",
+                patientName: "Sadia Hossain",
+                age: "37 Years",
+                gender: "Female",
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Card className="mt-6">
+          <CardContent>
+            <form>
+              <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">ID</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">Test Name</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">Test Result</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">Range</th>
+                  </tr>
+                </thead>
 
-        {/* Title */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold tracking-tight">Edit Thyroid Function Report</h1>
-        </div>
+                <tbody>
+                  {testData.map((test, index) => (
+                    <tr
+                      key={test.id}
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
+                    >
+                      <td className="px-4 py-3 text-sm text-gray-700 border-b">{test.id}</td>
+                      <td className="px-4 py-3 text-sm text-gray-700 border-b">{test.testName}</td>
 
-        {/* ======================= */}
-        {/* Row 1 — Invoice Details */}
-        {/* ======================= */}
-        <div className="bg-white shadow rounded-xl p-6 border mb-8">
-          <PatientInvoiceInfo
-            invoiceInfo={{
-              invoiceNo: "RPT-1017",
-              patientName: "Sadia Hossain",
-              age: "37 Years",
-              gender: "Female",
-            }}
-          />
-        </div>
+                      {/* Input field for testResult */}
+                      <td className="px-4 py-3 text-sm text-gray-700 border-b">
+                        <textarea
+                          value={test.testResult}
+                          className="w-full px-2 py-1.5 border rounded focus:outline-none focus:ring focus:ring-blue-300"
+                          onChange={() => { console.log("Test Result Updated") }}
+                        />
+                      </td>
 
-        {/* ======================= */}
-        {/* Row 2 — Tests Form */}
-        {/* ======================= */}
-        <div className="bg-white shadow rounded-xl p-6 border">
-          <h2 className="text-xl font-semibold mb-4">Test Results</h2>
-
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-
-              {/* T3 */}
-              <FormField
-                control={form.control}
-                name="t3"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>T3 (Triiodothyronine) (ng/dL)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter T3 value" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* T4 */}
-              <FormField
-                control={form.control}
-                name="t4"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>T4 (Thyroxine) (µg/dL)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter T4 value" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* TSH */}
-              <FormField
-                control={form.control}
-                name="tsh"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>TSH (µIU/mL)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter TSH value" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Comments */}
-              <FormField
-                control={form.control}
-                name="comments"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Comments / Remarks</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Additional notes..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Buttons */}
-              <div className="flex justify-between gap-3 pt-4">
-                <Button type="submit" variant="success" className="flex-1">
-                  {form.formState.isSubmitting ? "Saving..." : "Save Report"}
+                      <td className="px-4 py-3 text-sm text-gray-700 border-b">{test.range}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="flex justify-center gap-3 pt-4">
+                <Button type="submit" variant="success">
+                  Save Report
                 </Button>
 
-                <Button type="button" variant="warning" className="flex-1" onClick={handlePrint}>
+                <Button type="button" variant="warning">
                   Print
                 </Button>
 
-                <Button type="button" variant="info" className="flex-1" onClick={handleView}>
-                  View
-                </Button>
               </div>
-
             </form>
-          </Form>
-        </div>
 
+          </CardContent>
+        </Card>
       </Main>
     </>
   );

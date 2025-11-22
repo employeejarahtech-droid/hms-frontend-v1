@@ -21,6 +21,7 @@ import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
 import { Route as authSignIn2RouteImport } from './routes/(auth)/sign-in-2'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as ClerkAuthenticatedRouteRouteImport } from './routes/clerk/_authenticated/route'
 import { Route as ClerkauthRouteRouteImport } from './routes/clerk/(auth)/route'
@@ -45,8 +46,13 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedXRayAllReportsIndexRouteImport } from './routes/_authenticated/x-ray/all-reports/index'
+import { Route as AuthenticatedUltrasonogramAllReportsIndexRouteImport } from './routes/_authenticated/ultrasonogram/all-reports/index'
+import { Route as AuthenticatedTestsCreateIndexRouteImport } from './routes/_authenticated/tests/create/index'
 import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
 import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
+import { Route as AuthenticatedEcgAllReportsIndexRouteImport } from './routes/_authenticated/ecg/all-reports/index'
+import { Route as AuthenticatedTestsEditIdIndexRouteImport } from './routes/_authenticated/tests/edit/[$id]/index'
 import { Route as AuthenticatedPathologyUrineUrineForSugarIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-sugar/index'
 import { Route as AuthenticatedPathologyUrineUrineForReFullIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-re-full/index'
 import { Route as AuthenticatedPathologyUrineUrineForAlbuminIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-albumin/index'
@@ -55,24 +61,34 @@ import { Route as AuthenticatedPathologyStoolReducingSubstanceIndexRouteImport }
 import { Route as AuthenticatedPathologyStoolOcultBloodTestIndexRouteImport } from './routes/_authenticated/pathology/stool/ocult-blood-test/index'
 import { Route as AuthenticatedPathologySpecialT3t4tshIndexRouteImport } from './routes/_authenticated/pathology/special/t3t4tsh/index'
 import { Route as AuthenticatedPathologySpecialSputumIndexRouteImport } from './routes/_authenticated/pathology/special/sputum/index'
+import { Route as AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport } from './routes/_authenticated/pathology/special/skin-scrapping-for-fungus/index'
 import { Route as AuthenticatedPathologySpecialSemenIndexRouteImport } from './routes/_authenticated/pathology/special/semen/index'
 import { Route as AuthenticatedPathologySpecialElectrolytesIndexRouteImport } from './routes/_authenticated/pathology/special/electrolytes/index'
+import { Route as AuthenticatedPathologySpecialAllHormonesIndexRouteImport } from './routes/_authenticated/pathology/special/all-hormones/index'
 import { Route as AuthenticatedPathologyImmunologyWidalTestIndexRouteImport } from './routes/_authenticated/pathology/immunology/widal-test/index'
+import { Route as AuthenticatedPathologyImmunologyReportsIndexRouteImport } from './routes/_authenticated/pathology/immunology/reports/index'
 import { Route as AuthenticatedPathologyImmunologyMtIndexRouteImport } from './routes/_authenticated/pathology/immunology/mt/index'
 import { Route as AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport } from './routes/_authenticated/pathology/immunology/blood-group/index'
 import { Route as AuthenticatedPathologyImmunologyBetaHcgIndexRouteImport } from './routes/_authenticated/pathology/immunology/beta-hcg/index'
 import { Route as AuthenticatedPathologyHematologyReportsIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/index'
+import { Route as AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport } from './routes/_authenticated/pathology/hematology/prothom-bin-time-full/index'
 import { Route as AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport } from './routes/_authenticated/pathology/hematology/peripheral-blood-film/index'
 import { Route as AuthenticatedPathologyHematologyCbcShortIndexRouteImport } from './routes/_authenticated/pathology/hematology/cbc-short/index'
 import { Route as AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-tcdc/index'
 import { Route as AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-bt-ct/index'
 import { Route as AuthenticatedPathologyBiochemicalReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/reports/index'
 import { Route as AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport } from './routes/_authenticated/pathology/biochemical/lipid-profile/index'
+import { Route as AuthenticatedXRayAllReportsEditIdRouteImport } from './routes/_authenticated/x-ray/all-reports/edit/$id'
+import { Route as AuthenticatedUltrasonogramAllReportsEditIdRouteImport } from './routes/_authenticated/ultrasonogram/all-reports/edit/$id'
+import { Route as AuthenticatedEcgAllReportsEditIdRouteImport } from './routes/_authenticated/ecg/all-reports/edit/$id'
 import { Route as AuthenticatedPathologyUrineUrineForReFullEditIdRouteImport } from './routes/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
 import { Route as AuthenticatedPathologyStoolStoolReEditIdRouteImport } from './routes/_authenticated/pathology/stool/stool-re/edit/$id'
 import { Route as AuthenticatedPathologySpecialSemenEditReportIdRouteImport } from './routes/_authenticated/pathology/special/semen/edit/$reportId'
 import { Route as AuthenticatedPathologyHematologyCbcShortEditIdRouteImport } from './routes/_authenticated/pathology/hematology/cbc-short/edit/$id'
 import { Route as AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport } from './routes/_authenticated/pathology/biochemical/reports/edit/$reportId'
+import { Route as AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport } from './routes/_authenticated/pathology/special/all-hormones/edit/[$id]/index'
+import { Route as AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport } from './routes/_authenticated/pathology/immunology/reports/edit/[$id]/index'
+import { Route as AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/edit/[$id]/index'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -131,6 +147,11 @@ const authSignInRoute = authSignInRouteImport.update({
 const authOtpRoute = authOtpRouteImport.update({
   id: '/(auth)/otp',
   path: '/otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/(auth)/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
@@ -265,6 +286,24 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedXRayAllReportsIndexRoute =
+  AuthenticatedXRayAllReportsIndexRouteImport.update({
+    id: '/x-ray/all-reports/',
+    path: '/x-ray/all-reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUltrasonogramAllReportsIndexRoute =
+  AuthenticatedUltrasonogramAllReportsIndexRouteImport.update({
+    id: '/ultrasonogram/all-reports/',
+    path: '/ultrasonogram/all-reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTestsCreateIndexRoute =
+  AuthenticatedTestsCreateIndexRouteImport.update({
+    id: '/tests/create/',
+    path: '/tests/create/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInvoicesListIndexRoute =
   AuthenticatedInvoicesListIndexRouteImport.update({
     id: '/invoices/list/',
@@ -275,6 +314,18 @@ const AuthenticatedInvoicesCreateIndexRoute =
   AuthenticatedInvoicesCreateIndexRouteImport.update({
     id: '/invoices/create/',
     path: '/invoices/create/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEcgAllReportsIndexRoute =
+  AuthenticatedEcgAllReportsIndexRouteImport.update({
+    id: '/ecg/all-reports/',
+    path: '/ecg/all-reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTestsEditIdIndexRoute =
+  AuthenticatedTestsEditIdIndexRouteImport.update({
+    id: '/tests/edit/$id/',
+    path: '/tests/edit/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedPathologyUrineUrineForSugarIndexRoute =
@@ -325,6 +376,12 @@ const AuthenticatedPathologySpecialSputumIndexRoute =
     path: '/pathology/special/sputum/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute =
+  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport.update({
+    id: '/pathology/special/skin-scrapping-for-fungus/',
+    path: '/pathology/special/skin-scrapping-for-fungus/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologySpecialSemenIndexRoute =
   AuthenticatedPathologySpecialSemenIndexRouteImport.update({
     id: '/pathology/special/semen/',
@@ -337,10 +394,22 @@ const AuthenticatedPathologySpecialElectrolytesIndexRoute =
     path: '/pathology/special/electrolytes/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologySpecialAllHormonesIndexRoute =
+  AuthenticatedPathologySpecialAllHormonesIndexRouteImport.update({
+    id: '/pathology/special/all-hormones/',
+    path: '/pathology/special/all-hormones/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyImmunologyWidalTestIndexRoute =
   AuthenticatedPathologyImmunologyWidalTestIndexRouteImport.update({
     id: '/pathology/immunology/widal-test/',
     path: '/pathology/immunology/widal-test/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyImmunologyReportsIndexRoute =
+  AuthenticatedPathologyImmunologyReportsIndexRouteImport.update({
+    id: '/pathology/immunology/reports/',
+    path: '/pathology/immunology/reports/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedPathologyImmunologyMtIndexRoute =
@@ -365,6 +434,12 @@ const AuthenticatedPathologyHematologyReportsIndexRoute =
   AuthenticatedPathologyHematologyReportsIndexRouteImport.update({
     id: '/pathology/hematology/reports/',
     path: '/pathology/hematology/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute =
+  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport.update({
+    id: '/pathology/hematology/prothom-bin-time-full/',
+    path: '/pathology/hematology/prothom-bin-time-full/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute =
@@ -403,6 +478,24 @@ const AuthenticatedPathologyBiochemicalLipidProfileIndexRoute =
     path: '/pathology/biochemical/lipid-profile/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedXRayAllReportsEditIdRoute =
+  AuthenticatedXRayAllReportsEditIdRouteImport.update({
+    id: '/x-ray/all-reports/edit/$id',
+    path: '/x-ray/all-reports/edit/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUltrasonogramAllReportsEditIdRoute =
+  AuthenticatedUltrasonogramAllReportsEditIdRouteImport.update({
+    id: '/ultrasonogram/all-reports/edit/$id',
+    path: '/ultrasonogram/all-reports/edit/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEcgAllReportsEditIdRoute =
+  AuthenticatedEcgAllReportsEditIdRouteImport.update({
+    id: '/ecg/all-reports/edit/$id',
+    path: '/ecg/all-reports/edit/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyUrineUrineForReFullEditIdRoute =
   AuthenticatedPathologyUrineUrineForReFullEditIdRouteImport.update({
     id: '/pathology/urine/urine-for-re-full/edit/$id',
@@ -433,12 +526,31 @@ const AuthenticatedPathologyBiochemicalReportsEditReportIdRoute =
     path: '/pathology/biochemical/reports/edit/$reportId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute =
+  AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport.update({
+    id: '/pathology/special/all-hormones/edit/$id/',
+    path: '/pathology/special/all-hormones/edit/$id/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyImmunologyReportsEditIdIndexRoute =
+  AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport.update({
+    id: '/pathology/immunology/reports/edit/$id/',
+    path: '/pathology/immunology/reports/edit/$id/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPathologyHematologyReportsEditIdIndexRoute =
+  AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport.update({
+    id: '/pathology/hematology/reports/edit/$id/',
+    path: '/pathology/hematology/reports/edit/$id/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/clerk/': typeof ClerkauthRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
@@ -469,21 +581,32 @@ export interface FileRoutesByFullPath {
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/ecg/all-reports': typeof AuthenticatedEcgAllReportsIndexRoute
   '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
   '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
+  '/tests/create': typeof AuthenticatedTestsCreateIndexRoute
+  '/ultrasonogram/all-reports': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
+  '/x-ray/all-reports': typeof AuthenticatedXRayAllReportsIndexRoute
+  '/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
+  '/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
+  '/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
   '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
   '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
+  '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
   '/pathology/immunology/beta-hcg': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
   '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
   '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/pathology/immunology/reports': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
   '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
+  '/pathology/special/all-hormones': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
   '/pathology/special/electrolytes': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
   '/pathology/special/semen': typeof AuthenticatedPathologySpecialSemenIndexRoute
+  '/pathology/special/skin-scrapping-for-fungus': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
   '/pathology/special/sputum': typeof AuthenticatedPathologySpecialSputumIndexRoute
   '/pathology/special/t3t4tsh': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
   '/pathology/stool/ocult-blood-test': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
@@ -492,15 +615,20 @@ export interface FileRoutesByFullPath {
   '/pathology/urine/urine-for-albumin': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
   '/pathology/urine/urine-for-re-full': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
   '/pathology/urine/urine-for-sugar': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
+  '/tests/edit/$id': typeof AuthenticatedTestsEditIdIndexRoute
   '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
   '/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
   '/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
   '/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
   '/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
+  '/pathology/hematology/reports/edit/$id': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
+  '/pathology/immunology/reports/edit/$id': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
+  '/pathology/special/all-hormones/edit/$id': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
@@ -531,21 +659,32 @@ export interface FileRoutesByTo {
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/ecg/all-reports': typeof AuthenticatedEcgAllReportsIndexRoute
   '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
   '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
+  '/tests/create': typeof AuthenticatedTestsCreateIndexRoute
+  '/ultrasonogram/all-reports': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
+  '/x-ray/all-reports': typeof AuthenticatedXRayAllReportsIndexRoute
+  '/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
+  '/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
+  '/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
   '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
   '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
   '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
+  '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
   '/pathology/immunology/beta-hcg': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
   '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
   '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/pathology/immunology/reports': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
   '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
+  '/pathology/special/all-hormones': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
   '/pathology/special/electrolytes': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
   '/pathology/special/semen': typeof AuthenticatedPathologySpecialSemenIndexRoute
+  '/pathology/special/skin-scrapping-for-fungus': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
   '/pathology/special/sputum': typeof AuthenticatedPathologySpecialSputumIndexRoute
   '/pathology/special/t3t4tsh': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
   '/pathology/stool/ocult-blood-test': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
@@ -554,11 +693,15 @@ export interface FileRoutesByTo {
   '/pathology/urine/urine-for-albumin': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
   '/pathology/urine/urine-for-re-full': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
   '/pathology/urine/urine-for-sugar': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
+  '/tests/edit/$id': typeof AuthenticatedTestsEditIdIndexRoute
   '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
   '/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
   '/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
   '/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
   '/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
+  '/pathology/hematology/reports/edit/$id': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
+  '/pathology/immunology/reports/edit/$id': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
+  '/pathology/special/all-hormones/edit/$id': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -568,6 +711,7 @@ export interface FileRoutesById {
   '/clerk/(auth)': typeof ClerkauthRouteRouteWithChildren
   '/clerk/_authenticated': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
+  '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(auth)/sign-in-2': typeof authSignIn2Route
@@ -598,21 +742,32 @@ export interface FileRoutesById {
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/tests/': typeof AuthenticatedTestsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/ecg/all-reports/': typeof AuthenticatedEcgAllReportsIndexRoute
   '/_authenticated/invoices/create/': typeof AuthenticatedInvoicesCreateIndexRoute
   '/_authenticated/invoices/list/': typeof AuthenticatedInvoicesListIndexRoute
+  '/_authenticated/tests/create/': typeof AuthenticatedTestsCreateIndexRoute
+  '/_authenticated/ultrasonogram/all-reports/': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
+  '/_authenticated/x-ray/all-reports/': typeof AuthenticatedXRayAllReportsIndexRoute
+  '/_authenticated/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
+  '/_authenticated/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
+  '/_authenticated/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
   '/_authenticated/pathology/biochemical/lipid-profile/': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
   '/_authenticated/pathology/biochemical/reports/': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   '/_authenticated/pathology/hematology/blood-for-bt-ct/': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/_authenticated/pathology/hematology/blood-for-tcdc/': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/_authenticated/pathology/hematology/cbc-short/': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
   '/_authenticated/pathology/hematology/peripheral-blood-film/': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
+  '/_authenticated/pathology/hematology/prothom-bin-time-full/': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/_authenticated/pathology/hematology/reports/': typeof AuthenticatedPathologyHematologyReportsIndexRoute
   '/_authenticated/pathology/immunology/beta-hcg/': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
   '/_authenticated/pathology/immunology/blood-group/': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
   '/_authenticated/pathology/immunology/mt/': typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  '/_authenticated/pathology/immunology/reports/': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
   '/_authenticated/pathology/immunology/widal-test/': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
+  '/_authenticated/pathology/special/all-hormones/': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
   '/_authenticated/pathology/special/electrolytes/': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
   '/_authenticated/pathology/special/semen/': typeof AuthenticatedPathologySpecialSemenIndexRoute
+  '/_authenticated/pathology/special/skin-scrapping-for-fungus/': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
   '/_authenticated/pathology/special/sputum/': typeof AuthenticatedPathologySpecialSputumIndexRoute
   '/_authenticated/pathology/special/t3t4tsh/': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
   '/_authenticated/pathology/stool/ocult-blood-test/': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
@@ -621,11 +776,15 @@ export interface FileRoutesById {
   '/_authenticated/pathology/urine/urine-for-albumin/': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
   '/_authenticated/pathology/urine/urine-for-re-full/': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
   '/_authenticated/pathology/urine/urine-for-sugar/': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
+  '/_authenticated/tests/edit/$id/': typeof AuthenticatedTestsEditIdIndexRoute
   '/_authenticated/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
   '/_authenticated/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
   '/_authenticated/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
   '/_authenticated/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
   '/_authenticated/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
+  '/_authenticated/pathology/hematology/reports/edit/$id/': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
+  '/_authenticated/pathology/immunology/reports/edit/$id/': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
+  '/_authenticated/pathology/special/all-hormones/edit/$id/': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -634,6 +793,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/clerk/'
     | '/forgot-password'
+    | '/login'
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
@@ -664,21 +824,32 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/tests'
     | '/users'
+    | '/ecg/all-reports'
     | '/invoices/create'
     | '/invoices/list'
+    | '/tests/create'
+    | '/ultrasonogram/all-reports'
+    | '/x-ray/all-reports'
+    | '/ecg/all-reports/edit/$id'
+    | '/ultrasonogram/all-reports/edit/$id'
+    | '/x-ray/all-reports/edit/$id'
     | '/pathology/biochemical/lipid-profile'
     | '/pathology/biochemical/reports'
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
     | '/pathology/hematology/cbc-short'
     | '/pathology/hematology/peripheral-blood-film'
+    | '/pathology/hematology/prothom-bin-time-full'
     | '/pathology/hematology/reports'
     | '/pathology/immunology/beta-hcg'
     | '/pathology/immunology/blood-group'
     | '/pathology/immunology/mt'
+    | '/pathology/immunology/reports'
     | '/pathology/immunology/widal-test'
+    | '/pathology/special/all-hormones'
     | '/pathology/special/electrolytes'
     | '/pathology/special/semen'
+    | '/pathology/special/skin-scrapping-for-fungus'
     | '/pathology/special/sputum'
     | '/pathology/special/t3t4tsh'
     | '/pathology/stool/ocult-blood-test'
@@ -687,15 +858,20 @@ export interface FileRouteTypes {
     | '/pathology/urine/urine-for-albumin'
     | '/pathology/urine/urine-for-re-full'
     | '/pathology/urine/urine-for-sugar'
+    | '/tests/edit/$id'
     | '/pathology/biochemical/reports/edit/$reportId'
     | '/pathology/hematology/cbc-short/edit/$id'
     | '/pathology/special/semen/edit/$reportId'
     | '/pathology/stool/stool-re/edit/$id'
     | '/pathology/urine/urine-for-re-full/edit/$id'
+    | '/pathology/hematology/reports/edit/$id'
+    | '/pathology/immunology/reports/edit/$id'
+    | '/pathology/special/all-hormones/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
     | '/forgot-password'
+    | '/login'
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
@@ -726,21 +902,32 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/tests'
     | '/users'
+    | '/ecg/all-reports'
     | '/invoices/create'
     | '/invoices/list'
+    | '/tests/create'
+    | '/ultrasonogram/all-reports'
+    | '/x-ray/all-reports'
+    | '/ecg/all-reports/edit/$id'
+    | '/ultrasonogram/all-reports/edit/$id'
+    | '/x-ray/all-reports/edit/$id'
     | '/pathology/biochemical/lipid-profile'
     | '/pathology/biochemical/reports'
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
     | '/pathology/hematology/cbc-short'
     | '/pathology/hematology/peripheral-blood-film'
+    | '/pathology/hematology/prothom-bin-time-full'
     | '/pathology/hematology/reports'
     | '/pathology/immunology/beta-hcg'
     | '/pathology/immunology/blood-group'
     | '/pathology/immunology/mt'
+    | '/pathology/immunology/reports'
     | '/pathology/immunology/widal-test'
+    | '/pathology/special/all-hormones'
     | '/pathology/special/electrolytes'
     | '/pathology/special/semen'
+    | '/pathology/special/skin-scrapping-for-fungus'
     | '/pathology/special/sputum'
     | '/pathology/special/t3t4tsh'
     | '/pathology/stool/ocult-blood-test'
@@ -749,11 +936,15 @@ export interface FileRouteTypes {
     | '/pathology/urine/urine-for-albumin'
     | '/pathology/urine/urine-for-re-full'
     | '/pathology/urine/urine-for-sugar'
+    | '/tests/edit/$id'
     | '/pathology/biochemical/reports/edit/$reportId'
     | '/pathology/hematology/cbc-short/edit/$id'
     | '/pathology/special/semen/edit/$reportId'
     | '/pathology/stool/stool-re/edit/$id'
     | '/pathology/urine/urine-for-re-full/edit/$id'
+    | '/pathology/hematology/reports/edit/$id'
+    | '/pathology/immunology/reports/edit/$id'
+    | '/pathology/special/all-hormones/edit/$id'
   id:
     | '__root__'
     | '/_authenticated'
@@ -762,6 +953,7 @@ export interface FileRouteTypes {
     | '/clerk/(auth)'
     | '/clerk/_authenticated'
     | '/(auth)/forgot-password'
+    | '/(auth)/login'
     | '/(auth)/otp'
     | '/(auth)/sign-in'
     | '/(auth)/sign-in-2'
@@ -792,21 +984,32 @@ export interface FileRouteTypes {
     | '/_authenticated/tasks/'
     | '/_authenticated/tests/'
     | '/_authenticated/users/'
+    | '/_authenticated/ecg/all-reports/'
     | '/_authenticated/invoices/create/'
     | '/_authenticated/invoices/list/'
+    | '/_authenticated/tests/create/'
+    | '/_authenticated/ultrasonogram/all-reports/'
+    | '/_authenticated/x-ray/all-reports/'
+    | '/_authenticated/ecg/all-reports/edit/$id'
+    | '/_authenticated/ultrasonogram/all-reports/edit/$id'
+    | '/_authenticated/x-ray/all-reports/edit/$id'
     | '/_authenticated/pathology/biochemical/lipid-profile/'
     | '/_authenticated/pathology/biochemical/reports/'
     | '/_authenticated/pathology/hematology/blood-for-bt-ct/'
     | '/_authenticated/pathology/hematology/blood-for-tcdc/'
     | '/_authenticated/pathology/hematology/cbc-short/'
     | '/_authenticated/pathology/hematology/peripheral-blood-film/'
+    | '/_authenticated/pathology/hematology/prothom-bin-time-full/'
     | '/_authenticated/pathology/hematology/reports/'
     | '/_authenticated/pathology/immunology/beta-hcg/'
     | '/_authenticated/pathology/immunology/blood-group/'
     | '/_authenticated/pathology/immunology/mt/'
+    | '/_authenticated/pathology/immunology/reports/'
     | '/_authenticated/pathology/immunology/widal-test/'
+    | '/_authenticated/pathology/special/all-hormones/'
     | '/_authenticated/pathology/special/electrolytes/'
     | '/_authenticated/pathology/special/semen/'
+    | '/_authenticated/pathology/special/skin-scrapping-for-fungus/'
     | '/_authenticated/pathology/special/sputum/'
     | '/_authenticated/pathology/special/t3t4tsh/'
     | '/_authenticated/pathology/stool/ocult-blood-test/'
@@ -815,17 +1018,22 @@ export interface FileRouteTypes {
     | '/_authenticated/pathology/urine/urine-for-albumin/'
     | '/_authenticated/pathology/urine/urine-for-re-full/'
     | '/_authenticated/pathology/urine/urine-for-sugar/'
+    | '/_authenticated/tests/edit/$id/'
     | '/_authenticated/pathology/biochemical/reports/edit/$reportId'
     | '/_authenticated/pathology/hematology/cbc-short/edit/$id'
     | '/_authenticated/pathology/special/semen/edit/$reportId'
     | '/_authenticated/pathology/stool/stool-re/edit/$id'
     | '/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
+    | '/_authenticated/pathology/hematology/reports/edit/$id/'
+    | '/_authenticated/pathology/immunology/reports/edit/$id/'
+    | '/_authenticated/pathology/special/all-hormones/edit/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ClerkRouteRoute: typeof ClerkRouteRouteWithChildren
   authForgotPasswordRoute: typeof authForgotPasswordRoute
+  authLoginRoute: typeof authLoginRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
   authSignIn2Route: typeof authSignIn2Route
@@ -921,6 +1129,13 @@ declare module '@tanstack/react-router' {
       path: '/otp'
       fullPath: '/otp'
       preLoaderRoute: typeof authOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/forgot-password': {
@@ -1091,6 +1306,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/x-ray/all-reports/': {
+      id: '/_authenticated/x-ray/all-reports/'
+      path: '/x-ray/all-reports'
+      fullPath: '/x-ray/all-reports'
+      preLoaderRoute: typeof AuthenticatedXRayAllReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ultrasonogram/all-reports/': {
+      id: '/_authenticated/ultrasonogram/all-reports/'
+      path: '/ultrasonogram/all-reports'
+      fullPath: '/ultrasonogram/all-reports'
+      preLoaderRoute: typeof AuthenticatedUltrasonogramAllReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tests/create/': {
+      id: '/_authenticated/tests/create/'
+      path: '/tests/create'
+      fullPath: '/tests/create'
+      preLoaderRoute: typeof AuthenticatedTestsCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/invoices/list/': {
       id: '/_authenticated/invoices/list/'
       path: '/invoices/list'
@@ -1103,6 +1339,20 @@ declare module '@tanstack/react-router' {
       path: '/invoices/create'
       fullPath: '/invoices/create'
       preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ecg/all-reports/': {
+      id: '/_authenticated/ecg/all-reports/'
+      path: '/ecg/all-reports'
+      fullPath: '/ecg/all-reports'
+      preLoaderRoute: typeof AuthenticatedEcgAllReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tests/edit/$id/': {
+      id: '/_authenticated/tests/edit/$id/'
+      path: '/tests/edit/$id'
+      fullPath: '/tests/edit/$id'
+      preLoaderRoute: typeof AuthenticatedTestsEditIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/pathology/urine/urine-for-sugar/': {
@@ -1161,6 +1411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPathologySpecialSputumIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/special/skin-scrapping-for-fungus/': {
+      id: '/_authenticated/pathology/special/skin-scrapping-for-fungus/'
+      path: '/pathology/special/skin-scrapping-for-fungus'
+      fullPath: '/pathology/special/skin-scrapping-for-fungus'
+      preLoaderRoute: typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/special/semen/': {
       id: '/_authenticated/pathology/special/semen/'
       path: '/pathology/special/semen'
@@ -1175,11 +1432,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPathologySpecialElectrolytesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/special/all-hormones/': {
+      id: '/_authenticated/pathology/special/all-hormones/'
+      path: '/pathology/special/all-hormones'
+      fullPath: '/pathology/special/all-hormones'
+      preLoaderRoute: typeof AuthenticatedPathologySpecialAllHormonesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/immunology/widal-test/': {
       id: '/_authenticated/pathology/immunology/widal-test/'
       path: '/pathology/immunology/widal-test'
       fullPath: '/pathology/immunology/widal-test'
       preLoaderRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/immunology/reports/': {
+      id: '/_authenticated/pathology/immunology/reports/'
+      path: '/pathology/immunology/reports'
+      fullPath: '/pathology/immunology/reports'
+      preLoaderRoute: typeof AuthenticatedPathologyImmunologyReportsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/pathology/immunology/mt/': {
@@ -1208,6 +1479,13 @@ declare module '@tanstack/react-router' {
       path: '/pathology/hematology/reports'
       fullPath: '/pathology/hematology/reports'
       preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/prothom-bin-time-full/': {
+      id: '/_authenticated/pathology/hematology/prothom-bin-time-full/'
+      path: '/pathology/hematology/prothom-bin-time-full'
+      fullPath: '/pathology/hematology/prothom-bin-time-full'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/pathology/hematology/peripheral-blood-film/': {
@@ -1252,6 +1530,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/x-ray/all-reports/edit/$id': {
+      id: '/_authenticated/x-ray/all-reports/edit/$id'
+      path: '/x-ray/all-reports/edit/$id'
+      fullPath: '/x-ray/all-reports/edit/$id'
+      preLoaderRoute: typeof AuthenticatedXRayAllReportsEditIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ultrasonogram/all-reports/edit/$id': {
+      id: '/_authenticated/ultrasonogram/all-reports/edit/$id'
+      path: '/ultrasonogram/all-reports/edit/$id'
+      fullPath: '/ultrasonogram/all-reports/edit/$id'
+      preLoaderRoute: typeof AuthenticatedUltrasonogramAllReportsEditIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ecg/all-reports/edit/$id': {
+      id: '/_authenticated/ecg/all-reports/edit/$id'
+      path: '/ecg/all-reports/edit/$id'
+      fullPath: '/ecg/all-reports/edit/$id'
+      preLoaderRoute: typeof AuthenticatedEcgAllReportsEditIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/urine/urine-for-re-full/edit/$id': {
       id: '/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
       path: '/pathology/urine/urine-for-re-full/edit/$id'
@@ -1285,6 +1584,27 @@ declare module '@tanstack/react-router' {
       path: '/pathology/biochemical/reports/edit/$reportId'
       fullPath: '/pathology/biochemical/reports/edit/$reportId'
       preLoaderRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/special/all-hormones/edit/$id/': {
+      id: '/_authenticated/pathology/special/all-hormones/edit/$id/'
+      path: '/pathology/special/all-hormones/edit/$id'
+      fullPath: '/pathology/special/all-hormones/edit/$id'
+      preLoaderRoute: typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/immunology/reports/edit/$id/': {
+      id: '/_authenticated/pathology/immunology/reports/edit/$id/'
+      path: '/pathology/immunology/reports/edit/$id'
+      fullPath: '/pathology/immunology/reports/edit/$id'
+      preLoaderRoute: typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pathology/hematology/reports/edit/$id/': {
+      id: '/_authenticated/pathology/hematology/reports/edit/$id/'
+      path: '/pathology/hematology/reports/edit/$id'
+      fullPath: '/pathology/hematology/reports/edit/$id'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -1328,21 +1648,32 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedTestsIndexRoute: typeof AuthenticatedTestsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+  AuthenticatedEcgAllReportsIndexRoute: typeof AuthenticatedEcgAllReportsIndexRoute
   AuthenticatedInvoicesCreateIndexRoute: typeof AuthenticatedInvoicesCreateIndexRoute
   AuthenticatedInvoicesListIndexRoute: typeof AuthenticatedInvoicesListIndexRoute
+  AuthenticatedTestsCreateIndexRoute: typeof AuthenticatedTestsCreateIndexRoute
+  AuthenticatedUltrasonogramAllReportsIndexRoute: typeof AuthenticatedUltrasonogramAllReportsIndexRoute
+  AuthenticatedXRayAllReportsIndexRoute: typeof AuthenticatedXRayAllReportsIndexRoute
+  AuthenticatedEcgAllReportsEditIdRoute: typeof AuthenticatedEcgAllReportsEditIdRoute
+  AuthenticatedUltrasonogramAllReportsEditIdRoute: typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
+  AuthenticatedXRayAllReportsEditIdRoute: typeof AuthenticatedXRayAllReportsEditIdRoute
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
   AuthenticatedPathologyBiochemicalReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
   AuthenticatedPathologyHematologyBloodForBtCtIndexRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   AuthenticatedPathologyHematologyBloodForTcdcIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   AuthenticatedPathologyHematologyCbcShortIndexRoute: typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
   AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
+  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute: typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   AuthenticatedPathologyHematologyReportsIndexRoute: typeof AuthenticatedPathologyHematologyReportsIndexRoute
   AuthenticatedPathologyImmunologyBetaHcgIndexRoute: typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
   AuthenticatedPathologyImmunologyBloodGroupIndexRoute: typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
   AuthenticatedPathologyImmunologyMtIndexRoute: typeof AuthenticatedPathologyImmunologyMtIndexRoute
+  AuthenticatedPathologyImmunologyReportsIndexRoute: typeof AuthenticatedPathologyImmunologyReportsIndexRoute
   AuthenticatedPathologyImmunologyWidalTestIndexRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
+  AuthenticatedPathologySpecialAllHormonesIndexRoute: typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
   AuthenticatedPathologySpecialElectrolytesIndexRoute: typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
   AuthenticatedPathologySpecialSemenIndexRoute: typeof AuthenticatedPathologySpecialSemenIndexRoute
+  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute: typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
   AuthenticatedPathologySpecialSputumIndexRoute: typeof AuthenticatedPathologySpecialSputumIndexRoute
   AuthenticatedPathologySpecialT3t4tshIndexRoute: typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
   AuthenticatedPathologyStoolOcultBloodTestIndexRoute: typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
@@ -1351,11 +1682,15 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPathologyUrineUrineForAlbuminIndexRoute: typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
   AuthenticatedPathologyUrineUrineForReFullIndexRoute: typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
   AuthenticatedPathologyUrineUrineForSugarIndexRoute: typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
+  AuthenticatedTestsEditIdIndexRoute: typeof AuthenticatedTestsEditIdIndexRoute
   AuthenticatedPathologyBiochemicalReportsEditReportIdRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
   AuthenticatedPathologyHematologyCbcShortEditIdRoute: typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
   AuthenticatedPathologySpecialSemenEditReportIdRoute: typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
   AuthenticatedPathologyStoolStoolReEditIdRoute: typeof AuthenticatedPathologyStoolStoolReEditIdRoute
   AuthenticatedPathologyUrineUrineForReFullEditIdRoute: typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
+  AuthenticatedPathologyHematologyReportsEditIdIndexRoute: typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
+  AuthenticatedPathologyImmunologyReportsEditIdIndexRoute: typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
+  AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute: typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1373,8 +1708,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedTestsIndexRoute: AuthenticatedTestsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedEcgAllReportsIndexRoute: AuthenticatedEcgAllReportsIndexRoute,
   AuthenticatedInvoicesCreateIndexRoute: AuthenticatedInvoicesCreateIndexRoute,
   AuthenticatedInvoicesListIndexRoute: AuthenticatedInvoicesListIndexRoute,
+  AuthenticatedTestsCreateIndexRoute: AuthenticatedTestsCreateIndexRoute,
+  AuthenticatedUltrasonogramAllReportsIndexRoute:
+    AuthenticatedUltrasonogramAllReportsIndexRoute,
+  AuthenticatedXRayAllReportsIndexRoute: AuthenticatedXRayAllReportsIndexRoute,
+  AuthenticatedEcgAllReportsEditIdRoute: AuthenticatedEcgAllReportsEditIdRoute,
+  AuthenticatedUltrasonogramAllReportsEditIdRoute:
+    AuthenticatedUltrasonogramAllReportsEditIdRoute,
+  AuthenticatedXRayAllReportsEditIdRoute:
+    AuthenticatedXRayAllReportsEditIdRoute,
   AuthenticatedPathologyBiochemicalLipidProfileIndexRoute:
     AuthenticatedPathologyBiochemicalLipidProfileIndexRoute,
   AuthenticatedPathologyBiochemicalReportsIndexRoute:
@@ -1387,6 +1732,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyHematologyCbcShortIndexRoute,
   AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute:
     AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute,
+  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute:
+    AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute,
   AuthenticatedPathologyHematologyReportsIndexRoute:
     AuthenticatedPathologyHematologyReportsIndexRoute,
   AuthenticatedPathologyImmunologyBetaHcgIndexRoute:
@@ -1395,12 +1742,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyImmunologyBloodGroupIndexRoute,
   AuthenticatedPathologyImmunologyMtIndexRoute:
     AuthenticatedPathologyImmunologyMtIndexRoute,
+  AuthenticatedPathologyImmunologyReportsIndexRoute:
+    AuthenticatedPathologyImmunologyReportsIndexRoute,
   AuthenticatedPathologyImmunologyWidalTestIndexRoute:
     AuthenticatedPathologyImmunologyWidalTestIndexRoute,
+  AuthenticatedPathologySpecialAllHormonesIndexRoute:
+    AuthenticatedPathologySpecialAllHormonesIndexRoute,
   AuthenticatedPathologySpecialElectrolytesIndexRoute:
     AuthenticatedPathologySpecialElectrolytesIndexRoute,
   AuthenticatedPathologySpecialSemenIndexRoute:
     AuthenticatedPathologySpecialSemenIndexRoute,
+  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute:
+    AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute,
   AuthenticatedPathologySpecialSputumIndexRoute:
     AuthenticatedPathologySpecialSputumIndexRoute,
   AuthenticatedPathologySpecialT3t4tshIndexRoute:
@@ -1417,6 +1770,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyUrineUrineForReFullIndexRoute,
   AuthenticatedPathologyUrineUrineForSugarIndexRoute:
     AuthenticatedPathologyUrineUrineForSugarIndexRoute,
+  AuthenticatedTestsEditIdIndexRoute: AuthenticatedTestsEditIdIndexRoute,
   AuthenticatedPathologyBiochemicalReportsEditReportIdRoute:
     AuthenticatedPathologyBiochemicalReportsEditReportIdRoute,
   AuthenticatedPathologyHematologyCbcShortEditIdRoute:
@@ -1427,6 +1781,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyStoolStoolReEditIdRoute,
   AuthenticatedPathologyUrineUrineForReFullEditIdRoute:
     AuthenticatedPathologyUrineUrineForReFullEditIdRoute,
+  AuthenticatedPathologyHematologyReportsEditIdIndexRoute:
+    AuthenticatedPathologyHematologyReportsEditIdIndexRoute,
+  AuthenticatedPathologyImmunologyReportsEditIdIndexRoute:
+    AuthenticatedPathologyImmunologyReportsEditIdIndexRoute,
+  AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute:
+    AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -1479,6 +1839,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ClerkRouteRoute: ClerkRouteRouteWithChildren,
   authForgotPasswordRoute: authForgotPasswordRoute,
+  authLoginRoute: authLoginRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
   authSignIn2Route: authSignIn2Route,

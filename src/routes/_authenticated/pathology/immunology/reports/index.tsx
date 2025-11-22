@@ -1,3 +1,4 @@
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { ConfigDrawer } from "@/components/config-drawer";
 import { DataTable } from "@/components/DataTable";
 import { Header } from "@/components/layout/header";
@@ -10,8 +11,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { reportsData } from "@/data/data";
-import { Link } from "@tanstack/react-router";
 import { ColumnDef } from "@tanstack/react-table";
+
+export const Route = createFileRoute(
+  '/_authenticated/pathology/immunology/reports/',
+)({
+  component: ReportsImmunology,
+})
+
 
 const topNav = [
   {
@@ -50,7 +57,7 @@ type ReportsItem = {
 
 const reports: ReportsItem[] = reportsData;
 
-export default function AllReportsBiochemical() {
+function ReportsImmunology() {
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -125,7 +132,7 @@ export default function AllReportsBiochemical() {
               View
             </Button>
 
-            <Link to={`/pathology/biochemical/reports/edit/$reportId`} params={{ reportId: item.id }}>
+            <Link to="/pathology/immunology/reports/edit/$id" params={{ id: item.id }}>
               <Button size="sm" variant="default">Edit</Button>
             </Link>
 
@@ -152,7 +159,7 @@ export default function AllReportsBiochemical() {
       </Header>
       <Main>
         <div className="mb-4">
-          <h1 className='text-2xl font-bold tracking-tight'>All Reports (Biochemical)</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>All Reports (Immunology)</h1>
         </div>
         <DataTable columns={columns} data={reports} />
       </Main>
