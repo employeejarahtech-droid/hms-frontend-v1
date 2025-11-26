@@ -9,21 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 import { CreateCategoryForm } from './components/CreateCategoryForm'
-import { categoryData } from '@/data/data'
 import { useState } from 'react'
 import { EditCategoryForm } from './components/EditCategoryForm'
-
-type DepartmentItem = {
-    id: string;
-    name: string;
-};
-
-const tests: DepartmentItem[] = [
-    { id: "1", name: "Xray" },
-    { id: "2", name: "Ultra-sonography" },
-    { id: "3", name: "Pathology" },
-    { id: "4", name: "Others" },
-];
+import { getCookie } from '@/lib/cookies'
+import { useQuery } from '@tanstack/react-query'
 
 type TestCategory = {
     id: number;
@@ -31,25 +20,49 @@ type TestCategory = {
     CategoryName: string;
 };
 
-// Example category data
-const categories: TestCategory[] = categoryData;
-
-const mapCategoriesToDepartments = (categories: TestCategory[], departmentItems: DepartmentItem[]) => {
-    return categories.map(category => {
-        const department = departmentItems.find(department => department.id === category.DeptID.toString());
-        return {
-            ...category,
-            DepartmentName: department ? department.name : "Unknown"
-        };
-    });
-};
-
-// Now mapping categories to departments
-const mappedCategories = mapCategoriesToDepartments(categories, tests);
-
-
 export default function Categories() {
     const [openEditForm, setOpenEditForm] = useState<boolean>(false);
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const token = getCookie('accessToken');
+
+    const { data } = useQuery({
+        queryKey: ["category", page],
+
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/test-category?page=${page}&limit=${limit}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (!res.ok) throw new Error("Failed to fetch departments");
+            return res.json(); // MUST match placeholderData
+        },
+
+        enabled: !!token,
+
+        // ⭐ Perfect smooth pagination
+        placeholderData: (prev) =>
+            prev
+                ? prev
+                : {
+                    data: {
+                        items: [],
+                        meta: {
+                            page,
+                            limit,
+                            total: 0,
+                        },
+                    },
+                },
+    });
+
+
+    console.log(data?.data);
+
     const columns: ColumnDef<TestCategory>[] = [
         // Row selection
         {
@@ -76,12 +89,12 @@ export default function Categories() {
             header: "Category ID",
         },
         {
-            accessorKey: "CategoryName",
+            accessorKey: "name",
             header: "Category Name",
         },
 
         {
-            accessorKey: "DepartmentName",
+            accessorKey: "department_id",
             header: "Department Name",
         },
 
@@ -120,7 +133,7 @@ export default function Categories() {
                 <h1 className="text-2xl font-bold tracking-tight mb-4">List of Category</h1>
                 <CreateCategoryForm />
             </div>
-            <DataTable columns={columns} data={mappedCategories} />
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
             <EditCategoryForm open={openEditForm} setOpen={setOpenEditForm} />
         </Main>
     </>

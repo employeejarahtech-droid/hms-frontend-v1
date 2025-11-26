@@ -55,11 +55,11 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- List of Users',
-              url: "#",
+              url: "/users",
             },
             {
               title: '- List of Roles',
-              url: "#",
+              url: "/roles",
             },
             {
               title: '- User Wise Themes',

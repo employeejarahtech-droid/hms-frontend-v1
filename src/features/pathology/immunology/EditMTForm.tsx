@@ -62,7 +62,8 @@ export function EditMTForm({ open, setOpen }: TuberculinTestFormProps) {
                     <SheetTitle>Edit Tuberculin (MT) Test</SheetTitle>
                 </SheetHeader>
  
-                <PatientInvoiceInfo
+               <div className="px-4">
+                 <PatientInvoiceInfo
                     invoiceInfo={{
                         invoiceNo: "RPT-1009",
                         patientName: "Rafiq Ahmed",
@@ -70,6 +71,7 @@ export function EditMTForm({ open, setOpen }: TuberculinTestFormProps) {
                         gender: "Male",
                     }}
                 />
+               </div>
  
                 <Form {...form}>
                     <form

@@ -10,8 +10,10 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
+import { getCookie } from '@/lib/cookies';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/cbc-short/',
@@ -46,19 +48,68 @@ const topNav = [
   },
 ]
 
-type ReportsItem = {
+type CBC = {
   id: string;
-  receiptId: string;
-  patientName: string;
-  tests: string[];
-  date: string;
+  invoice_id: number;
+  basophils: number;
+  eosinophils: number;
+  hemoglobin: number;
+  lymphocytes: number;
+  monocytes: number;
+  neutrophils: number;
+  leukocytes: number;
+  platelets: number;
+  hct: number;
+  mcv: number;
+  mch: number;
+  mchc: number;
+  rbc_count: number;
+  wbc_count: number;
 };
 
-const reports: ReportsItem[] = reportsData;
 
 function CBCShort() {
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
-  const columns: ColumnDef<ReportsItem>[] = [
+  const token = getCookie('accessToken');
+
+  const { data } = useQuery({
+    queryKey: ["cbc", page],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/cbc?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch cbc data");
+      return res.json(); // MUST match placeholderData
+    },
+
+    enabled: !!token,
+
+    // ⭐ Perfect smooth pagination
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+
+  console.log(data?.data);
+  const columns: ColumnDef<CBC>[] = [
     // Row selection
     {
       id: "select",
@@ -81,27 +132,29 @@ function CBCShort() {
     },
 
     {
-      accessorKey: "receiptId",
-      header: "Receipt ID",
+      accessorKey: "invoice_id",
+      header: "Invoice ID",
     },
     {
       accessorKey: "patientName",
       header: "Patient Name",
     },
 
-    // ✅ FIXED Tests column
     {
-      accessorKey: "tests",
-      header: "Tests",
-      cell: ({ row }) => {
-        const tests = row.getValue("tests") as string[];
-        return tests.join(", ");
-      },
-    },
-
-    {
-      accessorKey: "date",
+      accessorKey: "created_at",
       header: "Date",
+      cell: ({ row }) => {
+        const iso = row.getValue("created_at") as string;
+        const date = new Date(iso);
+
+        const formatted = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+        return <div>{formatted}</div>; // Example: Nov 23, 2025
+      },
     },
 
     {
@@ -148,7 +201,7 @@ function CBCShort() {
 
   return (
     <>
-      <Header>
+      <Header fixed>
         <TopNav links={topNav} />
         <div className='ms-auto flex items-center space-x-4'>
           <Search />
@@ -161,7 +214,7 @@ function CBCShort() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>CBC Short</h1>
         </div>
-        <DataTable columns={columns} data={reports} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
       </Main>
     </>
 

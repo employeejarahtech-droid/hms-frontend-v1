@@ -11,6 +11,8 @@ import { DataTable } from '@/components/DataTable'
 import { CreateDepartmentForm } from './components/CreateDepartmentForm'
 import { EditDepartmentForm } from './components/EditDepartmentForm'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getCookie } from '@/lib/cookies'
 
 
 type DepartmentItem = {
@@ -18,16 +20,48 @@ type DepartmentItem = {
     name: string;
 };
 
-const tests: DepartmentItem[] = [
-    { id: "1", name: "Xray" },
-    { id: "2", name: "Ultra-sonography" },
-    { id: "3", name: "Pathology" },
-    { id: "4", name: "Others" },
-];
-
-
 export default function Departments() {
     const [openEditForm, setOpenEditForm] = useState<boolean>(false);
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const token = getCookie('accessToken');
+
+    const { data } = useQuery({
+        queryKey: ["deparmtent", page],
+
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/department?page=${page}&limit=${limit}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (!res.ok) throw new Error("Failed to fetch departments");
+            return res.json(); // MUST match placeholderData
+        },
+
+        enabled: !!token,
+
+        // ⭐ Perfect smooth pagination
+        placeholderData: (prev) =>
+            prev
+                ? prev
+                : {
+                    data: {
+                        items: [],
+                        meta: {
+                            page,
+                            limit,
+                            total: 0,
+                        },
+                    },
+                },
+    });
+
+
+    console.log(data?.data);
 
     const columns: ColumnDef<DepartmentItem>[] = [
         // Row selection
@@ -50,7 +84,7 @@ export default function Departments() {
             enableSorting: false,
             enableHiding: false,
         },
-          {
+        {
             accessorKey: "id",
             header: "Department ID",
         },
@@ -94,7 +128,7 @@ export default function Departments() {
                 <h1 className="text-2xl font-bold tracking-tight mb-4">List of Departments</h1>
                 <CreateDepartmentForm />
             </div>
-            <DataTable columns={columns} data={tests} />
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={(newPage) => setPage(newPage)} />
             <EditDepartmentForm open={openEditForm} setOpen={setOpenEditForm} />
         </Main>
     </>

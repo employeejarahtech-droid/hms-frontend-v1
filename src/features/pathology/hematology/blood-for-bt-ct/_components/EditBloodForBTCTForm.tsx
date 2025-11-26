@@ -60,7 +60,8 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                     <SheetTitle>Edit BT & CT Report</SheetTitle>
                 </SheetHeader>
  
-                <PatientInvoiceInfo
+               <div className="px-4">
+                 <PatientInvoiceInfo
                     invoiceInfo={{
                         invoiceNo: "RPT-1004",
                         patientName: "Nur Mohammad",
@@ -68,6 +69,7 @@ export function EditBloodForBTCTForm({ open, setOpen }: BTCTFormProps) {
                         gender: "Male",
                     }}
                 />
+               </div>
  
                 <Form {...form}>
                     <form

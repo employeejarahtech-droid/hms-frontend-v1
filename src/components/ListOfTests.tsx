@@ -5,28 +5,67 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 // import { CreateTestForm } from './CreateTestForm'
-import { testData } from '@/data/data'
 import { Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
+import { getCookie } from '@/lib/cookies'
+import { useEffect, useState } from 'react'
+import { useDebounce } from '@/hooks/useDebounce'
 
 
 type TestItem = {
     id: string;
     name: string;
-    category: string;
-    status: "passed" | "failed" | "pending";
-    score: number;
+    category_id: string;
+    price: string;
 };
 
-const tests: TestItem[] = testData;
-
-
 export default function ListOfTests() {
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("");
+    const limit = 10;
+
+    const token = getCookie('accessToken');
+
+    const debouncedSearch = useDebounce(search, 400);
+
+    const { data } = useQuery({
+        queryKey: ["tests", page, debouncedSearch],
+
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/tests?page=${page}&limit=${limit}&search=${encodeURIComponent(
+                    debouncedSearch
+                )}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch tests");
+            return res.json();
+        },
+
+        enabled: !!token,
+
+        // ⭐ Perfect smooth pagination
+        placeholderData: (prev) =>
+            prev ?? {
+                data: {
+                    items: [],
+                    meta: {
+                        page,
+                        total: 0,
+                        limit,
+                    },
+                },
+            },
+    });
+
+    console.log(data?.data);
 
     const columns: ColumnDef<TestItem>[] = [
         // Row selection
@@ -55,31 +94,13 @@ export default function ListOfTests() {
             header: "Test Name",
         },
         {
-            accessorKey: "category",
+            accessorKey: "category_id",
             header: "Category",
         },
-
         {
-            accessorKey: "status",
-            header: "Status",
-            cell: ({ row }) => {
-                const status = row.getValue("status") as string;
-                const color =
-                    status === "passed"
-                        ? "bg-green-500"
-                        : status === "failed"
-                            ? "bg-red-500"
-                            : "bg-yellow-500";
-
-                return <Badge className={color + " text-white"}>{status}</Badge>;
-            },
+            accessorKey: "price",
+            header: "Price",
         },
-
-        {
-            accessorKey: "score",
-            header: "Score",
-        },
-
         // Actions Column
         {
             id: "actions",
@@ -121,7 +142,12 @@ export default function ListOfTests() {
                 <Link to="/tests/create"><Button>Create New Test</Button></Link>
                 {/* <CreateTestForm /> */}
             </div>
-            <DataTable columns={columns} data={tests} />
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={(newPage) => setPage(newPage)} search={search}
+                onSearchChange={(value) => {
+                    setSearch(value);
+                    setPage(1); // reset page when searching
+                }}
+            />
         </Main>
     </>
 }

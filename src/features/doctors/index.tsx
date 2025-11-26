@@ -8,10 +8,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
-import { doctorsData } from '@/data/data'
 import { CreateDoctorForm } from './components/CreateDoctorForm'
 import { EditDoctorForm } from './components/EditDoctorForm'
 import { useState } from 'react'
+import { getCookie } from '@/lib/cookies'
+import { useQuery } from '@tanstack/react-query'
 
 
 type DoctorItem = {
@@ -27,11 +28,48 @@ type DoctorItem = {
     email: string;
 };
 
-const doctors: DoctorItem[] = doctorsData;
-
-
 export default function Doctors() {
     const [open, setOpen] = useState<boolean>(false);
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const token = getCookie('accessToken');
+
+    const { data } = useQuery({
+        queryKey: ["doctor", page],
+
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/doctor?page=${page}&limit=${limit}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (!res.ok) throw new Error("Failed to fetch doctors");
+            return res.json(); // MUST match placeholderData
+        },
+
+        enabled: !!token,
+
+        // ⭐ Perfect smooth pagination
+        placeholderData: (prev) =>
+            prev
+                ? prev
+                : {
+                    data: {
+                        items: [],
+                        meta: {
+                            page,
+                            limit,
+                            total: 0,
+                        },
+                    },
+                },
+    });
+
+
+    console.log(data?.data);
 
     const columns: ColumnDef<DoctorItem>[] = [
         // Row selection
@@ -137,7 +175,7 @@ export default function Doctors() {
                 <h1 className="text-2xl font-bold tracking-tight">List of Doctor</h1>
                 <CreateDoctorForm />
             </div>
-            <DataTable columns={columns} data={doctors} />
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
             <EditDoctorForm open={open} setOpen={setOpen} />
         </Main>
     </>

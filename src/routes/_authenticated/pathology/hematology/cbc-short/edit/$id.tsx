@@ -108,7 +108,7 @@ function EditCBCShort() {
   return (
     <>
       {/* Header */}
-      <Header className="bg-white shadow-sm">
+      <Header fixed>
         <TopNav links={topNav} />
         <div className="ms-auto flex items-center space-x-4">
           <Search />

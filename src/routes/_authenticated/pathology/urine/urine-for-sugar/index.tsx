@@ -10,10 +10,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
 import { EditBetaHCGTestForm } from '@/features/pathology/immunology/EditBetaHcgForm';
+import { getCookie } from '@/lib/cookies';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/urine/urine-for-sugar/',
@@ -56,15 +57,51 @@ type ReportsItem = {
   date: string;
 };
 
-const reports: ReportsItem[] = reportsData;
-
 function UrineForSugar() {
 
-    const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const limit = 10;
 
-    const handleEditForm = () => {
-      setOpen(!open);
-    };
+  const token = getCookie('accessToken');
+
+  const { data } = useQuery({
+    queryKey: ["urine-sugar", page, search],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/urine-sugar?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch blood for tcdc reports");
+      return res.json(); // MUST match placeholderData
+    },
+
+    enabled: !!token,
+
+    // ⭐ Perfect smooth pagination
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+
+  console.log(data?.data);
+  console.log('search', search);
 
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
@@ -89,27 +126,29 @@ function UrineForSugar() {
     },
 
     {
-      accessorKey: "receiptId",
-      header: "Receipt ID",
+      accessorKey: "invoice_id",
+      header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
-    // ✅ FIXED Tests column
     {
-      accessorKey: "tests",
-      header: "Tests",
-      cell: ({ row }) => {
-        const tests = row.getValue("tests") as string[];
-        return tests.join(", ");
-      },
-    },
-
-    {
-      accessorKey: "date",
+      accessorKey: "created_at",
       header: "Date",
+      cell: ({ row }) => {
+        const iso = row.getValue("created_at") as string;
+        const date = new Date(iso);
+
+        const formatted = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+        return <div>{formatted}</div>; // Example: Nov 23, 2025
+      },
     },
 
     {
@@ -124,7 +163,7 @@ function UrineForSugar() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -139,9 +178,8 @@ function UrineForSugar() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-              <Button size="sm" variant="default" onClick={() => handleEditForm()}>
-                Edit
-              </Button>
+
+            <Button size="sm" variant="default" onClick={() => setOpen(true)}>Edit</Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -150,6 +188,7 @@ function UrineForSugar() {
         );
       },
     },
+
   ];
 
   return (
@@ -167,7 +206,7 @@ function UrineForSugar() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Urine For Sugar</h1>
         </div>
-        <DataTable columns={columns} data={reports} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditBetaHCGTestForm open={open} setOpen={setOpen} />
       </Main>
     </>

@@ -10,10 +10,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
 import { EditProthrombinTimeForm } from '@/features/pathology/hematology/prothom-bin-time/EditProthomBinTimeForm';
+import { getCookie } from '@/lib/cookies';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/prothom-bin-time-full/',
@@ -57,13 +58,49 @@ type ReportsItem = {
   date: string;
 };
 
-const reports: ReportsItem[] = reportsData;
-
 function ProthomBinTimeFull() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const handleOpenEditForm = () => {
-    setIsDrawerOpen(true);
-  }
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  const token = getCookie('accessToken');
+
+  const { data } = useQuery({
+    queryKey: ["prothombin-time", page],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/prothombin-time?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch blood for tcdc reports");
+      return res.json(); // MUST match placeholderData
+    },
+
+    enabled: !!token,
+
+    // ⭐ Perfect smooth pagination
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+
+ // console.log(data?.data);
+
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -87,27 +124,29 @@ function ProthomBinTimeFull() {
     },
 
     {
-      accessorKey: "receiptId",
-      header: "Receipt ID",
+      accessorKey: "invoice_id",
+      header: "Invoice ID",
     },
     {
       accessorKey: "patientName",
       header: "Patient Name",
     },
 
-    // ✅ FIXED Tests column
     {
-      accessorKey: "tests",
-      header: "Tests",
-      cell: ({ row }) => {
-        const tests = row.getValue("tests") as string[];
-        return tests.join(", ");
-      },
-    },
-
-    {
-      accessorKey: "date",
+      accessorKey: "created_at",
       header: "Date",
+      cell: ({ row }) => {
+        const iso = row.getValue("created_at") as string;
+        const date = new Date(iso);
+
+        const formatted = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+        return <div>{formatted}</div>; // Example: Nov 23, 2025
+      },
     },
 
     {
@@ -122,7 +161,7 @@ function ProthomBinTimeFull() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -138,7 +177,7 @@ function ProthomBinTimeFull() {
               View
             </Button>
 
-            <Button size="sm" variant="default" onClick={() => handleOpenEditForm()}>Edit</Button>
+            <Button size="sm" variant="default" onClick={() => setIsDrawerOpen(true)}>Edit</Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -165,7 +204,7 @@ function ProthomBinTimeFull() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Prothom Bin Time Full</h1>
         </div>
-        <DataTable columns={columns} data={reports} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
         <EditProthrombinTimeForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>

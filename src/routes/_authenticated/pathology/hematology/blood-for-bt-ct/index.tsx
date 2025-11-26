@@ -7,13 +7,13 @@ import { TopNav } from "@/components/layout/top-nav";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditBloodForBTCTForm } from '@/features/pathology/hematology/blood-for-bt-ct/_components/EditBloodForBTCTForm';
 import { useState } from 'react';
+import { getCookie } from '@/lib/cookies';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/blood-for-bt-ct/',
@@ -48,22 +48,57 @@ const topNav = [
   },
 ]
 
-type ReportsItem = {
-  id: string;
-  receiptId: string;
-  patientName: string;
-  tests: string[];
-  date: string;
+type BTCT = {
+  id: number;
+  invoice_id: number;
+  bleeding_time: number;
+  clotting_time: number;
 };
-
-const reports: ReportsItem[] = reportsData;
 
 function BloodForBTCT() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const handleOpenEditForm = () => {
-    setIsDrawerOpen(true);
-  }
-  const columns: ColumnDef<ReportsItem>[] = [
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  const token = getCookie('accessToken');
+
+  const { data } = useQuery({
+    queryKey: ["btct", page],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/btct?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch blood for tcdc reports");
+      return res.json(); // MUST match placeholderData
+    },
+
+    enabled: !!token,
+
+    // ⭐ Perfect smooth pagination
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+
+  //console.log(data?.data);
+
+  const columns: ColumnDef<BTCT>[] = [
     // Row selection
     {
       id: "select",
@@ -86,44 +121,20 @@ function BloodForBTCT() {
     },
 
     {
-      accessorKey: "receiptId",
-      header: "Receipt ID",
+      accessorKey: "invoice_id",
+      header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
-      header: "Patient Name",
+      accessorKey: "bleeding_time",
+      header: "Bleeding Time",
     },
 
     // ✅ FIXED Tests column
     {
-      accessorKey: "tests",
-      header: "Tests",
-      cell: ({ row }) => {
-        const tests = row.getValue("tests") as string[];
-        return tests.join(", ");
-      },
+      accessorKey: "clotting_time",
+      header: "Clotting Time",
     },
 
-    {
-      accessorKey: "date",
-      header: "Date",
-    },
-
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => {
-        const status = row.getValue("status") as string;
-        const color =
-          status === "passed"
-            ? "bg-green-500"
-            : status === "failed"
-              ? "bg-red-500"
-              : "bg-yellow-500";
-
-        return <Badge className={color + " text-white"}>{status}</Badge>;
-      },
-    },
     // Actions Column
     {
       id: "actions",
@@ -137,7 +148,7 @@ function BloodForBTCT() {
               View
             </Button>
 
-            <Button size="sm" variant="default" onClick={() => handleOpenEditForm()}>Edit</Button>
+            <Button size="sm" variant="default" onClick={() => setIsDrawerOpen(true)}>Edit</Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -164,7 +175,7 @@ function BloodForBTCT() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Blood For BT/CT</h1>
         </div>
-        <DataTable columns={columns} data={reports} />
+        <DataTable columns={columns} data={data?.data.items || []} meta={data?.data.meta} onPageChange={setPage} />
         <EditBloodForBTCTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>

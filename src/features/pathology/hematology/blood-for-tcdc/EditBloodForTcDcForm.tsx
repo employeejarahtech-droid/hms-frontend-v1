@@ -80,7 +80,9 @@ export function EditBloodForTcDcForm({ open, setOpen }: BloodForTCDCFormProps) {
                     <SheetTitle>Edit Blood for TCDC</SheetTitle>
                 </SheetHeader>
 
-                <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1002", patientName: "Abdul Karim", age: "36 Years", gender: "Male" }} />
+                <div className="px-4">
+                    <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1002", patientName: "Abdul Karim", age: "36 Years", gender: "Male" }} />
+                </div>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4 p-4">

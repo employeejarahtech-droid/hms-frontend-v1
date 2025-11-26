@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ClerkRouteRouteImport } from './routes/clerk/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedLayoutRouteImport } from './routes/_authenticated/_layout'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -31,6 +32,7 @@ import { Route as AuthenticatedTestsIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedServicesIndexRouteImport } from './routes/_authenticated/services/index'
+import { Route as AuthenticatedRolesIndexRouteImport } from './routes/_authenticated/roles/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedDueCollectionIndexRouteImport } from './routes/_authenticated/due-collection/index'
 import { Route as AuthenticatedDoctorsIndexRouteImport } from './routes/_authenticated/doctors/index'
@@ -102,6 +104,10 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLayoutRoute = AuthenticatedLayoutRouteImport.update({
+  id: '/_layout',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const errors503Route = errors503RouteImport.update({
@@ -200,6 +206,11 @@ const AuthenticatedServicesIndexRoute =
     path: '/services/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRolesIndexRoute = AuthenticatedRolesIndexRouteImport.update({
+  id: '/roles/',
+  path: '/roles/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedHelpCenterIndexRoute =
   AuthenticatedHelpCenterIndexRouteImport.update({
     id: '/help-center/',
@@ -576,6 +587,7 @@ export interface FileRoutesByFullPath {
   '/doctors': typeof AuthenticatedDoctorsIndexRoute
   '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/roles': typeof AuthenticatedRolesIndexRoute
   '/services': typeof AuthenticatedServicesIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
@@ -654,6 +666,7 @@ export interface FileRoutesByTo {
   '/doctors': typeof AuthenticatedDoctorsIndexRoute
   '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/roles': typeof AuthenticatedRolesIndexRoute
   '/services': typeof AuthenticatedServicesIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
@@ -721,6 +734,7 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/_authenticated/_layout': typeof AuthenticatedLayoutRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
@@ -737,6 +751,7 @@ export interface FileRoutesById {
   '/_authenticated/doctors/': typeof AuthenticatedDoctorsIndexRoute
   '/_authenticated/due-collection/': typeof AuthenticatedDueCollectionIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/_authenticated/roles/': typeof AuthenticatedRolesIndexRoute
   '/_authenticated/services/': typeof AuthenticatedServicesIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
@@ -819,6 +834,7 @@ export interface FileRouteTypes {
     | '/doctors'
     | '/due-collection'
     | '/help-center'
+    | '/roles'
     | '/services'
     | '/settings/'
     | '/tasks'
@@ -897,6 +913,7 @@ export interface FileRouteTypes {
     | '/doctors'
     | '/due-collection'
     | '/help-center'
+    | '/roles'
     | '/services'
     | '/settings'
     | '/tasks'
@@ -963,6 +980,7 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/_authenticated/_layout'
     | '/_authenticated/'
     | '/_authenticated/errors/$error'
     | '/_authenticated/settings/account'
@@ -979,6 +997,7 @@ export interface FileRouteTypes {
     | '/_authenticated/doctors/'
     | '/_authenticated/due-collection/'
     | '/_authenticated/help-center/'
+    | '/_authenticated/roles/'
     | '/_authenticated/services/'
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
@@ -1066,6 +1085,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/_layout': {
+      id: '/_authenticated/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedLayoutRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -1199,6 +1225,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof AuthenticatedServicesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/roles/': {
+      id: '/_authenticated/roles/'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof AuthenticatedRolesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/help-center/': {
@@ -1635,6 +1668,7 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
+  AuthenticatedLayoutRoute: typeof AuthenticatedLayoutRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
@@ -1644,6 +1678,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDoctorsIndexRoute: typeof AuthenticatedDoctorsIndexRoute
   AuthenticatedDueCollectionIndexRoute: typeof AuthenticatedDueCollectionIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
+  AuthenticatedRolesIndexRoute: typeof AuthenticatedRolesIndexRoute
   AuthenticatedServicesIndexRoute: typeof AuthenticatedServicesIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedTestsIndexRoute: typeof AuthenticatedTestsIndexRoute
@@ -1695,6 +1730,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
+  AuthenticatedLayoutRoute: AuthenticatedLayoutRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
@@ -1704,6 +1740,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDoctorsIndexRoute: AuthenticatedDoctorsIndexRoute,
   AuthenticatedDueCollectionIndexRoute: AuthenticatedDueCollectionIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
+  AuthenticatedRolesIndexRoute: AuthenticatedRolesIndexRoute,
   AuthenticatedServicesIndexRoute: AuthenticatedServicesIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedTestsIndexRoute: AuthenticatedTestsIndexRoute,

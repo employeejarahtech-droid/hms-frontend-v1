@@ -15,19 +15,7 @@ export function useLogin() {
     },
 
     onSuccess: (res) => {
-      /*
-        Expected response:
-
-        {
-          status: true,
-          message: "Login successful",
-          data: {
-            token: "...",
-            user: {...}
-          }
-        }
-      */
-
+ 
       const token = res.data?.token;
       const user = res.data?.user;
 
@@ -38,6 +26,8 @@ export function useLogin() {
 
       // Save token & user
       setAuth(user, token);
+
+      console.log("user set", user);
 
       toast.success("Login successful!", { id: "login-toast" });
     },

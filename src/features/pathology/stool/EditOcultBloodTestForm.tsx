@@ -60,7 +60,8 @@ export function EditOccultBloodTestForm({ open, setOpen }: UrineOccultBloodFormP
                     <SheetTitle>Edit Urine Occult Blood Test</SheetTitle>
                 </SheetHeader>
  
-                <PatientInvoiceInfo
+               <div className="px-4">
+                 <PatientInvoiceInfo
                     invoiceInfo={{
                         invoiceNo: "RPT-1013",
                         patientName: "Jahid Hasan",
@@ -68,6 +69,7 @@ export function EditOccultBloodTestForm({ open, setOpen }: UrineOccultBloodFormP
                         gender: "Male",
                     }}
                 />
+               </div>
  
                 <Form {...form}>
                     <form

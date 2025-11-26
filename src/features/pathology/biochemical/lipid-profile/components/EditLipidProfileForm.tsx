@@ -86,7 +86,9 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                     <SheetTitle>Edit Lipid Profile</SheetTitle>
                 </SheetHeader>
 
-                <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1001", patientName: "Maksudul Haque", age: "40 Years", gender: "Male" }} />
+                <div className="px-4">
+                    <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1001", patientName: "Maksudul Haque", age: "40 Years", gender: "Male" }} />
+                </div>
                 {/* --- 4. Wrap the form content with the <Form> component --- */}
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4 p-4">

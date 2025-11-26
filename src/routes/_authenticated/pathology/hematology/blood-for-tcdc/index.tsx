@@ -7,13 +7,13 @@ import { TopNav } from "@/components/layout/top-nav";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
 import { EditBloodForTcDcForm } from '@/features/pathology/hematology/blood-for-tcdc/EditBloodForTcDcForm';
+import { getCookie } from '@/lib/cookies';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/blood-for-tcdc/',
@@ -49,24 +49,63 @@ const topNav = [
   },
 ]
 
-type ReportsItem = {
+type TCDC = {
   id: string;
-  receiptId: string;
-  patientName: string;
-  tests: string[];
-  date: string;
+  invoice_id: string;
+  patient_name: string;
+  basophils: string;
+  eosinophils: string;
+  lymphocytes: string;
+  monocytes: string;
+  neutrophils: string;
+  total_count: string;
 };
-
-const reports: ReportsItem[] = reportsData;
 
 function BloodForTcdc() {
   const [open, setOpen] = useState<boolean>(false);
 
-   const handleOpenEditForm = () => {
-      setOpen(true);
-    }
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
-  const columns: ColumnDef<ReportsItem>[] = [
+  const token = getCookie('accessToken');
+
+  const { data } = useQuery({
+    queryKey: ["tcdc", page],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/tcdc?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch blood for tcdc reports");
+      return res.json(); // MUST match placeholderData
+    },
+
+    enabled: !!token,
+
+    // ⭐ Perfect smooth pagination
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+
+  //console.log(data?.data);
+
+  const columns: ColumnDef<TCDC>[] = [
     // Row selection
     {
       id: "select",
@@ -89,43 +128,40 @@ function BloodForTcdc() {
     },
 
     {
-      accessorKey: "receiptId",
-      header: "Receipt ID",
+      accessorKey: "invoice_id",
+      header: "Invoice ID",
     },
-    {
-      accessorKey: "patientName",
+
+     {
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
     // ✅ FIXED Tests column
     {
-      accessorKey: "tests",
-      header: "Tests",
-      cell: ({ row }) => {
-        const tests = row.getValue("tests") as string[];
-        return tests.join(", ");
-      },
+      accessorKey: "basophils",
+      header: "Basophils",
     },
 
-    {
-      accessorKey: "date",
-      header: "Date",
+   {
+      accessorKey: "eosinophils",
+      header: "Eosinophils",
     },
-
+   {
+      accessorKey: "lymphocytes",
+      header: "Lymphocytes",
+    },
+     {
+      accessorKey: "monocytes",
+      header: "Monocytes",
+    },
     {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => {
-        const status = row.getValue("status") as string;
-        const color =
-          status === "passed"
-            ? "bg-green-500"
-            : status === "failed"
-              ? "bg-red-500"
-              : "bg-yellow-500";
-
-        return <Badge className={color + " text-white"}>{status}</Badge>;
-      },
+      accessorKey: "neutrophils",
+      header: "Neutrophils",
+    },
+     {
+      accessorKey: "total_count",
+      header: "Total Count",
     },
     // Actions Column
     {
@@ -140,7 +176,7 @@ function BloodForTcdc() {
               View
             </Button>
 
-            <Button size="sm" variant="default" onClick={() => handleOpenEditForm()}>Edit</Button>
+            <Button size="sm" variant="default" onClick={() => setOpen(true)}>Edit</Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -154,7 +190,7 @@ function BloodForTcdc() {
 
   return (
     <>
-      <Header>
+      <Header fixed>
         <TopNav links={topNav} />
         <div className='ms-auto flex items-center space-x-4'>
           <Search />
@@ -167,7 +203,7 @@ function BloodForTcdc() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Blood For TCDC</h1>
         </div>
-        <DataTable columns={columns} data={reports} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
         <EditBloodForTcDcForm open={open} setOpen={setOpen} />
       </Main>
     </>
