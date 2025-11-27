@@ -2,7 +2,6 @@ import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { TopNav } from '@/components/layout/top-nav'
-import PatientInvoiceInfo from '@/components/pathology/PatientInvoiceInfo'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
@@ -11,10 +10,14 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { getCookie } from '@/lib/cookies'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createFileRoute } from '@tanstack/react-router'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import z from 'zod'
 
 export const Route = createFileRoute('/_authenticated/tests/create/')({
@@ -52,7 +55,7 @@ const testSchema = z.object({
   name: z.string().min(1, "Required"),
   category: z.string().min(1, "Required"),
   status: z.string().min(1, "Required"),
-  score: z
+  price: z
     .any()                           // accept anything (string, number, null, etc.)
     .transform((val) => Number(val))  // force convert using Number()
     .refine((val) => !isNaN(val), {
@@ -68,46 +71,130 @@ type TestValues = {
   name: string
   category: string
   status: string
-  score: number
+  price: number
+}
+
+
+type Category = {
+  id: string
+  name: string
+  department_id: number
+  department_name: string
 }
 
 function CreateTest() {
+
+  const [page] = useState(1);
+  const limit = 10;
+
+  const navigate = useNavigate();
+
+  const token = getCookie('accessToken');
+
+  const { data: categories } = useQuery({
+    queryKey: ["category", page],
+
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/test-category?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch categories");
+      return res.json();
+    },
+
+    enabled: !!token,
+
+    placeholderData: (prev) =>
+      prev
+        ? prev
+        : {
+          data: {
+            items: [],
+            meta: {
+              page,
+              limit,
+              total: 0,
+            },
+          },
+        },
+  });
+
+ // console.log('categories', categories);
 
   const form = useForm<TestValues>({
     resolver: zodResolver(testSchema),
     defaultValues: {
       name: "",
-      category: "",
+      category: undefined,   // string
       status: "pending",
-      score: 0,
+      price: 0,
     },
   })
 
+  //POST api call
+
+  const createTestMutation = useMutation({
+    mutationFn: async (payload: TestValues) => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tests/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          category_id: Number(payload.category),
+          status: payload.status,
+          price: payload.price,
+        }),
+      });
+
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || "Failed to create test");
+      }
+
+      return res.json();
+    },
+
+    onSuccess: (data) => {
+      toast.success("Test created successfully!");
+      console.log("API Response:", data);
+      navigate({ to: "/tests" });
+      // optional:
+      // form.reset();
+      // queryClient.invalidateQueries(["tests"]);
+    },
+
+    onError: (error: any) => {
+      toast.error(error.message || "Something went wrong");
+    },
+  });
+
+
   const onSubmit = (data: TestValues) => {
     console.log(data)
+    createTestMutation.mutate(data);
     showSubmittedData(data)
   }
   return <>
-        {/* Header */}
-        <Header>
-          <TopNav links={topNav} />
-          <div className="ms-auto flex items-center space-x-4">
-            <Search />
-            <ThemeSwitch />
-            <ConfigDrawer />
-            <ProfileDropdown />
-          </div>
-        </Header>
+    {/* Header */}
+    <Header>
+      <TopNav links={topNav} />
+      <div className="ms-auto flex items-center space-x-4">
+        <Search />
+        <ThemeSwitch />
+        <ConfigDrawer />
+        <ProfileDropdown />
+      </div>
+    </Header>
 
     <Main>
       <div className="max-w-4xl mx-auto space-y-6">
-        <Card>
-          <CardContent>
-            <h3 className='text-2xl font-semibold mb-4 text-center'>Patient Information</h3>
-            <PatientInvoiceInfo invoiceInfo={{ invoiceNo: "RPT-1001", patientName: "Maksudul Haque", age: "40 Years", gender: "Male" }} />
-
-          </CardContent>
-        </Card>
         {/* <CreateTestForm /> */}
         <Card>
           <CardContent>
@@ -139,23 +226,31 @@ function CreateTest() {
                       <FormItem>
                         <FormLabel>Category</FormLabel>
                         <FormControl>
-                          <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger className='w-full'>
-                              <SelectValue placeholder="Select Category" />
+                          <Select
+                            value={field.value}   // undefined if not selected
+                            onValueChange={(value: string) => field.onChange(value)}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select category" />
                             </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="hematology">Hematology</SelectItem>
-                              <SelectItem value="cardiology">Cardiology</SelectItem>
-                              <SelectItem value="biochemistry">Biochemistry</SelectItem>
-                              <SelectItem value="endocrinology">Endocrinology</SelectItem>
-                              <SelectItem value="pathology">Pathology</SelectItem>
-                            </SelectContent>
+
+                            {categories?.data?.items?.length > 0 && (
+                              <SelectContent>
+                                {categories.data.items.map((category: Category) => (
+                                  <SelectItem key={category.id} value={String(category.id)}>
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            )}
                           </Select>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
+
 
                   {/* Status */}
                   <FormField
@@ -184,10 +279,10 @@ function CreateTest() {
                   {/* Numeric Value */}
                   <FormField
                     control={form.control}
-                    name="score"
+                    name="price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Score</FormLabel>
+                        <FormLabel>Price</FormLabel>
                         <FormControl>
                           <Input type="number" placeholder="0–100" {...field} />
                         </FormControl>
@@ -197,7 +292,9 @@ function CreateTest() {
                   />
 
                   <div className="flex justify-center">
-                    <Button type="submit">Create Test</Button>
+                    <Button type="submit" disabled={createTestMutation.isPending}>
+                      {createTestMutation.isPending ? "Creating..." : "Create Test"}
+                    </Button>
                   </div>
 
                 </form>

@@ -10,7 +10,6 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditLipidProfileForm } from "./components/EditLipidProfileForm";
 import { useState } from "react";
@@ -51,8 +50,6 @@ type ReportsItem = {
   tests: string[];
   date: string;
 };
-
-const reports: ReportsItem[] = reportsData;
 
 export default function LipidProfile() {
   const [open, setOpen] = useState<boolean>(false);

@@ -60,19 +60,19 @@ type ReportsItem = {
 };
 
 function UrineForAlbumin() {
-
   const [open, setOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["urine-albumin", page],
+    queryKey: ["urine-albumin", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/urine-albumin?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/urine-albumin?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -101,7 +101,7 @@ function UrineForAlbumin() {
   });
 
 
-  console.log(data?.data);
+  //console.log(data?.data);
 
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
@@ -206,7 +206,7 @@ function UrineForAlbumin() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Urine For Albumin</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditUrineForAlbuminForm open={open} setOpen={setOpen} />
       </Main>
     </>

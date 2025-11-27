@@ -7,6 +7,7 @@ import { TopNav } from "@/components/layout/top-nav";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
@@ -49,32 +50,29 @@ const topNav = [
   },
 ]
 
-type TCDC = {
+type TCDCItem = {
   id: string;
   invoice_id: string;
   patient_name: string;
-  basophils: string;
-  eosinophils: string;
-  lymphocytes: string;
-  monocytes: string;
-  neutrophils: string;
-  total_count: string;
+  created_at: string;
+  status: string;
 };
 
 function BloodForTcdc() {
   const [open, setOpen] = useState<boolean>(false);
 
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["tcdc", page],
+    queryKey: ["tcdc", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/tcdc?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/tcdc?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -105,7 +103,7 @@ function BloodForTcdc() {
 
   //console.log(data?.data);
 
-  const columns: ColumnDef<TCDC>[] = [
+  const columns: ColumnDef<TCDCItem>[] = [
     // Row selection
     {
       id: "select",
@@ -132,36 +130,42 @@ function BloodForTcdc() {
       header: "Invoice ID",
     },
 
-     {
+    {
       accessorKey: "patient_name",
       header: "Patient Name",
     },
 
-    // ✅ FIXED Tests column
     {
-      accessorKey: "basophils",
-      header: "Basophils",
+      accessorKey: "created_at",
+      header: "Date",
+      cell: ({ row }) => {
+        const iso = row.getValue("created_at") as string;
+        const date = new Date(iso);
+
+        const formatted = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+        return <div>{formatted}</div>; // Example: Nov 23, 2025
+      },
     },
 
-   {
-      accessorKey: "eosinophils",
-      header: "Eosinophils",
-    },
-   {
-      accessorKey: "lymphocytes",
-      header: "Lymphocytes",
-    },
-     {
-      accessorKey: "monocytes",
-      header: "Monocytes",
-    },
     {
-      accessorKey: "neutrophils",
-      header: "Neutrophils",
-    },
-     {
-      accessorKey: "total_count",
-      header: "Total Count",
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status") as string;
+        const color =
+          status === "passed"
+            ? "bg-green-500"
+            : status === "failed"
+              ? "bg-red-500"
+              : "bg-yellow-500";
+
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
+      },
     },
     // Actions Column
     {
@@ -190,7 +194,7 @@ function BloodForTcdc() {
 
   return (
     <>
-      <Header fixed>
+      <Header>
         <TopNav links={topNav} />
         <div className='ms-auto flex items-center space-x-4'>
           <Search />
@@ -203,7 +207,7 @@ function BloodForTcdc() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Blood For TCDC</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditBloodForTcDcForm open={open} setOpen={setOpen} />
       </Main>
     </>

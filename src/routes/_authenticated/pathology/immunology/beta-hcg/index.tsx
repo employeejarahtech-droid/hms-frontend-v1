@@ -10,7 +10,6 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from 'react';
 import { EditBetaHCGTestForm } from '@/features/pathology/immunology/EditBetaHcgForm';
@@ -58,22 +57,22 @@ type ReportsItem = {
   date: string;
 };
 
-const reports: ReportsItem[] = reportsData;
+
 
 function BetaHcg() {
-
   const [open, setOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["hcg", page],
+    queryKey: ["hcg", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/hcg?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/hcg?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -102,7 +101,7 @@ function BetaHcg() {
   });
 
 
-  console.log(data?.data);
+  //console.log(data?.data);
 
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
@@ -131,7 +130,7 @@ function BetaHcg() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
@@ -164,7 +163,7 @@ function BetaHcg() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status || "Pending"}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -207,7 +206,7 @@ function BetaHcg() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Beta HCG</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditBetaHCGTestForm open={open} setOpen={setOpen} />
       </Main>
     </>

@@ -48,38 +48,28 @@ const topNav = [
   },
 ]
 
-type CBC = {
+type CBCItem = {
   id: string;
   invoice_id: number;
-  basophils: number;
-  eosinophils: number;
-  hemoglobin: number;
-  lymphocytes: number;
-  monocytes: number;
-  neutrophils: number;
-  leukocytes: number;
-  platelets: number;
-  hct: number;
-  mcv: number;
-  mch: number;
-  mchc: number;
-  rbc_count: number;
-  wbc_count: number;
+  patient_name: string;
+  created_at: string;
+  status: string;
 };
 
 
 function CBCShort() {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["cbc", page],
+    queryKey: ["cbc", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/cbc?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/cbc?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -108,8 +98,8 @@ function CBCShort() {
   });
 
 
-  console.log(data?.data);
-  const columns: ColumnDef<CBC>[] = [
+  //console.log(data?.data);
+  const columns: ColumnDef<CBCItem>[] = [
     // Row selection
     {
       id: "select",
@@ -136,7 +126,7 @@ function CBCShort() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
@@ -169,7 +159,7 @@ function CBCShort() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -201,7 +191,7 @@ function CBCShort() {
 
   return (
     <>
-      <Header fixed>
+      <Header>
         <TopNav links={topNav} />
         <div className='ms-auto flex items-center space-x-4'>
           <Search />
@@ -214,7 +204,7 @@ function CBCShort() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>CBC Short</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
       </Main>
     </>
 

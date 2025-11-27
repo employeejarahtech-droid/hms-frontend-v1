@@ -60,16 +60,17 @@ type ReportsItem = {
 function WidalTest() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["widal", page],
+    queryKey: ["widal", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/widal?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/widal?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -99,7 +100,7 @@ function WidalTest() {
 
 
   //console.log(data?.data);
-  
+
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -127,7 +128,7 @@ function WidalTest() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
     {
@@ -159,7 +160,7 @@ function WidalTest() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status || "-"}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -202,7 +203,7 @@ function WidalTest() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Widal Test</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <WidalTestForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>

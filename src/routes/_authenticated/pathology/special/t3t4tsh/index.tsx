@@ -10,7 +10,6 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { reportsData } from "@/data/data";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { ThyroidFunctionTestForm } from '@/features/pathology/special/EditT3T4TshForm';
@@ -57,8 +56,6 @@ type ReportsItem = {
   tests: string[];
   date: string;
 };
-
-const reports: ReportsItem[] = reportsData;
 
 function T3T4TSH() {
   const [open, setOpen] = useState<boolean>(false);

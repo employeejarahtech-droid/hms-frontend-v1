@@ -17,14 +17,8 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { Analytics } from './components/analytics'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
-import { useAuthStore } from '@/stores/auth-store'
 
 export function Dashboard() {
-
-const user = useAuthStore.getState().user;
-
-console.log("user", user);
- 
   return (
     <>
       {/* ===== Top Heading ===== */}

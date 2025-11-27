@@ -11,8 +11,9 @@ import { DataTable } from '@/components/DataTable'
 import { CreateDepartmentForm } from './components/CreateDepartmentForm'
 import { EditDepartmentForm } from './components/EditDepartmentForm'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getCookie } from '@/lib/cookies'
+import { toast } from 'sonner'
 
 
 type DepartmentItem = {
@@ -22,9 +23,11 @@ type DepartmentItem = {
 
 export default function Departments() {
     const [openEditForm, setOpenEditForm] = useState<boolean>(false);
+    const [selectedDepartmentId, setSelectedDepartmentId] = useState<string | null>(null);
     const [page, setPage] = useState(1);
     const limit = 10;
 
+    const queryClient = useQueryClient();
     const token = getCookie('accessToken');
 
     const { data } = useQuery({
@@ -60,6 +63,35 @@ export default function Departments() {
                 },
     });
 
+    // Delete mutation
+    const deleteMutation = useMutation({
+        mutationFn: async (departmentId: string) => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/department/${departmentId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to delete department");
+            return res.json();
+        },
+        onSuccess: () => {
+            toast.success("Department deleted successfully");
+            queryClient.invalidateQueries({ queryKey: ["deparmtent"] });
+        },
+        onError: (error: any) => {
+            toast.error(error?.message || "Failed to delete department");
+        },
+    });
+
+    const handleDelete = (departmentId: string, departmentName: string) => {
+        if (window.confirm(`Are you sure you want to delete "${departmentName}"?`)) {
+            deleteMutation.mutate(departmentId);
+        }
+    };
 
     console.log(data?.data);
 
@@ -102,10 +134,22 @@ export default function Departments() {
 
                 return (
                     <div className="flex gap-2">
-                        <Button size="sm" variant="default" onClick={() => setOpenEditForm(true)}>
+                        <Button
+                            size="sm"
+                            variant="default"
+                            onClick={() => {
+                                setSelectedDepartmentId(item.id);
+                                setOpenEditForm(true);
+                            }}
+                        >
                             Edit
                         </Button>
-                        <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
+                        <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDelete(item.id, item.name)}
+                            disabled={deleteMutation.isPending}
+                        >
                             Delete
                         </Button>
                     </div>
@@ -113,6 +157,7 @@ export default function Departments() {
             },
         },
     ];
+
     return <>
         <Header>
             <Search />
@@ -129,7 +174,7 @@ export default function Departments() {
                 <CreateDepartmentForm />
             </div>
             <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={(newPage) => setPage(newPage)} />
-            <EditDepartmentForm open={openEditForm} setOpen={setOpenEditForm} />
+            <EditDepartmentForm open={openEditForm} setOpen={setOpenEditForm} departmentId={selectedDepartmentId} />
         </Main>
     </>
 }

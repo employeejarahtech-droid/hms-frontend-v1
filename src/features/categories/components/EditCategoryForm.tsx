@@ -1,39 +1,130 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { getCookie } from "@/lib/cookies";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-export function EditCategoryForm({ onCreate, open, setOpen }: { onCreate?: (values: any) => void, open: boolean, setOpen: (open: boolean) => void }) {
-    // form state
+export function EditCategoryForm({
+    open,
+    setOpen,
+    categoryId
+}: {
+    open: boolean;
+    setOpen: (open: boolean) => void;
+    categoryId: number | null;
+}) {
     const [name, setName] = useState("");
-    const [category, setCategory] = useState("");
-    const [status, setStatus] = useState("pending");
-    const [score, setScore] = useState(0);
-    const [department, setDepartment] = useState("");
+    const [departmentId, setDepartmentId] = useState("");
+
+    const queryClient = useQueryClient();
+    const token = getCookie('accessToken');
+
+    // Fetch departments for the dropdown
+    const { data: departmentsData } = useQuery({
+        queryKey: ["departments-list"],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/department?limit=100`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch departments");
+            return res.json();
+        },
+        enabled: open && !!token,
+    });
+
+    // Fetch category details
+    const { data: categoryData } = useQuery({
+        queryKey: ["category", categoryId],
+        queryFn: async () => {
+            if (!categoryId) return null;
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/test-category/${categoryId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch category");
+            return res.json();
+        },
+        enabled: !!categoryId && open && !!token,
+    });
+
+    // Populate form when data is loaded
+    useEffect(() => {
+        if (categoryData?.data) {
+            setName(categoryData.data.name || "");
+            setDepartmentId(String(categoryData.data.department_id || ""));
+        }
+    }, [categoryData]);
+
+    // Update mutation
+    const updateMutation = useMutation({
+        mutationFn: async (updatedCategory: { name: string; department_id: number }) => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/test-category/${categoryId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(updatedCategory),
+                }
+            );
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error?.message || "Failed to update category");
+            }
+            return res.json();
+        },
+        onSuccess: () => {
+            toast.success("Category updated successfully");
+            queryClient.invalidateQueries({ queryKey: ["category"] });
+            setOpen(false);
+            resetForm();
+        },
+        onError: (error: any) => {
+            toast.error(error?.message || "Failed to update category");
+        },
+    });
+
+    const resetForm = () => {
+        setName("");
+        setDepartmentId("");
+    };
 
     const handleSubmit = () => {
-        const newTest = {
-            id: Date.now().toString(),
+        if (!categoryId) {
+            toast.error("No category selected");
+            return;
+        }
+        if (!departmentId) {
+            toast.error("Please select a department");
+            return;
+        }
+        if (!name.trim()) {
+            toast.error("Category name is required");
+            return;
+        }
+
+        updateMutation.mutate({
             name,
-            category,
-            status,
-            score: Number(score),
-        };
+            department_id: Number(departmentId),
+        });
+    };
 
-        if (onCreate) onCreate(newTest);
-
-        // close sheet
+    const handleCancel = () => {
         setOpen(false);
-
-        // reset form
-        setName("");
-        setCategory("");
-        setStatus("pending");
-        setScore(0);
+        resetForm();
     };
 
     return (
@@ -45,39 +136,50 @@ export function EditCategoryForm({ onCreate, open, setOpen }: { onCreate?: (valu
 
                 <div className="space-y-6 mt-6 p-4">
 
-                    {/* Test Name */}
+                    {/* Department Selection */}
                     <div className="space-y-2">
                         <Label>Department Name</Label>
                         <Select
-                            value={department}
-                            onValueChange={setDepartment}
+                            value={departmentId}
+                            onValueChange={setDepartmentId}
                         >
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select a department" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="development">Development</SelectItem>
-                                <SelectItem value="design">Design</SelectItem>
-                                <SelectItem value="marketing">Marketing</SelectItem>
-                                <SelectItem value="sales">Sales</SelectItem>
+                                {departmentsData?.data?.items?.map((dept: any) => (
+                                    <SelectItem key={dept.id} value={String(dept.id)}>
+                                        {dept.name}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
+
+                    {/* Category Name */}
                     <div className="space-y-2">
                         <Label>Category Name</Label>
                         <Input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            placeholder="Enter category name"
                         />
                     </div>
 
                     {/* Submit */}
                     <div className="flex justify-center gap-5">
-                        <Button onClick={handleSubmit} variant="outline">
+                        <Button
+                            onClick={handleCancel}
+                            variant="outline"
+                            disabled={updateMutation.isPending}
+                        >
                             Cancel
                         </Button>
-                        <Button onClick={handleSubmit}>
-                            Update
+                        <Button
+                            onClick={handleSubmit}
+                            disabled={updateMutation.isPending}
+                        >
+                            {updateMutation.isPending ? "Updating..." : "Update"}
                         </Button>
                     </div>
                 </div>

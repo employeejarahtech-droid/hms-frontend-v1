@@ -75,6 +75,7 @@ import { Route as AuthenticatedPathologyImmunologyBetaHcgIndexRouteImport } from
 import { Route as AuthenticatedPathologyHematologyReportsIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/index'
 import { Route as AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport } from './routes/_authenticated/pathology/hematology/prothom-bin-time-full/index'
 import { Route as AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport } from './routes/_authenticated/pathology/hematology/peripheral-blood-film/index'
+import { Route as AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport } from './routes/_authenticated/pathology/hematology/cbc-with-pbf/index'
 import { Route as AuthenticatedPathologyHematologyCbcShortIndexRouteImport } from './routes/_authenticated/pathology/hematology/cbc-short/index'
 import { Route as AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-tcdc/index'
 import { Route as AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-bt-ct/index'
@@ -459,6 +460,12 @@ const AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute =
     path: '/pathology/hematology/peripheral-blood-film/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPathologyHematologyCbcWithPbfIndexRoute =
+  AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport.update({
+    id: '/pathology/hematology/cbc-with-pbf/',
+    path: '/pathology/hematology/cbc-with-pbf/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPathologyHematologyCbcShortIndexRoute =
   AuthenticatedPathologyHematologyCbcShortIndexRouteImport.update({
     id: '/pathology/hematology/cbc-short/',
@@ -607,6 +614,7 @@ export interface FileRoutesByFullPath {
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
+  '/pathology/hematology/cbc-with-pbf': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
   '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
@@ -686,6 +694,7 @@ export interface FileRoutesByTo {
   '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
+  '/pathology/hematology/cbc-with-pbf': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
   '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
@@ -771,6 +780,7 @@ export interface FileRoutesById {
   '/_authenticated/pathology/hematology/blood-for-bt-ct/': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   '/_authenticated/pathology/hematology/blood-for-tcdc/': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   '/_authenticated/pathology/hematology/cbc-short/': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
+  '/_authenticated/pathology/hematology/cbc-with-pbf/': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
   '/_authenticated/pathology/hematology/peripheral-blood-film/': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   '/_authenticated/pathology/hematology/prothom-bin-time-full/': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   '/_authenticated/pathology/hematology/reports/': typeof AuthenticatedPathologyHematologyReportsIndexRoute
@@ -854,6 +864,7 @@ export interface FileRouteTypes {
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
     | '/pathology/hematology/cbc-short'
+    | '/pathology/hematology/cbc-with-pbf'
     | '/pathology/hematology/peripheral-blood-film'
     | '/pathology/hematology/prothom-bin-time-full'
     | '/pathology/hematology/reports'
@@ -933,6 +944,7 @@ export interface FileRouteTypes {
     | '/pathology/hematology/blood-for-bt-ct'
     | '/pathology/hematology/blood-for-tcdc'
     | '/pathology/hematology/cbc-short'
+    | '/pathology/hematology/cbc-with-pbf'
     | '/pathology/hematology/peripheral-blood-film'
     | '/pathology/hematology/prothom-bin-time-full'
     | '/pathology/hematology/reports'
@@ -1017,6 +1029,7 @@ export interface FileRouteTypes {
     | '/_authenticated/pathology/hematology/blood-for-bt-ct/'
     | '/_authenticated/pathology/hematology/blood-for-tcdc/'
     | '/_authenticated/pathology/hematology/cbc-short/'
+    | '/_authenticated/pathology/hematology/cbc-with-pbf/'
     | '/_authenticated/pathology/hematology/peripheral-blood-film/'
     | '/_authenticated/pathology/hematology/prothom-bin-time-full/'
     | '/_authenticated/pathology/hematology/reports/'
@@ -1528,6 +1541,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pathology/hematology/cbc-with-pbf/': {
+      id: '/_authenticated/pathology/hematology/cbc-with-pbf/'
+      path: '/pathology/hematology/cbc-with-pbf'
+      fullPath: '/pathology/hematology/cbc-with-pbf'
+      preLoaderRoute: typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/pathology/hematology/cbc-short/': {
       id: '/_authenticated/pathology/hematology/cbc-short/'
       path: '/pathology/hematology/cbc-short'
@@ -1697,6 +1717,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPathologyHematologyBloodForBtCtIndexRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
   AuthenticatedPathologyHematologyBloodForTcdcIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
   AuthenticatedPathologyHematologyCbcShortIndexRoute: typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
+  AuthenticatedPathologyHematologyCbcWithPbfIndexRoute: typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
   AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
   AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute: typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
   AuthenticatedPathologyHematologyReportsIndexRoute: typeof AuthenticatedPathologyHematologyReportsIndexRoute
@@ -1767,6 +1788,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPathologyHematologyBloodForTcdcIndexRoute,
   AuthenticatedPathologyHematologyCbcShortIndexRoute:
     AuthenticatedPathologyHematologyCbcShortIndexRoute,
+  AuthenticatedPathologyHematologyCbcWithPbfIndexRoute:
+    AuthenticatedPathologyHematologyCbcWithPbfIndexRoute,
   AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute:
     AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute,
   AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute:

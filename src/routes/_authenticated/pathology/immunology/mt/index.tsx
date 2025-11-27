@@ -59,17 +59,18 @@ type ReportsItem = {
 
 function MT() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
- const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["mt", page],
+    queryKey: ["mt", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/mt?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/mt?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -98,7 +99,7 @@ function MT() {
   });
 
 
-  console.log(data?.data);
+  //console.log(data?.data);
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
     {
@@ -126,11 +127,11 @@ function MT() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
-  {
+    {
       accessorKey: "created_at",
       header: "Date",
       cell: ({ row }) => {
@@ -159,7 +160,7 @@ function MT() {
               ? "bg-red-500"
               : "bg-yellow-500";
 
-        return <Badge className={color + " text-white"}>{status || "Pending"}</Badge>;
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
       },
     },
     // Actions Column
@@ -202,7 +203,7 @@ function MT() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Tuberculin (MT)</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditMTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>

@@ -61,16 +61,17 @@ type ReportsItem = {
 function ProthomBinTimeFull() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["prothombin-time", page],
+    queryKey: ["prothombin-time", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/prothombin-time?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/prothombin-time?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -99,7 +100,7 @@ function ProthomBinTimeFull() {
   });
 
 
- // console.log(data?.data);
+  // console.log(data?.data);
 
   const columns: ColumnDef<ReportsItem>[] = [
     // Row selection
@@ -128,7 +129,7 @@ function ProthomBinTimeFull() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "patientName",
+      accessorKey: "patient_name",
       header: "Patient Name",
     },
 
@@ -204,7 +205,7 @@ function ProthomBinTimeFull() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Prothom Bin Time Full</h1>
         </div>
-        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditProthrombinTimeForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>

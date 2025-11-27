@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,10 +22,12 @@ import {
 } from "@/components/ui/sheet";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import { showSubmittedData } from "@/lib/show-submitted-data";
+import { getCookie } from "@/lib/cookies";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const doctorSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  doctor_name: z.string().min(1, { message: "Required" }),
   title: z.string().min(1, { message: "Required" }),
   qualification: z.string().min(1, { message: "Required" }),
   speciality: z.string().min(1, { message: "Required" }),
@@ -31,17 +35,19 @@ const doctorSchema = z.object({
   city: z.string().min(1, { message: "Required" }),
   phone: z.string().min(1, { message: "Required" }),
   mobile: z.string().min(1, { message: "Required" }),
-  email: z.string().min(1, { message: "Required" }),
-  score: z.number().min(1, { message: "Required" }),
+  email: z.string().email({ message: "Invalid email" }),
+  score: z.number().min(0, { message: "Score must be at least 0" }),
 });
 
 export function CreateDoctorForm() {
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const token = getCookie('accessToken');
 
   const form = useForm<z.infer<typeof doctorSchema>>({
     resolver: zodResolver(doctorSchema),
     defaultValues: {
-      name: "",
+      doctor_name: "",
       title: "",
       qualification: "",
       speciality: "",
@@ -54,14 +60,40 @@ export function CreateDoctorForm() {
     },
   });
 
-  function handleSubmit(data: z.infer<typeof doctorSchema>) {
-    console.log("Submitted Data", data);
-    setOpen(false);
-    showSubmittedData(data);
-    form.reset();
-  }
+  // Create mutation
+  const createMutation = useMutation({
+    mutationFn: async (newDoctor: z.infer<typeof doctorSchema>) => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/doctor`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newDoctor),
+        }
+      );
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error?.message || "Failed to create doctor");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      toast.success("Doctor created successfully");
+      queryClient.invalidateQueries({ queryKey: ["doctor"] });
+      setOpen(false);
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast.error(error?.message || "Failed to create doctor");
+    },
+  });
 
-  console.log(import.meta.env.VITE_API_URL);
+  function handleSubmit(data: z.infer<typeof doctorSchema>) {
+    createMutation.mutate(data);
+  }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -81,10 +113,10 @@ export function CreateDoctorForm() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
 
-              {/* Name */}
+              {/* Doctor Name */}
               <FormField
                 control={form.control}
-                name="name"
+                name="doctor_name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Doctor's Name</FormLabel>
@@ -237,8 +269,12 @@ export function CreateDoctorForm() {
               />
 
               {/* Submit */}
-              <Button type="submit" className="w-full">
-                Add Doctor
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={createMutation.isPending}
+              >
+                {createMutation.isPending ? "Creating..." : "Add Doctor"}
               </Button>
             </form>
           </Form>

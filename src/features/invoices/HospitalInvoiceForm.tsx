@@ -18,7 +18,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Link } from "@tanstack/react-router";
-import { se } from "date-fns/locale";
 
 type TestItem = {
   id: number
@@ -43,10 +42,10 @@ type TestsResponse = {
 export default function HospitalInvoiceForm() {
   //const [deliveryDate, setDeliveryDate] = useState(new Date());
   // const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(undefined)
+  // const [date, setDate] = useState<Date | undefined>(undefined)
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
 
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [search, setSearch] = useState("");
   const limit = 10;
 
@@ -169,7 +168,7 @@ export default function HospitalInvoiceForm() {
     });
   };
 
-  const { mutate: createInvoice, isPending, isError, isSuccess } = useCreateOutdoorInvoice();
+  const { mutate: createInvoice } = useCreateOutdoorInvoice();
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -177,18 +176,10 @@ export default function HospitalInvoiceForm() {
     const {
       patientName,
       sex,
-      ageValue,
-      ageUnit,
       phone,
       date,
       ref_doctor,
-      test_name,
-      deliveryDate,
-      deliveryTime,
-      discount,
       totalCharge,
-      paidAmount,
-      dueAmount
     } = data;
 
     const payload = {
@@ -636,21 +627,25 @@ export default function HospitalInvoiceForm() {
                             <Popover>
                               <PopoverTrigger asChild>
                                 <Button
-                                  variant={"outline"}
+                                  variant="outline"
                                   className={cn(
                                     "w-[280px] justify-start text-left font-normal",
-                                    !date && "text-muted-foreground"
+                                    !field.value && "text-muted-foreground"
                                   )}
                                 >
                                   <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {date ? date.toLocaleDateString() : <span>Pick a date</span>}
+                                  {field.value
+                                    ? new Date(field.value).toLocaleDateString()
+                                    : <span>Pick a date</span>}
                                 </Button>
                               </PopoverTrigger>
                               <PopoverContent className="w-auto p-0">
                                 <Calendar
                                   mode="single"
-                                  selected={date}
-                                  onSelect={setDate}
+                                  selected={field.value ? new Date(field.value) : undefined}
+                                  onSelect={(date) => {
+                                    field.onChange(date); // Update RHF
+                                  }}
                                   initialFocus
                                 />
                               </PopoverContent>
@@ -660,6 +655,7 @@ export default function HospitalInvoiceForm() {
                         </FormItem>
                       )}
                     />
+
                     <div className="w-full">
                       <FormField
                         control={form.control}

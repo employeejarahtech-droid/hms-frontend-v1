@@ -12,19 +12,24 @@ import { CreateCategoryForm } from './components/CreateCategoryForm'
 import { useState } from 'react'
 import { EditCategoryForm } from './components/EditCategoryForm'
 import { getCookie } from '@/lib/cookies'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
-type TestCategory = {
+type CategoryItem = {
     id: number;
-    DeptID: number;
-    CategoryName: string;
+    name: string;
+    department_id: number;
+    department_name: string;
+    created_at: string;
 };
 
 export default function Categories() {
     const [openEditForm, setOpenEditForm] = useState<boolean>(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
     const [page, setPage] = useState(1);
     const limit = 10;
 
+    const queryClient = useQueryClient();
     const token = getCookie('accessToken');
 
     const { data } = useQuery({
@@ -38,13 +43,12 @@ export default function Categories() {
                 }
             );
 
-            if (!res.ok) throw new Error("Failed to fetch departments");
-            return res.json(); // MUST match placeholderData
+            if (!res.ok) throw new Error("Failed to fetch categories");
+            return res.json();
         },
 
         enabled: !!token,
 
-        // ⭐ Perfect smooth pagination
         placeholderData: (prev) =>
             prev
                 ? prev
@@ -60,10 +64,39 @@ export default function Categories() {
                 },
     });
 
+    // Delete mutation
+    const deleteMutation = useMutation({
+        mutationFn: async (categoryId: number) => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/test-category/${categoryId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to delete category");
+            return res.json();
+        },
+        onSuccess: () => {
+            toast.success("Category deleted successfully");
+            queryClient.invalidateQueries({ queryKey: ["category"] });
+        },
+        onError: (error: any) => {
+            toast.error(error?.message || "Failed to delete category");
+        },
+    });
+
+    const handleDelete = (categoryId: number, categoryName: string) => {
+        if (window.confirm(`Are you sure you want to delete "${categoryName}"?`)) {
+            deleteMutation.mutate(categoryId);
+        }
+    };
 
     console.log(data?.data);
 
-    const columns: ColumnDef<TestCategory>[] = [
+    const columns: ColumnDef<CategoryItem>[] = [
         // Row selection
         {
             id: "select",
@@ -92,12 +125,10 @@ export default function Categories() {
             accessorKey: "name",
             header: "Category Name",
         },
-
         {
-            accessorKey: "department_id",
+            accessorKey: "department_name",
             header: "Department Name",
         },
-
         // Actions Column
         {
             id: "actions",
@@ -107,10 +138,22 @@ export default function Categories() {
 
                 return (
                     <div className="flex gap-2">
-                        <Button size="sm" variant="default" onClick={() => setOpenEditForm(true)}>
+                        <Button
+                            size="sm"
+                            variant="default"
+                            onClick={() => {
+                                setSelectedCategoryId(item.id);
+                                setOpenEditForm(true);
+                            }}
+                        >
                             Edit
                         </Button>
-                        <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
+                        <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDelete(item.id, item.name)}
+                            disabled={deleteMutation.isPending}
+                        >
                             Delete
                         </Button>
                     </div>
@@ -118,6 +161,7 @@ export default function Categories() {
             },
         },
     ];
+
     return <>
         <Header>
             <Search />
@@ -130,11 +174,11 @@ export default function Categories() {
 
         <Main>
             <div className="flex flex-wrap items-end justify-between gap-2">
-                <h1 className="text-2xl font-bold tracking-tight mb-4">List of Category</h1>
+                <h1 className="text-2xl font-bold tracking-tight mb-4">List of Categories</h1>
                 <CreateCategoryForm />
             </div>
             <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
-            <EditCategoryForm open={openEditForm} setOpen={setOpenEditForm} />
+            <EditCategoryForm open={openEditForm} setOpen={setOpenEditForm} categoryId={selectedCategoryId} />
         </Main>
     </>
 }

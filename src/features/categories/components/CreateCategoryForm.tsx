@@ -6,38 +6,92 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
-
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { showSubmittedData } from "@/lib/show-submitted-data";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
-
-const categorySchema = z.object({
-    department_name: z.string().min(1, {
-        message: "Required",
-    }),
-    category_name: z.string().min(1, {
-        message: "Required",
-    }),
-})
+import { Label } from "@/components/ui/label";
+import { getCookie } from "@/lib/cookies";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function CreateCategoryForm() {
     const [open, setOpen] = useState(false);
+    const [name, setName] = useState("");
+    const [departmentId, setDepartmentId] = useState("");
 
-    const form = useForm<z.infer<typeof categorySchema>>({
-        resolver: zodResolver(categorySchema),
-        defaultValues: {
-            department_name: "",
-            category_name: "",
+    const queryClient = useQueryClient();
+    const token = getCookie('accessToken');
+
+    // Fetch departments for the dropdown
+    const { data: departmentsData } = useQuery({
+        queryKey: ["departments-list"],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/department?limit=100`, // Fetch enough departments
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch departments");
+            return res.json();
+        },
+        enabled: open && !!token,
+    });
+
+    // Create mutation
+    const createMutation = useMutation({
+        mutationFn: async (newCategory: { name: string; department_id: number }) => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/test-category`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(newCategory),
+                }
+            );
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error?.message || "Failed to create category");
+            }
+            return res.json();
+        },
+        onSuccess: () => {
+            toast.success("Category created successfully");
+            queryClient.invalidateQueries({ queryKey: ["category"] });
+            setOpen(false);
+            resetForm();
+        },
+        onError: (error: any) => {
+            toast.error(error?.message || "Failed to create category");
         },
     });
 
-    const handleSubmit = async (data: z.infer<typeof categorySchema>) => {
-        console.log('Submitted Data', data);
+    const resetForm = () => {
+        setName("");
+        setDepartmentId("");
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!departmentId) {
+            toast.error("Please select a department");
+            return;
+        }
+        if (!name.trim()) {
+            toast.error("Category name is required");
+            return;
+        }
+
+        createMutation.mutate({
+            name,
+            department_id: Number(departmentId),
+        });
+    };
+
+    const handleCancel = () => {
         setOpen(false);
-        showSubmittedData(data);
-        form.reset();
+        resetForm();
     };
 
     return (
@@ -56,55 +110,56 @@ export function CreateCategoryForm() {
                 </SheetHeader>
 
                 <div className="mt-6 p-4">
+                    <form onSubmit={handleSubmit} className="space-y-6">
 
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-                            <FormField
-                                control={form.control}
-                                name="department_name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Department Name</FormLabel>
-                                        <Select
-                                            value={field.value}
-                                            onValueChange={field.onChange}
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select a department" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="development">Development</SelectItem>
-                                                <SelectItem value="design">Design</SelectItem>
-                                                <SelectItem value="marketing">Marketing</SelectItem>
-                                                <SelectItem value="sales">Sales</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </FormItem>
-                                )} />
+                        {/* Department Selection */}
+                        <div className="space-y-2">
+                            <Label>Department Name</Label>
+                            <Select
+                                value={departmentId}
+                                onValueChange={setDepartmentId}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select a department" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {departmentsData?.data?.items?.map((dept: any) => (
+                                        <SelectItem key={dept.id} value={String(dept.id)}>
+                                            {dept.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
 
-                            <FormField
-                                control={form.control}
-                                name="category_name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Category Name</FormLabel>
-                                        <Input {...field} placeholder="Enter a category name" />
-                                    </FormItem>
-                                )} />
+                        {/* Category Name */}
+                        <div className="space-y-2">
+                            <Label>Category Name</Label>
+                            <Input
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter a category name"
+                            />
+                        </div>
 
-                            {/* Submit */}
-                            <div className="flex justify-center gap-5">
-                                <Button type="button" onClick={() => setOpen(false)} variant="outline">
-                                    Cancel
-                                </Button>
-                                <Button type="submit">
-                                    Add
-                                </Button>
-                            </div>
-                        </form>
-                    </Form>
-
-
+                        {/* Submit */}
+                        <div className="flex justify-center gap-5">
+                            <Button
+                                type="button"
+                                onClick={handleCancel}
+                                variant="outline"
+                                disabled={createMutation.isPending}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={createMutation.isPending}
+                            >
+                                {createMutation.isPending ? "Adding..." : "Add"}
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             </SheetContent>
         </Sheet>

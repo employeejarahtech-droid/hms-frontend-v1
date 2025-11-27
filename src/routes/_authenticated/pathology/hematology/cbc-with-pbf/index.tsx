@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { ConfigDrawer } from "@/components/config-drawer";
 import { DataTable } from "@/components/DataTable";
 import { Header } from "@/components/layout/header";
@@ -11,16 +11,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
-import { EditLipidProfileForm } from '@/features/pathology/biochemical/lipid-profile/components/EditLipidProfileForm';
 import { getCookie } from '@/lib/cookies';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 export const Route = createFileRoute(
-  '/_authenticated/pathology/biochemical/lipid-profile/',
+  '/_authenticated/pathology/hematology/cbc-with-pbf/',
 )({
-  component: LipidProfile,
+  component: CBCWithPBF,
 })
+
 
 const topNav = [
   {
@@ -49,16 +49,16 @@ const topNav = [
   },
 ]
 
-type LipidProfileItem = {
+type CBCItem = {
   id: string;
-  invoice_id: string;
+  invoice_id: number;
   patient_name: string;
   created_at: string;
   status: string;
 };
 
-function LipidProfile() {
-  const [open, setOpen] = useState<boolean>(false);
+
+function CBCWithPBF() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const limit = 10;
@@ -66,17 +66,17 @@ function LipidProfile() {
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["lipid-profile", page, search],
+    queryKey: ["cbc-pbf", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/lipid-profile?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
+        `${import.meta.env.VITE_API_URL}/api/cbc-pbf?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      if (!res.ok) throw new Error("Failed to fetch lipid profiles");
+      if (!res.ok) throw new Error("Failed to fetch cbc data");
       return res.json(); // MUST match placeholderData
     },
 
@@ -100,8 +100,7 @@ function LipidProfile() {
 
 
   //console.log(data?.data);
-
-  const columns: ColumnDef<LipidProfileItem>[] = [
+  const columns: ColumnDef<CBCItem>[] = [
     // Row selection
     {
       id: "select",
@@ -176,8 +175,11 @@ function LipidProfile() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-
-            <Button size="sm" variant="default" onClick={() => setOpen(true)}>Edit</Button>
+            <Link to="/pathology/hematology/cbc-short/edit/$id" params={{ id: item.id }}>
+              <Button size="sm" variant="default">
+                Edit
+              </Button>
+            </Link>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -186,7 +188,6 @@ function LipidProfile() {
         );
       },
     },
-
   ];
 
   return (
@@ -202,13 +203,11 @@ function LipidProfile() {
       </Header>
       <Main>
         <div className="mb-4">
-          <h1 className='text-2xl font-bold tracking-tight'>Lipid Profile</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>CBC With PBF</h1>
         </div>
         <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
-        <EditLipidProfileForm open={open} setOpen={setOpen} />
       </Main>
     </>
 
   )
 }
-

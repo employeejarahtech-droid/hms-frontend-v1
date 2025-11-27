@@ -7,6 +7,7 @@ import { TopNav } from "@/components/layout/top-nav";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
@@ -48,26 +49,30 @@ const topNav = [
   },
 ]
 
-type BTCT = {
+type BTCTItem = {
   id: number;
   invoice_id: number;
+  patient_name: string;
   bleeding_time: number;
   clotting_time: number;
+  created_at: string;
+  status: string;
 };
 
 function BloodForBTCT() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const limit = 10;
 
   const token = getCookie('accessToken');
 
   const { data } = useQuery({
-    queryKey: ["btct", page],
+    queryKey: ["btct", page, search],
 
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/btct?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/api/btct?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -98,7 +103,7 @@ function BloodForBTCT() {
 
   //console.log(data?.data);
 
-  const columns: ColumnDef<BTCT>[] = [
+  const columns: ColumnDef<BTCTItem>[] = [
     // Row selection
     {
       id: "select",
@@ -125,14 +130,40 @@ function BloodForBTCT() {
       header: "Invoice ID",
     },
     {
-      accessorKey: "bleeding_time",
-      header: "Bleeding Time",
+      accessorKey: "patient_name",
+      header: "Patient Name",
+    },
+    {
+      accessorKey: "created_at",
+      header: "Date",
+      cell: ({ row }) => {
+        const iso = row.getValue("created_at") as string;
+        const date = new Date(iso);
+
+        const formatted = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+
+        return <div>{formatted}</div>; // Example: Nov 23, 2025
+      },
     },
 
-    // ✅ FIXED Tests column
     {
-      accessorKey: "clotting_time",
-      header: "Clotting Time",
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status") as string;
+        const color =
+          status === "passed"
+            ? "bg-green-500"
+            : status === "failed"
+              ? "bg-red-500"
+              : "bg-yellow-500";
+
+        return <Badge className={color + " text-white"}>{status || 'Pending'}</Badge>;
+      },
     },
 
     // Actions Column
@@ -175,7 +206,7 @@ function BloodForBTCT() {
         <div className="mb-4">
           <h1 className='text-2xl font-bold tracking-tight'>Blood For BT/CT</h1>
         </div>
-        <DataTable columns={columns} data={data?.data.items || []} meta={data?.data.meta} onPageChange={setPage} />
+        <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
         <EditBloodForBTCTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
       </Main>
     </>
