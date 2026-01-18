@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ClerkRouteRouteImport } from './routes/clerk/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedLayoutRouteImport } from './routes/_authenticated/_layout'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -28,18 +27,17 @@ import { Route as ClerkAuthenticatedRouteRouteImport } from './routes/clerk/_aut
 import { Route as ClerkauthRouteRouteImport } from './routes/clerk/(auth)/route'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
-import { Route as AuthenticatedTestsIndexRouteImport } from './routes/_authenticated/tests/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
+import { Route as AuthenticatedSuppliersIndexRouteImport } from './routes/_authenticated/suppliers/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
-import { Route as AuthenticatedServicesIndexRouteImport } from './routes/_authenticated/services/index'
 import { Route as AuthenticatedRolesIndexRouteImport } from './routes/_authenticated/roles/index'
+import { Route as AuthenticatedProductsIndexRouteImport } from './routes/_authenticated/products/index'
+import { Route as AuthenticatedHelpIndexRouteImport } from './routes/_authenticated/help/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
-import { Route as AuthenticatedDueCollectionIndexRouteImport } from './routes/_authenticated/due-collection/index'
-import { Route as AuthenticatedDoctorsIndexRouteImport } from './routes/_authenticated/doctors/index'
-import { Route as AuthenticatedDepartmentsIndexRouteImport } from './routes/_authenticated/departments/index'
+import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authenticated/customers/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
-import { Route as AuthenticatedCategoriesIndexRouteImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
+import { Route as AuthenticatedAccountingIndexRouteImport } from './routes/_authenticated/accounting/index'
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
 import { Route as ClerkauthSignInRouteImport } from './routes/clerk/(auth)/sign-in'
@@ -48,50 +46,40 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
-import { Route as AuthenticatedXRayAllReportsIndexRouteImport } from './routes/_authenticated/x-ray/all-reports/index'
-import { Route as AuthenticatedUltrasonogramAllReportsIndexRouteImport } from './routes/_authenticated/ultrasonogram/all-reports/index'
-import { Route as AuthenticatedTestsCreateIndexRouteImport } from './routes/_authenticated/tests/create/index'
-import { Route as AuthenticatedInvoicesListIndexRouteImport } from './routes/_authenticated/invoices/list/index'
-import { Route as AuthenticatedInvoicesCreateIndexRouteImport } from './routes/_authenticated/invoices/create/index'
-import { Route as AuthenticatedEcgAllReportsIndexRouteImport } from './routes/_authenticated/ecg/all-reports/index'
-import { Route as AuthenticatedTestsEditIdIndexRouteImport } from './routes/_authenticated/tests/edit/[$id]/index'
-import { Route as AuthenticatedPathologyUrineUrineForSugarIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-sugar/index'
-import { Route as AuthenticatedPathologyUrineUrineForReFullIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-re-full/index'
-import { Route as AuthenticatedPathologyUrineUrineForAlbuminIndexRouteImport } from './routes/_authenticated/pathology/urine/urine-for-albumin/index'
-import { Route as AuthenticatedPathologyStoolStoolReIndexRouteImport } from './routes/_authenticated/pathology/stool/stool-re/index'
-import { Route as AuthenticatedPathologyStoolReducingSubstanceIndexRouteImport } from './routes/_authenticated/pathology/stool/reducing-substance/index'
-import { Route as AuthenticatedPathologyStoolOcultBloodTestIndexRouteImport } from './routes/_authenticated/pathology/stool/ocult-blood-test/index'
-import { Route as AuthenticatedPathologySpecialT3t4tshIndexRouteImport } from './routes/_authenticated/pathology/special/t3t4tsh/index'
-import { Route as AuthenticatedPathologySpecialSputumIndexRouteImport } from './routes/_authenticated/pathology/special/sputum/index'
-import { Route as AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport } from './routes/_authenticated/pathology/special/skin-scrapping-for-fungus/index'
-import { Route as AuthenticatedPathologySpecialSemenIndexRouteImport } from './routes/_authenticated/pathology/special/semen/index'
-import { Route as AuthenticatedPathologySpecialElectrolytesIndexRouteImport } from './routes/_authenticated/pathology/special/electrolytes/index'
-import { Route as AuthenticatedPathologySpecialAllHormonesIndexRouteImport } from './routes/_authenticated/pathology/special/all-hormones/index'
-import { Route as AuthenticatedPathologyImmunologyWidalTestIndexRouteImport } from './routes/_authenticated/pathology/immunology/widal-test/index'
-import { Route as AuthenticatedPathologyImmunologyReportsIndexRouteImport } from './routes/_authenticated/pathology/immunology/reports/index'
-import { Route as AuthenticatedPathologyImmunologyMtIndexRouteImport } from './routes/_authenticated/pathology/immunology/mt/index'
-import { Route as AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport } from './routes/_authenticated/pathology/immunology/blood-group/index'
-import { Route as AuthenticatedPathologyImmunologyBetaHcgIndexRouteImport } from './routes/_authenticated/pathology/immunology/beta-hcg/index'
-import { Route as AuthenticatedPathologyHematologyReportsIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/index'
-import { Route as AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport } from './routes/_authenticated/pathology/hematology/prothom-bin-time-full/index'
-import { Route as AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport } from './routes/_authenticated/pathology/hematology/peripheral-blood-film/index'
-import { Route as AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport } from './routes/_authenticated/pathology/hematology/cbc-with-pbf/index'
-import { Route as AuthenticatedPathologyHematologyCbcShortIndexRouteImport } from './routes/_authenticated/pathology/hematology/cbc-short/index'
-import { Route as AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-tcdc/index'
-import { Route as AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport } from './routes/_authenticated/pathology/hematology/blood-for-bt-ct/index'
-import { Route as AuthenticatedPathologyBiochemicalReportsIndexRouteImport } from './routes/_authenticated/pathology/biochemical/reports/index'
-import { Route as AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport } from './routes/_authenticated/pathology/biochemical/lipid-profile/index'
-import { Route as AuthenticatedXRayAllReportsEditIdRouteImport } from './routes/_authenticated/x-ray/all-reports/edit/$id'
-import { Route as AuthenticatedUltrasonogramAllReportsEditIdRouteImport } from './routes/_authenticated/ultrasonogram/all-reports/edit/$id'
-import { Route as AuthenticatedEcgAllReportsEditIdRouteImport } from './routes/_authenticated/ecg/all-reports/edit/$id'
-import { Route as AuthenticatedPathologyUrineUrineForReFullEditIdRouteImport } from './routes/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
-import { Route as AuthenticatedPathologyStoolStoolReEditIdRouteImport } from './routes/_authenticated/pathology/stool/stool-re/edit/$id'
-import { Route as AuthenticatedPathologySpecialSemenEditReportIdRouteImport } from './routes/_authenticated/pathology/special/semen/edit/$reportId'
-import { Route as AuthenticatedPathologyHematologyCbcShortEditIdRouteImport } from './routes/_authenticated/pathology/hematology/cbc-short/edit/$id'
-import { Route as AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport } from './routes/_authenticated/pathology/biochemical/reports/edit/$reportId'
-import { Route as AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport } from './routes/_authenticated/pathology/special/all-hormones/edit/[$id]/index'
-import { Route as AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport } from './routes/_authenticated/pathology/immunology/reports/edit/[$id]/index'
-import { Route as AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport } from './routes/_authenticated/pathology/hematology/reports/edit/[$id]/index'
+import { Route as AuthenticatedSuppliersCreateIndexRouteImport } from './routes/_authenticated/suppliers/create/index'
+import { Route as AuthenticatedSuppliersIdIndexRouteImport } from './routes/_authenticated/suppliers/$id/index'
+import { Route as AuthenticatedSalesOrdersIndexRouteImport } from './routes/_authenticated/sales/orders/index'
+import { Route as AuthenticatedRolesCreateIndexRouteImport } from './routes/_authenticated/roles/create/index'
+import { Route as AuthenticatedPurchasePaymentsIndexRouteImport } from './routes/_authenticated/purchase/payments/index'
+import { Route as AuthenticatedPurchaseOrderIndexRouteImport } from './routes/_authenticated/purchase/order/index'
+import { Route as AuthenticatedPurchaseInvoicesIndexRouteImport } from './routes/_authenticated/purchase/invoices/index'
+import { Route as AuthenticatedProductsUnitsIndexRouteImport } from './routes/_authenticated/products/units/index'
+import { Route as AuthenticatedProductsCreateIndexRouteImport } from './routes/_authenticated/products/create/index'
+import { Route as AuthenticatedProductsCategoriesIndexRouteImport } from './routes/_authenticated/products/categories/index'
+import { Route as AuthenticatedProductsProductIdIndexRouteImport } from './routes/_authenticated/products/$productId/index'
+import { Route as AuthenticatedInventoryStocksIndexRouteImport } from './routes/_authenticated/inventory/stocks/index'
+import { Route as AuthenticatedCustomersCreateIndexRouteImport } from './routes/_authenticated/customers/create/index'
+import { Route as AuthenticatedCustomersIdIndexRouteImport } from './routes/_authenticated/customers/$id/index'
+import { Route as AuthenticatedAccountingTransactionsIndexRouteImport } from './routes/_authenticated/accounting/transactions/index'
+import { Route as AuthenticatedAccountingIncomeIndexRouteImport } from './routes/_authenticated/accounting/income/index'
+import { Route as AuthenticatedAccountingExpensesIndexRouteImport } from './routes/_authenticated/accounting/expenses/index'
+import { Route as AuthenticatedAccountingAccountsIndexRouteImport } from './routes/_authenticated/accounting/accounts/index'
+import { Route as AuthenticatedRolesEditIdRouteImport } from './routes/_authenticated/roles/edit/$id'
+import { Route as AuthenticatedPurchaseOrderCreateRouteImport } from './routes/_authenticated/purchase/order/create'
+import { Route as AuthenticatedProductsProductIdEditRouteImport } from './routes/_authenticated/products/$productId/edit'
+import { Route as AuthenticatedSuppliersIdEditIndexRouteImport } from './routes/_authenticated/suppliers/$id/edit/index'
+import { Route as AuthenticatedPurchasePaymentsCreateIndexRouteImport } from './routes/_authenticated/purchase/payments/create/index'
+import { Route as AuthenticatedPurchasePaymentsIdIndexRouteImport } from './routes/_authenticated/purchase/payments/$id/index'
+import { Route as AuthenticatedPurchaseOrderIdIndexRouteImport } from './routes/_authenticated/purchase/order/$id/index'
+import { Route as AuthenticatedPurchaseInvoicesIdIndexRouteImport } from './routes/_authenticated/purchase/invoices/$id/index'
+import { Route as AuthenticatedCustomersIdEditIndexRouteImport } from './routes/_authenticated/customers/$id/edit/index'
+import { Route as AuthenticatedAccountingReportsTrialBalanceIndexRouteImport } from './routes/_authenticated/accounting/reports/trial-balance/index'
+import { Route as AuthenticatedAccountingReportsProfitLossIndexRouteImport } from './routes/_authenticated/accounting/reports/profit-loss/index'
+import { Route as AuthenticatedAccountingReportsProfitAndLossIndexRouteImport } from './routes/_authenticated/accounting/reports/profit-and-loss/index'
+import { Route as AuthenticatedAccountingReportsLedgerIndexRouteImport } from './routes/_authenticated/accounting/reports/ledger/index'
+import { Route as AuthenticatedAccountingReportsJournalIndexRouteImport } from './routes/_authenticated/accounting/reports/journal/index'
+import { Route as AuthenticatedPurchaseOrderIdEditRouteImport } from './routes/_authenticated/purchase/order/$id/edit'
+import { Route as AuthenticatedPurchaseInvoicesIdPreviewIndexRouteImport } from './routes/_authenticated/purchase/invoices/$id/preview/index'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -105,10 +93,6 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedLayoutRoute = AuthenticatedLayoutRouteImport.update({
-  id: '/_layout',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const errors503Route = errors503RouteImport.update({
@@ -185,31 +169,37 @@ const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedTestsIndexRoute = AuthenticatedTestsIndexRouteImport.update({
-  id: '/tests/',
-  path: '/tests/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedTasksIndexRoute = AuthenticatedTasksIndexRouteImport.update({
   id: '/tasks/',
   path: '/tasks/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSuppliersIndexRoute =
+  AuthenticatedSuppliersIndexRouteImport.update({
+    id: '/suppliers/',
+    path: '/suppliers/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsIndexRoute =
   AuthenticatedSettingsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
-const AuthenticatedServicesIndexRoute =
-  AuthenticatedServicesIndexRouteImport.update({
-    id: '/services/',
-    path: '/services/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedRolesIndexRoute = AuthenticatedRolesIndexRouteImport.update({
   id: '/roles/',
   path: '/roles/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProductsIndexRoute =
+  AuthenticatedProductsIndexRouteImport.update({
+    id: '/products/',
+    path: '/products/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedHelpIndexRoute = AuthenticatedHelpIndexRouteImport.update({
+  id: '/help/',
+  path: '/help/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedHelpCenterIndexRoute =
@@ -218,22 +208,10 @@ const AuthenticatedHelpCenterIndexRoute =
     path: '/help-center/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedDueCollectionIndexRoute =
-  AuthenticatedDueCollectionIndexRouteImport.update({
-    id: '/due-collection/',
-    path: '/due-collection/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedDoctorsIndexRoute =
-  AuthenticatedDoctorsIndexRouteImport.update({
-    id: '/doctors/',
-    path: '/doctors/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedDepartmentsIndexRoute =
-  AuthenticatedDepartmentsIndexRouteImport.update({
-    id: '/departments/',
-    path: '/departments/',
+const AuthenticatedCustomersIndexRoute =
+  AuthenticatedCustomersIndexRouteImport.update({
+    id: '/customers/',
+    path: '/customers/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
@@ -241,17 +219,17 @@ const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
   path: '/chats/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedCategoriesIndexRoute =
-  AuthenticatedCategoriesIndexRouteImport.update({
-    id: '/categories/',
-    path: '/categories/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   id: '/apps/',
   path: '/apps/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAccountingIndexRoute =
+  AuthenticatedAccountingIndexRouteImport.update({
+    id: '/accounting/',
+    path: '/accounting/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ClerkAuthenticatedUserManagementRoute =
   ClerkAuthenticatedUserManagementRouteImport.update({
     id: '/user-management',
@@ -298,275 +276,214 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedXRayAllReportsIndexRoute =
-  AuthenticatedXRayAllReportsIndexRouteImport.update({
-    id: '/x-ray/all-reports/',
-    path: '/x-ray/all-reports/',
+const AuthenticatedSuppliersCreateIndexRoute =
+  AuthenticatedSuppliersCreateIndexRouteImport.update({
+    id: '/suppliers/create/',
+    path: '/suppliers/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedUltrasonogramAllReportsIndexRoute =
-  AuthenticatedUltrasonogramAllReportsIndexRouteImport.update({
-    id: '/ultrasonogram/all-reports/',
-    path: '/ultrasonogram/all-reports/',
+const AuthenticatedSuppliersIdIndexRoute =
+  AuthenticatedSuppliersIdIndexRouteImport.update({
+    id: '/suppliers/$id/',
+    path: '/suppliers/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedTestsCreateIndexRoute =
-  AuthenticatedTestsCreateIndexRouteImport.update({
-    id: '/tests/create/',
-    path: '/tests/create/',
+const AuthenticatedSalesOrdersIndexRoute =
+  AuthenticatedSalesOrdersIndexRouteImport.update({
+    id: '/sales/orders/',
+    path: '/sales/orders/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedInvoicesListIndexRoute =
-  AuthenticatedInvoicesListIndexRouteImport.update({
-    id: '/invoices/list/',
-    path: '/invoices/list/',
+const AuthenticatedRolesCreateIndexRoute =
+  AuthenticatedRolesCreateIndexRouteImport.update({
+    id: '/roles/create/',
+    path: '/roles/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedInvoicesCreateIndexRoute =
-  AuthenticatedInvoicesCreateIndexRouteImport.update({
-    id: '/invoices/create/',
-    path: '/invoices/create/',
+const AuthenticatedPurchasePaymentsIndexRoute =
+  AuthenticatedPurchasePaymentsIndexRouteImport.update({
+    id: '/purchase/payments/',
+    path: '/purchase/payments/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedEcgAllReportsIndexRoute =
-  AuthenticatedEcgAllReportsIndexRouteImport.update({
-    id: '/ecg/all-reports/',
-    path: '/ecg/all-reports/',
+const AuthenticatedPurchaseOrderIndexRoute =
+  AuthenticatedPurchaseOrderIndexRouteImport.update({
+    id: '/purchase/order/',
+    path: '/purchase/order/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedTestsEditIdIndexRoute =
-  AuthenticatedTestsEditIdIndexRouteImport.update({
-    id: '/tests/edit/$id/',
-    path: '/tests/edit/$id/',
+const AuthenticatedPurchaseInvoicesIndexRoute =
+  AuthenticatedPurchaseInvoicesIndexRouteImport.update({
+    id: '/purchase/invoices/',
+    path: '/purchase/invoices/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyUrineUrineForSugarIndexRoute =
-  AuthenticatedPathologyUrineUrineForSugarIndexRouteImport.update({
-    id: '/pathology/urine/urine-for-sugar/',
-    path: '/pathology/urine/urine-for-sugar/',
+const AuthenticatedProductsUnitsIndexRoute =
+  AuthenticatedProductsUnitsIndexRouteImport.update({
+    id: '/products/units/',
+    path: '/products/units/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyUrineUrineForReFullIndexRoute =
-  AuthenticatedPathologyUrineUrineForReFullIndexRouteImport.update({
-    id: '/pathology/urine/urine-for-re-full/',
-    path: '/pathology/urine/urine-for-re-full/',
+const AuthenticatedProductsCreateIndexRoute =
+  AuthenticatedProductsCreateIndexRouteImport.update({
+    id: '/products/create/',
+    path: '/products/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyUrineUrineForAlbuminIndexRoute =
-  AuthenticatedPathologyUrineUrineForAlbuminIndexRouteImport.update({
-    id: '/pathology/urine/urine-for-albumin/',
-    path: '/pathology/urine/urine-for-albumin/',
+const AuthenticatedProductsCategoriesIndexRoute =
+  AuthenticatedProductsCategoriesIndexRouteImport.update({
+    id: '/products/categories/',
+    path: '/products/categories/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyStoolStoolReIndexRoute =
-  AuthenticatedPathologyStoolStoolReIndexRouteImport.update({
-    id: '/pathology/stool/stool-re/',
-    path: '/pathology/stool/stool-re/',
+const AuthenticatedProductsProductIdIndexRoute =
+  AuthenticatedProductsProductIdIndexRouteImport.update({
+    id: '/products/$productId/',
+    path: '/products/$productId/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyStoolReducingSubstanceIndexRoute =
-  AuthenticatedPathologyStoolReducingSubstanceIndexRouteImport.update({
-    id: '/pathology/stool/reducing-substance/',
-    path: '/pathology/stool/reducing-substance/',
+const AuthenticatedInventoryStocksIndexRoute =
+  AuthenticatedInventoryStocksIndexRouteImport.update({
+    id: '/inventory/stocks/',
+    path: '/inventory/stocks/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyStoolOcultBloodTestIndexRoute =
-  AuthenticatedPathologyStoolOcultBloodTestIndexRouteImport.update({
-    id: '/pathology/stool/ocult-blood-test/',
-    path: '/pathology/stool/ocult-blood-test/',
+const AuthenticatedCustomersCreateIndexRoute =
+  AuthenticatedCustomersCreateIndexRouteImport.update({
+    id: '/customers/create/',
+    path: '/customers/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialT3t4tshIndexRoute =
-  AuthenticatedPathologySpecialT3t4tshIndexRouteImport.update({
-    id: '/pathology/special/t3t4tsh/',
-    path: '/pathology/special/t3t4tsh/',
+const AuthenticatedCustomersIdIndexRoute =
+  AuthenticatedCustomersIdIndexRouteImport.update({
+    id: '/customers/$id/',
+    path: '/customers/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialSputumIndexRoute =
-  AuthenticatedPathologySpecialSputumIndexRouteImport.update({
-    id: '/pathology/special/sputum/',
-    path: '/pathology/special/sputum/',
+const AuthenticatedAccountingTransactionsIndexRoute =
+  AuthenticatedAccountingTransactionsIndexRouteImport.update({
+    id: '/accounting/transactions/',
+    path: '/accounting/transactions/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute =
-  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport.update({
-    id: '/pathology/special/skin-scrapping-for-fungus/',
-    path: '/pathology/special/skin-scrapping-for-fungus/',
+const AuthenticatedAccountingIncomeIndexRoute =
+  AuthenticatedAccountingIncomeIndexRouteImport.update({
+    id: '/accounting/income/',
+    path: '/accounting/income/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialSemenIndexRoute =
-  AuthenticatedPathologySpecialSemenIndexRouteImport.update({
-    id: '/pathology/special/semen/',
-    path: '/pathology/special/semen/',
+const AuthenticatedAccountingExpensesIndexRoute =
+  AuthenticatedAccountingExpensesIndexRouteImport.update({
+    id: '/accounting/expenses/',
+    path: '/accounting/expenses/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialElectrolytesIndexRoute =
-  AuthenticatedPathologySpecialElectrolytesIndexRouteImport.update({
-    id: '/pathology/special/electrolytes/',
-    path: '/pathology/special/electrolytes/',
+const AuthenticatedAccountingAccountsIndexRoute =
+  AuthenticatedAccountingAccountsIndexRouteImport.update({
+    id: '/accounting/accounts/',
+    path: '/accounting/accounts/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologySpecialAllHormonesIndexRoute =
-  AuthenticatedPathologySpecialAllHormonesIndexRouteImport.update({
-    id: '/pathology/special/all-hormones/',
-    path: '/pathology/special/all-hormones/',
+const AuthenticatedRolesEditIdRoute =
+  AuthenticatedRolesEditIdRouteImport.update({
+    id: '/roles/edit/$id',
+    path: '/roles/edit/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyImmunologyWidalTestIndexRoute =
-  AuthenticatedPathologyImmunologyWidalTestIndexRouteImport.update({
-    id: '/pathology/immunology/widal-test/',
-    path: '/pathology/immunology/widal-test/',
+const AuthenticatedPurchaseOrderCreateRoute =
+  AuthenticatedPurchaseOrderCreateRouteImport.update({
+    id: '/purchase/order/create',
+    path: '/purchase/order/create',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyImmunologyReportsIndexRoute =
-  AuthenticatedPathologyImmunologyReportsIndexRouteImport.update({
-    id: '/pathology/immunology/reports/',
-    path: '/pathology/immunology/reports/',
+const AuthenticatedProductsProductIdEditRoute =
+  AuthenticatedProductsProductIdEditRouteImport.update({
+    id: '/products/$productId/edit',
+    path: '/products/$productId/edit',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyImmunologyMtIndexRoute =
-  AuthenticatedPathologyImmunologyMtIndexRouteImport.update({
-    id: '/pathology/immunology/mt/',
-    path: '/pathology/immunology/mt/',
+const AuthenticatedSuppliersIdEditIndexRoute =
+  AuthenticatedSuppliersIdEditIndexRouteImport.update({
+    id: '/suppliers/$id/edit/',
+    path: '/suppliers/$id/edit/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyImmunologyBloodGroupIndexRoute =
-  AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport.update({
-    id: '/pathology/immunology/blood-group/',
-    path: '/pathology/immunology/blood-group/',
+const AuthenticatedPurchasePaymentsCreateIndexRoute =
+  AuthenticatedPurchasePaymentsCreateIndexRouteImport.update({
+    id: '/purchase/payments/create/',
+    path: '/purchase/payments/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyImmunologyBetaHcgIndexRoute =
-  AuthenticatedPathologyImmunologyBetaHcgIndexRouteImport.update({
-    id: '/pathology/immunology/beta-hcg/',
-    path: '/pathology/immunology/beta-hcg/',
+const AuthenticatedPurchasePaymentsIdIndexRoute =
+  AuthenticatedPurchasePaymentsIdIndexRouteImport.update({
+    id: '/purchase/payments/$id/',
+    path: '/purchase/payments/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyReportsIndexRoute =
-  AuthenticatedPathologyHematologyReportsIndexRouteImport.update({
-    id: '/pathology/hematology/reports/',
-    path: '/pathology/hematology/reports/',
+const AuthenticatedPurchaseOrderIdIndexRoute =
+  AuthenticatedPurchaseOrderIdIndexRouteImport.update({
+    id: '/purchase/order/$id/',
+    path: '/purchase/order/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute =
-  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport.update({
-    id: '/pathology/hematology/prothom-bin-time-full/',
-    path: '/pathology/hematology/prothom-bin-time-full/',
+const AuthenticatedPurchaseInvoicesIdIndexRoute =
+  AuthenticatedPurchaseInvoicesIdIndexRouteImport.update({
+    id: '/purchase/invoices/$id/',
+    path: '/purchase/invoices/$id/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute =
-  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport.update({
-    id: '/pathology/hematology/peripheral-blood-film/',
-    path: '/pathology/hematology/peripheral-blood-film/',
+const AuthenticatedCustomersIdEditIndexRoute =
+  AuthenticatedCustomersIdEditIndexRouteImport.update({
+    id: '/customers/$id/edit/',
+    path: '/customers/$id/edit/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyCbcWithPbfIndexRoute =
-  AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport.update({
-    id: '/pathology/hematology/cbc-with-pbf/',
-    path: '/pathology/hematology/cbc-with-pbf/',
+const AuthenticatedAccountingReportsTrialBalanceIndexRoute =
+  AuthenticatedAccountingReportsTrialBalanceIndexRouteImport.update({
+    id: '/accounting/reports/trial-balance/',
+    path: '/accounting/reports/trial-balance/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyCbcShortIndexRoute =
-  AuthenticatedPathologyHematologyCbcShortIndexRouteImport.update({
-    id: '/pathology/hematology/cbc-short/',
-    path: '/pathology/hematology/cbc-short/',
+const AuthenticatedAccountingReportsProfitLossIndexRoute =
+  AuthenticatedAccountingReportsProfitLossIndexRouteImport.update({
+    id: '/accounting/reports/profit-loss/',
+    path: '/accounting/reports/profit-loss/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyBloodForTcdcIndexRoute =
-  AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport.update({
-    id: '/pathology/hematology/blood-for-tcdc/',
-    path: '/pathology/hematology/blood-for-tcdc/',
+const AuthenticatedAccountingReportsProfitAndLossIndexRoute =
+  AuthenticatedAccountingReportsProfitAndLossIndexRouteImport.update({
+    id: '/accounting/reports/profit-and-loss/',
+    path: '/accounting/reports/profit-and-loss/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyHematologyBloodForBtCtIndexRoute =
-  AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport.update({
-    id: '/pathology/hematology/blood-for-bt-ct/',
-    path: '/pathology/hematology/blood-for-bt-ct/',
+const AuthenticatedAccountingReportsLedgerIndexRoute =
+  AuthenticatedAccountingReportsLedgerIndexRouteImport.update({
+    id: '/accounting/reports/ledger/',
+    path: '/accounting/reports/ledger/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyBiochemicalReportsIndexRoute =
-  AuthenticatedPathologyBiochemicalReportsIndexRouteImport.update({
-    id: '/pathology/biochemical/reports/',
-    path: '/pathology/biochemical/reports/',
+const AuthenticatedAccountingReportsJournalIndexRoute =
+  AuthenticatedAccountingReportsJournalIndexRouteImport.update({
+    id: '/accounting/reports/journal/',
+    path: '/accounting/reports/journal/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPathologyBiochemicalLipidProfileIndexRoute =
-  AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport.update({
-    id: '/pathology/biochemical/lipid-profile/',
-    path: '/pathology/biochemical/lipid-profile/',
+const AuthenticatedPurchaseOrderIdEditRoute =
+  AuthenticatedPurchaseOrderIdEditRouteImport.update({
+    id: '/purchase/order/$id/edit',
+    path: '/purchase/order/$id/edit',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedXRayAllReportsEditIdRoute =
-  AuthenticatedXRayAllReportsEditIdRouteImport.update({
-    id: '/x-ray/all-reports/edit/$id',
-    path: '/x-ray/all-reports/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedUltrasonogramAllReportsEditIdRoute =
-  AuthenticatedUltrasonogramAllReportsEditIdRouteImport.update({
-    id: '/ultrasonogram/all-reports/edit/$id',
-    path: '/ultrasonogram/all-reports/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedEcgAllReportsEditIdRoute =
-  AuthenticatedEcgAllReportsEditIdRouteImport.update({
-    id: '/ecg/all-reports/edit/$id',
-    path: '/ecg/all-reports/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyUrineUrineForReFullEditIdRoute =
-  AuthenticatedPathologyUrineUrineForReFullEditIdRouteImport.update({
-    id: '/pathology/urine/urine-for-re-full/edit/$id',
-    path: '/pathology/urine/urine-for-re-full/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyStoolStoolReEditIdRoute =
-  AuthenticatedPathologyStoolStoolReEditIdRouteImport.update({
-    id: '/pathology/stool/stool-re/edit/$id',
-    path: '/pathology/stool/stool-re/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologySpecialSemenEditReportIdRoute =
-  AuthenticatedPathologySpecialSemenEditReportIdRouteImport.update({
-    id: '/pathology/special/semen/edit/$reportId',
-    path: '/pathology/special/semen/edit/$reportId',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyHematologyCbcShortEditIdRoute =
-  AuthenticatedPathologyHematologyCbcShortEditIdRouteImport.update({
-    id: '/pathology/hematology/cbc-short/edit/$id',
-    path: '/pathology/hematology/cbc-short/edit/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyBiochemicalReportsEditReportIdRoute =
-  AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport.update({
-    id: '/pathology/biochemical/reports/edit/$reportId',
-    path: '/pathology/biochemical/reports/edit/$reportId',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute =
-  AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport.update({
-    id: '/pathology/special/all-hormones/edit/$id/',
-    path: '/pathology/special/all-hormones/edit/$id/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyImmunologyReportsEditIdIndexRoute =
-  AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport.update({
-    id: '/pathology/immunology/reports/edit/$id/',
-    path: '/pathology/immunology/reports/edit/$id/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedPathologyHematologyReportsEditIdIndexRoute =
-  AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport.update({
-    id: '/pathology/hematology/reports/edit/$id/',
-    path: '/pathology/hematology/reports/edit/$id/',
+const AuthenticatedPurchaseInvoicesIdPreviewIndexRoute =
+  AuthenticatedPurchaseInvoicesIdPreviewIndexRouteImport.update({
+    id: '/purchase/invoices/$id/preview/',
+    path: '/purchase/invoices/$id/preview/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
-  '/clerk/': typeof ClerkauthRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
@@ -587,63 +504,52 @@ export interface FileRoutesByFullPath {
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/accounting': typeof AuthenticatedAccountingIndexRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
-  '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
-  '/departments': typeof AuthenticatedDepartmentsIndexRoute
-  '/doctors': typeof AuthenticatedDoctorsIndexRoute
-  '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
+  '/customers': typeof AuthenticatedCustomersIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/help': typeof AuthenticatedHelpIndexRoute
+  '/products': typeof AuthenticatedProductsIndexRoute
   '/roles': typeof AuthenticatedRolesIndexRoute
-  '/services': typeof AuthenticatedServicesIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
+  '/suppliers': typeof AuthenticatedSuppliersIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/ecg/all-reports': typeof AuthenticatedEcgAllReportsIndexRoute
-  '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
-  '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
-  '/tests/create': typeof AuthenticatedTestsCreateIndexRoute
-  '/ultrasonogram/all-reports': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
-  '/x-ray/all-reports': typeof AuthenticatedXRayAllReportsIndexRoute
-  '/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
-  '/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
-  '/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
-  '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
-  '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
-  '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
-  '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
-  '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
-  '/pathology/hematology/cbc-with-pbf': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
-  '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
-  '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
-  '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
-  '/pathology/immunology/beta-hcg': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
-  '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
-  '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
-  '/pathology/immunology/reports': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
-  '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
-  '/pathology/special/all-hormones': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
-  '/pathology/special/electrolytes': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
-  '/pathology/special/semen': typeof AuthenticatedPathologySpecialSemenIndexRoute
-  '/pathology/special/skin-scrapping-for-fungus': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
-  '/pathology/special/sputum': typeof AuthenticatedPathologySpecialSputumIndexRoute
-  '/pathology/special/t3t4tsh': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
-  '/pathology/stool/ocult-blood-test': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
-  '/pathology/stool/reducing-substance': typeof AuthenticatedPathologyStoolReducingSubstanceIndexRoute
-  '/pathology/stool/stool-re': typeof AuthenticatedPathologyStoolStoolReIndexRoute
-  '/pathology/urine/urine-for-albumin': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
-  '/pathology/urine/urine-for-re-full': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
-  '/pathology/urine/urine-for-sugar': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
-  '/tests/edit/$id': typeof AuthenticatedTestsEditIdIndexRoute
-  '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
-  '/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
-  '/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
-  '/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
-  '/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
-  '/pathology/hematology/reports/edit/$id': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
-  '/pathology/immunology/reports/edit/$id': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
-  '/pathology/special/all-hormones/edit/$id': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
+  '/products/$productId/edit': typeof AuthenticatedProductsProductIdEditRoute
+  '/purchase/order/create': typeof AuthenticatedPurchaseOrderCreateRoute
+  '/roles/edit/$id': typeof AuthenticatedRolesEditIdRoute
+  '/accounting/accounts': typeof AuthenticatedAccountingAccountsIndexRoute
+  '/accounting/expenses': typeof AuthenticatedAccountingExpensesIndexRoute
+  '/accounting/income': typeof AuthenticatedAccountingIncomeIndexRoute
+  '/accounting/transactions': typeof AuthenticatedAccountingTransactionsIndexRoute
+  '/customers/$id': typeof AuthenticatedCustomersIdIndexRoute
+  '/customers/create': typeof AuthenticatedCustomersCreateIndexRoute
+  '/inventory/stocks': typeof AuthenticatedInventoryStocksIndexRoute
+  '/products/$productId': typeof AuthenticatedProductsProductIdIndexRoute
+  '/products/categories': typeof AuthenticatedProductsCategoriesIndexRoute
+  '/products/create': typeof AuthenticatedProductsCreateIndexRoute
+  '/products/units': typeof AuthenticatedProductsUnitsIndexRoute
+  '/purchase/invoices': typeof AuthenticatedPurchaseInvoicesIndexRoute
+  '/purchase/order': typeof AuthenticatedPurchaseOrderIndexRoute
+  '/purchase/payments': typeof AuthenticatedPurchasePaymentsIndexRoute
+  '/roles/create': typeof AuthenticatedRolesCreateIndexRoute
+  '/sales/orders': typeof AuthenticatedSalesOrdersIndexRoute
+  '/suppliers/$id': typeof AuthenticatedSuppliersIdIndexRoute
+  '/suppliers/create': typeof AuthenticatedSuppliersCreateIndexRoute
+  '/purchase/order/$id/edit': typeof AuthenticatedPurchaseOrderIdEditRoute
+  '/accounting/reports/journal': typeof AuthenticatedAccountingReportsJournalIndexRoute
+  '/accounting/reports/ledger': typeof AuthenticatedAccountingReportsLedgerIndexRoute
+  '/accounting/reports/profit-and-loss': typeof AuthenticatedAccountingReportsProfitAndLossIndexRoute
+  '/accounting/reports/profit-loss': typeof AuthenticatedAccountingReportsProfitLossIndexRoute
+  '/accounting/reports/trial-balance': typeof AuthenticatedAccountingReportsTrialBalanceIndexRoute
+  '/customers/$id/edit': typeof AuthenticatedCustomersIdEditIndexRoute
+  '/purchase/invoices/$id': typeof AuthenticatedPurchaseInvoicesIdIndexRoute
+  '/purchase/order/$id': typeof AuthenticatedPurchaseOrderIdIndexRoute
+  '/purchase/payments/$id': typeof AuthenticatedPurchasePaymentsIdIndexRoute
+  '/purchase/payments/create': typeof AuthenticatedPurchasePaymentsCreateIndexRoute
+  '/suppliers/$id/edit': typeof AuthenticatedSuppliersIdEditIndexRoute
+  '/purchase/invoices/$id/preview': typeof AuthenticatedPurchaseInvoicesIdPreviewIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -667,63 +573,52 @@ export interface FileRoutesByTo {
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/accounting': typeof AuthenticatedAccountingIndexRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
-  '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
-  '/departments': typeof AuthenticatedDepartmentsIndexRoute
-  '/doctors': typeof AuthenticatedDoctorsIndexRoute
-  '/due-collection': typeof AuthenticatedDueCollectionIndexRoute
+  '/customers': typeof AuthenticatedCustomersIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/help': typeof AuthenticatedHelpIndexRoute
+  '/products': typeof AuthenticatedProductsIndexRoute
   '/roles': typeof AuthenticatedRolesIndexRoute
-  '/services': typeof AuthenticatedServicesIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
+  '/suppliers': typeof AuthenticatedSuppliersIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/tests': typeof AuthenticatedTestsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/ecg/all-reports': typeof AuthenticatedEcgAllReportsIndexRoute
-  '/invoices/create': typeof AuthenticatedInvoicesCreateIndexRoute
-  '/invoices/list': typeof AuthenticatedInvoicesListIndexRoute
-  '/tests/create': typeof AuthenticatedTestsCreateIndexRoute
-  '/ultrasonogram/all-reports': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
-  '/x-ray/all-reports': typeof AuthenticatedXRayAllReportsIndexRoute
-  '/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
-  '/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
-  '/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
-  '/pathology/biochemical/lipid-profile': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
-  '/pathology/biochemical/reports': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
-  '/pathology/hematology/blood-for-bt-ct': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
-  '/pathology/hematology/blood-for-tcdc': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
-  '/pathology/hematology/cbc-short': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
-  '/pathology/hematology/cbc-with-pbf': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
-  '/pathology/hematology/peripheral-blood-film': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
-  '/pathology/hematology/prothom-bin-time-full': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
-  '/pathology/hematology/reports': typeof AuthenticatedPathologyHematologyReportsIndexRoute
-  '/pathology/immunology/beta-hcg': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
-  '/pathology/immunology/blood-group': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
-  '/pathology/immunology/mt': typeof AuthenticatedPathologyImmunologyMtIndexRoute
-  '/pathology/immunology/reports': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
-  '/pathology/immunology/widal-test': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
-  '/pathology/special/all-hormones': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
-  '/pathology/special/electrolytes': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
-  '/pathology/special/semen': typeof AuthenticatedPathologySpecialSemenIndexRoute
-  '/pathology/special/skin-scrapping-for-fungus': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
-  '/pathology/special/sputum': typeof AuthenticatedPathologySpecialSputumIndexRoute
-  '/pathology/special/t3t4tsh': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
-  '/pathology/stool/ocult-blood-test': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
-  '/pathology/stool/reducing-substance': typeof AuthenticatedPathologyStoolReducingSubstanceIndexRoute
-  '/pathology/stool/stool-re': typeof AuthenticatedPathologyStoolStoolReIndexRoute
-  '/pathology/urine/urine-for-albumin': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
-  '/pathology/urine/urine-for-re-full': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
-  '/pathology/urine/urine-for-sugar': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
-  '/tests/edit/$id': typeof AuthenticatedTestsEditIdIndexRoute
-  '/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
-  '/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
-  '/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
-  '/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
-  '/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
-  '/pathology/hematology/reports/edit/$id': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
-  '/pathology/immunology/reports/edit/$id': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
-  '/pathology/special/all-hormones/edit/$id': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
+  '/products/$productId/edit': typeof AuthenticatedProductsProductIdEditRoute
+  '/purchase/order/create': typeof AuthenticatedPurchaseOrderCreateRoute
+  '/roles/edit/$id': typeof AuthenticatedRolesEditIdRoute
+  '/accounting/accounts': typeof AuthenticatedAccountingAccountsIndexRoute
+  '/accounting/expenses': typeof AuthenticatedAccountingExpensesIndexRoute
+  '/accounting/income': typeof AuthenticatedAccountingIncomeIndexRoute
+  '/accounting/transactions': typeof AuthenticatedAccountingTransactionsIndexRoute
+  '/customers/$id': typeof AuthenticatedCustomersIdIndexRoute
+  '/customers/create': typeof AuthenticatedCustomersCreateIndexRoute
+  '/inventory/stocks': typeof AuthenticatedInventoryStocksIndexRoute
+  '/products/$productId': typeof AuthenticatedProductsProductIdIndexRoute
+  '/products/categories': typeof AuthenticatedProductsCategoriesIndexRoute
+  '/products/create': typeof AuthenticatedProductsCreateIndexRoute
+  '/products/units': typeof AuthenticatedProductsUnitsIndexRoute
+  '/purchase/invoices': typeof AuthenticatedPurchaseInvoicesIndexRoute
+  '/purchase/order': typeof AuthenticatedPurchaseOrderIndexRoute
+  '/purchase/payments': typeof AuthenticatedPurchasePaymentsIndexRoute
+  '/roles/create': typeof AuthenticatedRolesCreateIndexRoute
+  '/sales/orders': typeof AuthenticatedSalesOrdersIndexRoute
+  '/suppliers/$id': typeof AuthenticatedSuppliersIdIndexRoute
+  '/suppliers/create': typeof AuthenticatedSuppliersCreateIndexRoute
+  '/purchase/order/$id/edit': typeof AuthenticatedPurchaseOrderIdEditRoute
+  '/accounting/reports/journal': typeof AuthenticatedAccountingReportsJournalIndexRoute
+  '/accounting/reports/ledger': typeof AuthenticatedAccountingReportsLedgerIndexRoute
+  '/accounting/reports/profit-and-loss': typeof AuthenticatedAccountingReportsProfitAndLossIndexRoute
+  '/accounting/reports/profit-loss': typeof AuthenticatedAccountingReportsProfitLossIndexRoute
+  '/accounting/reports/trial-balance': typeof AuthenticatedAccountingReportsTrialBalanceIndexRoute
+  '/customers/$id/edit': typeof AuthenticatedCustomersIdEditIndexRoute
+  '/purchase/invoices/$id': typeof AuthenticatedPurchaseInvoicesIdIndexRoute
+  '/purchase/order/$id': typeof AuthenticatedPurchaseOrderIdIndexRoute
+  '/purchase/payments/$id': typeof AuthenticatedPurchasePaymentsIdIndexRoute
+  '/purchase/payments/create': typeof AuthenticatedPurchasePaymentsCreateIndexRoute
+  '/suppliers/$id/edit': typeof AuthenticatedSuppliersIdEditIndexRoute
+  '/purchase/invoices/$id/preview': typeof AuthenticatedPurchaseInvoicesIdPreviewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -743,7 +638,6 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
-  '/_authenticated/_layout': typeof AuthenticatedLayoutRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
@@ -753,70 +647,58 @@ export interface FileRoutesById {
   '/clerk/(auth)/sign-in': typeof ClerkauthSignInRoute
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/_authenticated/accounting/': typeof AuthenticatedAccountingIndexRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
-  '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
-  '/_authenticated/departments/': typeof AuthenticatedDepartmentsIndexRoute
-  '/_authenticated/doctors/': typeof AuthenticatedDoctorsIndexRoute
-  '/_authenticated/due-collection/': typeof AuthenticatedDueCollectionIndexRoute
+  '/_authenticated/customers/': typeof AuthenticatedCustomersIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/_authenticated/help/': typeof AuthenticatedHelpIndexRoute
+  '/_authenticated/products/': typeof AuthenticatedProductsIndexRoute
   '/_authenticated/roles/': typeof AuthenticatedRolesIndexRoute
-  '/_authenticated/services/': typeof AuthenticatedServicesIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
+  '/_authenticated/suppliers/': typeof AuthenticatedSuppliersIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
-  '/_authenticated/tests/': typeof AuthenticatedTestsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
-  '/_authenticated/ecg/all-reports/': typeof AuthenticatedEcgAllReportsIndexRoute
-  '/_authenticated/invoices/create/': typeof AuthenticatedInvoicesCreateIndexRoute
-  '/_authenticated/invoices/list/': typeof AuthenticatedInvoicesListIndexRoute
-  '/_authenticated/tests/create/': typeof AuthenticatedTestsCreateIndexRoute
-  '/_authenticated/ultrasonogram/all-reports/': typeof AuthenticatedUltrasonogramAllReportsIndexRoute
-  '/_authenticated/x-ray/all-reports/': typeof AuthenticatedXRayAllReportsIndexRoute
-  '/_authenticated/ecg/all-reports/edit/$id': typeof AuthenticatedEcgAllReportsEditIdRoute
-  '/_authenticated/ultrasonogram/all-reports/edit/$id': typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
-  '/_authenticated/x-ray/all-reports/edit/$id': typeof AuthenticatedXRayAllReportsEditIdRoute
-  '/_authenticated/pathology/biochemical/lipid-profile/': typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
-  '/_authenticated/pathology/biochemical/reports/': typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
-  '/_authenticated/pathology/hematology/blood-for-bt-ct/': typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
-  '/_authenticated/pathology/hematology/blood-for-tcdc/': typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
-  '/_authenticated/pathology/hematology/cbc-short/': typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
-  '/_authenticated/pathology/hematology/cbc-with-pbf/': typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
-  '/_authenticated/pathology/hematology/peripheral-blood-film/': typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
-  '/_authenticated/pathology/hematology/prothom-bin-time-full/': typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
-  '/_authenticated/pathology/hematology/reports/': typeof AuthenticatedPathologyHematologyReportsIndexRoute
-  '/_authenticated/pathology/immunology/beta-hcg/': typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
-  '/_authenticated/pathology/immunology/blood-group/': typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
-  '/_authenticated/pathology/immunology/mt/': typeof AuthenticatedPathologyImmunologyMtIndexRoute
-  '/_authenticated/pathology/immunology/reports/': typeof AuthenticatedPathologyImmunologyReportsIndexRoute
-  '/_authenticated/pathology/immunology/widal-test/': typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
-  '/_authenticated/pathology/special/all-hormones/': typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
-  '/_authenticated/pathology/special/electrolytes/': typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
-  '/_authenticated/pathology/special/semen/': typeof AuthenticatedPathologySpecialSemenIndexRoute
-  '/_authenticated/pathology/special/skin-scrapping-for-fungus/': typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
-  '/_authenticated/pathology/special/sputum/': typeof AuthenticatedPathologySpecialSputumIndexRoute
-  '/_authenticated/pathology/special/t3t4tsh/': typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
-  '/_authenticated/pathology/stool/ocult-blood-test/': typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
-  '/_authenticated/pathology/stool/reducing-substance/': typeof AuthenticatedPathologyStoolReducingSubstanceIndexRoute
-  '/_authenticated/pathology/stool/stool-re/': typeof AuthenticatedPathologyStoolStoolReIndexRoute
-  '/_authenticated/pathology/urine/urine-for-albumin/': typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
-  '/_authenticated/pathology/urine/urine-for-re-full/': typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
-  '/_authenticated/pathology/urine/urine-for-sugar/': typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
-  '/_authenticated/tests/edit/$id/': typeof AuthenticatedTestsEditIdIndexRoute
-  '/_authenticated/pathology/biochemical/reports/edit/$reportId': typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
-  '/_authenticated/pathology/hematology/cbc-short/edit/$id': typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
-  '/_authenticated/pathology/special/semen/edit/$reportId': typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
-  '/_authenticated/pathology/stool/stool-re/edit/$id': typeof AuthenticatedPathologyStoolStoolReEditIdRoute
-  '/_authenticated/pathology/urine/urine-for-re-full/edit/$id': typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
-  '/_authenticated/pathology/hematology/reports/edit/$id/': typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
-  '/_authenticated/pathology/immunology/reports/edit/$id/': typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
-  '/_authenticated/pathology/special/all-hormones/edit/$id/': typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
+  '/_authenticated/products/$productId/edit': typeof AuthenticatedProductsProductIdEditRoute
+  '/_authenticated/purchase/order/create': typeof AuthenticatedPurchaseOrderCreateRoute
+  '/_authenticated/roles/edit/$id': typeof AuthenticatedRolesEditIdRoute
+  '/_authenticated/accounting/accounts/': typeof AuthenticatedAccountingAccountsIndexRoute
+  '/_authenticated/accounting/expenses/': typeof AuthenticatedAccountingExpensesIndexRoute
+  '/_authenticated/accounting/income/': typeof AuthenticatedAccountingIncomeIndexRoute
+  '/_authenticated/accounting/transactions/': typeof AuthenticatedAccountingTransactionsIndexRoute
+  '/_authenticated/customers/$id/': typeof AuthenticatedCustomersIdIndexRoute
+  '/_authenticated/customers/create/': typeof AuthenticatedCustomersCreateIndexRoute
+  '/_authenticated/inventory/stocks/': typeof AuthenticatedInventoryStocksIndexRoute
+  '/_authenticated/products/$productId/': typeof AuthenticatedProductsProductIdIndexRoute
+  '/_authenticated/products/categories/': typeof AuthenticatedProductsCategoriesIndexRoute
+  '/_authenticated/products/create/': typeof AuthenticatedProductsCreateIndexRoute
+  '/_authenticated/products/units/': typeof AuthenticatedProductsUnitsIndexRoute
+  '/_authenticated/purchase/invoices/': typeof AuthenticatedPurchaseInvoicesIndexRoute
+  '/_authenticated/purchase/order/': typeof AuthenticatedPurchaseOrderIndexRoute
+  '/_authenticated/purchase/payments/': typeof AuthenticatedPurchasePaymentsIndexRoute
+  '/_authenticated/roles/create/': typeof AuthenticatedRolesCreateIndexRoute
+  '/_authenticated/sales/orders/': typeof AuthenticatedSalesOrdersIndexRoute
+  '/_authenticated/suppliers/$id/': typeof AuthenticatedSuppliersIdIndexRoute
+  '/_authenticated/suppliers/create/': typeof AuthenticatedSuppliersCreateIndexRoute
+  '/_authenticated/purchase/order/$id/edit': typeof AuthenticatedPurchaseOrderIdEditRoute
+  '/_authenticated/accounting/reports/journal/': typeof AuthenticatedAccountingReportsJournalIndexRoute
+  '/_authenticated/accounting/reports/ledger/': typeof AuthenticatedAccountingReportsLedgerIndexRoute
+  '/_authenticated/accounting/reports/profit-and-loss/': typeof AuthenticatedAccountingReportsProfitAndLossIndexRoute
+  '/_authenticated/accounting/reports/profit-loss/': typeof AuthenticatedAccountingReportsProfitLossIndexRoute
+  '/_authenticated/accounting/reports/trial-balance/': typeof AuthenticatedAccountingReportsTrialBalanceIndexRoute
+  '/_authenticated/customers/$id/edit/': typeof AuthenticatedCustomersIdEditIndexRoute
+  '/_authenticated/purchase/invoices/$id/': typeof AuthenticatedPurchaseInvoicesIdIndexRoute
+  '/_authenticated/purchase/order/$id/': typeof AuthenticatedPurchaseOrderIdIndexRoute
+  '/_authenticated/purchase/payments/$id/': typeof AuthenticatedPurchasePaymentsIdIndexRoute
+  '/_authenticated/purchase/payments/create/': typeof AuthenticatedPurchasePaymentsCreateIndexRoute
+  '/_authenticated/suppliers/$id/edit/': typeof AuthenticatedSuppliersIdEditIndexRoute
+  '/_authenticated/purchase/invoices/$id/preview/': typeof AuthenticatedPurchaseInvoicesIdPreviewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/clerk'
     | '/settings'
-    | '/clerk/'
     | '/forgot-password'
     | '/login'
     | '/otp'
@@ -837,63 +719,52 @@ export interface FileRouteTypes {
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
+    | '/accounting'
     | '/apps'
-    | '/categories'
     | '/chats'
-    | '/departments'
-    | '/doctors'
-    | '/due-collection'
+    | '/customers'
     | '/help-center'
+    | '/help'
+    | '/products'
     | '/roles'
-    | '/services'
     | '/settings/'
+    | '/suppliers'
     | '/tasks'
-    | '/tests'
     | '/users'
-    | '/ecg/all-reports'
-    | '/invoices/create'
-    | '/invoices/list'
-    | '/tests/create'
-    | '/ultrasonogram/all-reports'
-    | '/x-ray/all-reports'
-    | '/ecg/all-reports/edit/$id'
-    | '/ultrasonogram/all-reports/edit/$id'
-    | '/x-ray/all-reports/edit/$id'
-    | '/pathology/biochemical/lipid-profile'
-    | '/pathology/biochemical/reports'
-    | '/pathology/hematology/blood-for-bt-ct'
-    | '/pathology/hematology/blood-for-tcdc'
-    | '/pathology/hematology/cbc-short'
-    | '/pathology/hematology/cbc-with-pbf'
-    | '/pathology/hematology/peripheral-blood-film'
-    | '/pathology/hematology/prothom-bin-time-full'
-    | '/pathology/hematology/reports'
-    | '/pathology/immunology/beta-hcg'
-    | '/pathology/immunology/blood-group'
-    | '/pathology/immunology/mt'
-    | '/pathology/immunology/reports'
-    | '/pathology/immunology/widal-test'
-    | '/pathology/special/all-hormones'
-    | '/pathology/special/electrolytes'
-    | '/pathology/special/semen'
-    | '/pathology/special/skin-scrapping-for-fungus'
-    | '/pathology/special/sputum'
-    | '/pathology/special/t3t4tsh'
-    | '/pathology/stool/ocult-blood-test'
-    | '/pathology/stool/reducing-substance'
-    | '/pathology/stool/stool-re'
-    | '/pathology/urine/urine-for-albumin'
-    | '/pathology/urine/urine-for-re-full'
-    | '/pathology/urine/urine-for-sugar'
-    | '/tests/edit/$id'
-    | '/pathology/biochemical/reports/edit/$reportId'
-    | '/pathology/hematology/cbc-short/edit/$id'
-    | '/pathology/special/semen/edit/$reportId'
-    | '/pathology/stool/stool-re/edit/$id'
-    | '/pathology/urine/urine-for-re-full/edit/$id'
-    | '/pathology/hematology/reports/edit/$id'
-    | '/pathology/immunology/reports/edit/$id'
-    | '/pathology/special/all-hormones/edit/$id'
+    | '/products/$productId/edit'
+    | '/purchase/order/create'
+    | '/roles/edit/$id'
+    | '/accounting/accounts'
+    | '/accounting/expenses'
+    | '/accounting/income'
+    | '/accounting/transactions'
+    | '/customers/$id'
+    | '/customers/create'
+    | '/inventory/stocks'
+    | '/products/$productId'
+    | '/products/categories'
+    | '/products/create'
+    | '/products/units'
+    | '/purchase/invoices'
+    | '/purchase/order'
+    | '/purchase/payments'
+    | '/roles/create'
+    | '/sales/orders'
+    | '/suppliers/$id'
+    | '/suppliers/create'
+    | '/purchase/order/$id/edit'
+    | '/accounting/reports/journal'
+    | '/accounting/reports/ledger'
+    | '/accounting/reports/profit-and-loss'
+    | '/accounting/reports/profit-loss'
+    | '/accounting/reports/trial-balance'
+    | '/customers/$id/edit'
+    | '/purchase/invoices/$id'
+    | '/purchase/order/$id'
+    | '/purchase/payments/$id'
+    | '/purchase/payments/create'
+    | '/suppliers/$id/edit'
+    | '/purchase/invoices/$id/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -917,63 +788,52 @@ export interface FileRouteTypes {
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
+    | '/accounting'
     | '/apps'
-    | '/categories'
     | '/chats'
-    | '/departments'
-    | '/doctors'
-    | '/due-collection'
+    | '/customers'
     | '/help-center'
+    | '/help'
+    | '/products'
     | '/roles'
-    | '/services'
     | '/settings'
+    | '/suppliers'
     | '/tasks'
-    | '/tests'
     | '/users'
-    | '/ecg/all-reports'
-    | '/invoices/create'
-    | '/invoices/list'
-    | '/tests/create'
-    | '/ultrasonogram/all-reports'
-    | '/x-ray/all-reports'
-    | '/ecg/all-reports/edit/$id'
-    | '/ultrasonogram/all-reports/edit/$id'
-    | '/x-ray/all-reports/edit/$id'
-    | '/pathology/biochemical/lipid-profile'
-    | '/pathology/biochemical/reports'
-    | '/pathology/hematology/blood-for-bt-ct'
-    | '/pathology/hematology/blood-for-tcdc'
-    | '/pathology/hematology/cbc-short'
-    | '/pathology/hematology/cbc-with-pbf'
-    | '/pathology/hematology/peripheral-blood-film'
-    | '/pathology/hematology/prothom-bin-time-full'
-    | '/pathology/hematology/reports'
-    | '/pathology/immunology/beta-hcg'
-    | '/pathology/immunology/blood-group'
-    | '/pathology/immunology/mt'
-    | '/pathology/immunology/reports'
-    | '/pathology/immunology/widal-test'
-    | '/pathology/special/all-hormones'
-    | '/pathology/special/electrolytes'
-    | '/pathology/special/semen'
-    | '/pathology/special/skin-scrapping-for-fungus'
-    | '/pathology/special/sputum'
-    | '/pathology/special/t3t4tsh'
-    | '/pathology/stool/ocult-blood-test'
-    | '/pathology/stool/reducing-substance'
-    | '/pathology/stool/stool-re'
-    | '/pathology/urine/urine-for-albumin'
-    | '/pathology/urine/urine-for-re-full'
-    | '/pathology/urine/urine-for-sugar'
-    | '/tests/edit/$id'
-    | '/pathology/biochemical/reports/edit/$reportId'
-    | '/pathology/hematology/cbc-short/edit/$id'
-    | '/pathology/special/semen/edit/$reportId'
-    | '/pathology/stool/stool-re/edit/$id'
-    | '/pathology/urine/urine-for-re-full/edit/$id'
-    | '/pathology/hematology/reports/edit/$id'
-    | '/pathology/immunology/reports/edit/$id'
-    | '/pathology/special/all-hormones/edit/$id'
+    | '/products/$productId/edit'
+    | '/purchase/order/create'
+    | '/roles/edit/$id'
+    | '/accounting/accounts'
+    | '/accounting/expenses'
+    | '/accounting/income'
+    | '/accounting/transactions'
+    | '/customers/$id'
+    | '/customers/create'
+    | '/inventory/stocks'
+    | '/products/$productId'
+    | '/products/categories'
+    | '/products/create'
+    | '/products/units'
+    | '/purchase/invoices'
+    | '/purchase/order'
+    | '/purchase/payments'
+    | '/roles/create'
+    | '/sales/orders'
+    | '/suppliers/$id'
+    | '/suppliers/create'
+    | '/purchase/order/$id/edit'
+    | '/accounting/reports/journal'
+    | '/accounting/reports/ledger'
+    | '/accounting/reports/profit-and-loss'
+    | '/accounting/reports/profit-loss'
+    | '/accounting/reports/trial-balance'
+    | '/customers/$id/edit'
+    | '/purchase/invoices/$id'
+    | '/purchase/order/$id'
+    | '/purchase/payments/$id'
+    | '/purchase/payments/create'
+    | '/suppliers/$id/edit'
+    | '/purchase/invoices/$id/preview'
   id:
     | '__root__'
     | '/_authenticated'
@@ -992,7 +852,6 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
-    | '/_authenticated/_layout'
     | '/_authenticated/'
     | '/_authenticated/errors/$error'
     | '/_authenticated/settings/account'
@@ -1002,63 +861,52 @@ export interface FileRouteTypes {
     | '/clerk/(auth)/sign-in'
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
+    | '/_authenticated/accounting/'
     | '/_authenticated/apps/'
-    | '/_authenticated/categories/'
     | '/_authenticated/chats/'
-    | '/_authenticated/departments/'
-    | '/_authenticated/doctors/'
-    | '/_authenticated/due-collection/'
+    | '/_authenticated/customers/'
     | '/_authenticated/help-center/'
+    | '/_authenticated/help/'
+    | '/_authenticated/products/'
     | '/_authenticated/roles/'
-    | '/_authenticated/services/'
     | '/_authenticated/settings/'
+    | '/_authenticated/suppliers/'
     | '/_authenticated/tasks/'
-    | '/_authenticated/tests/'
     | '/_authenticated/users/'
-    | '/_authenticated/ecg/all-reports/'
-    | '/_authenticated/invoices/create/'
-    | '/_authenticated/invoices/list/'
-    | '/_authenticated/tests/create/'
-    | '/_authenticated/ultrasonogram/all-reports/'
-    | '/_authenticated/x-ray/all-reports/'
-    | '/_authenticated/ecg/all-reports/edit/$id'
-    | '/_authenticated/ultrasonogram/all-reports/edit/$id'
-    | '/_authenticated/x-ray/all-reports/edit/$id'
-    | '/_authenticated/pathology/biochemical/lipid-profile/'
-    | '/_authenticated/pathology/biochemical/reports/'
-    | '/_authenticated/pathology/hematology/blood-for-bt-ct/'
-    | '/_authenticated/pathology/hematology/blood-for-tcdc/'
-    | '/_authenticated/pathology/hematology/cbc-short/'
-    | '/_authenticated/pathology/hematology/cbc-with-pbf/'
-    | '/_authenticated/pathology/hematology/peripheral-blood-film/'
-    | '/_authenticated/pathology/hematology/prothom-bin-time-full/'
-    | '/_authenticated/pathology/hematology/reports/'
-    | '/_authenticated/pathology/immunology/beta-hcg/'
-    | '/_authenticated/pathology/immunology/blood-group/'
-    | '/_authenticated/pathology/immunology/mt/'
-    | '/_authenticated/pathology/immunology/reports/'
-    | '/_authenticated/pathology/immunology/widal-test/'
-    | '/_authenticated/pathology/special/all-hormones/'
-    | '/_authenticated/pathology/special/electrolytes/'
-    | '/_authenticated/pathology/special/semen/'
-    | '/_authenticated/pathology/special/skin-scrapping-for-fungus/'
-    | '/_authenticated/pathology/special/sputum/'
-    | '/_authenticated/pathology/special/t3t4tsh/'
-    | '/_authenticated/pathology/stool/ocult-blood-test/'
-    | '/_authenticated/pathology/stool/reducing-substance/'
-    | '/_authenticated/pathology/stool/stool-re/'
-    | '/_authenticated/pathology/urine/urine-for-albumin/'
-    | '/_authenticated/pathology/urine/urine-for-re-full/'
-    | '/_authenticated/pathology/urine/urine-for-sugar/'
-    | '/_authenticated/tests/edit/$id/'
-    | '/_authenticated/pathology/biochemical/reports/edit/$reportId'
-    | '/_authenticated/pathology/hematology/cbc-short/edit/$id'
-    | '/_authenticated/pathology/special/semen/edit/$reportId'
-    | '/_authenticated/pathology/stool/stool-re/edit/$id'
-    | '/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
-    | '/_authenticated/pathology/hematology/reports/edit/$id/'
-    | '/_authenticated/pathology/immunology/reports/edit/$id/'
-    | '/_authenticated/pathology/special/all-hormones/edit/$id/'
+    | '/_authenticated/products/$productId/edit'
+    | '/_authenticated/purchase/order/create'
+    | '/_authenticated/roles/edit/$id'
+    | '/_authenticated/accounting/accounts/'
+    | '/_authenticated/accounting/expenses/'
+    | '/_authenticated/accounting/income/'
+    | '/_authenticated/accounting/transactions/'
+    | '/_authenticated/customers/$id/'
+    | '/_authenticated/customers/create/'
+    | '/_authenticated/inventory/stocks/'
+    | '/_authenticated/products/$productId/'
+    | '/_authenticated/products/categories/'
+    | '/_authenticated/products/create/'
+    | '/_authenticated/products/units/'
+    | '/_authenticated/purchase/invoices/'
+    | '/_authenticated/purchase/order/'
+    | '/_authenticated/purchase/payments/'
+    | '/_authenticated/roles/create/'
+    | '/_authenticated/sales/orders/'
+    | '/_authenticated/suppliers/$id/'
+    | '/_authenticated/suppliers/create/'
+    | '/_authenticated/purchase/order/$id/edit'
+    | '/_authenticated/accounting/reports/journal/'
+    | '/_authenticated/accounting/reports/ledger/'
+    | '/_authenticated/accounting/reports/profit-and-loss/'
+    | '/_authenticated/accounting/reports/profit-loss/'
+    | '/_authenticated/accounting/reports/trial-balance/'
+    | '/_authenticated/customers/$id/edit/'
+    | '/_authenticated/purchase/invoices/$id/'
+    | '/_authenticated/purchase/order/$id/'
+    | '/_authenticated/purchase/payments/$id/'
+    | '/_authenticated/purchase/payments/create/'
+    | '/_authenticated/suppliers/$id/edit/'
+    | '/_authenticated/purchase/invoices/$id/preview/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1098,13 +946,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/_layout': {
-      id: '/_authenticated/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedLayoutRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -1193,8 +1034,8 @@ declare module '@tanstack/react-router' {
     }
     '/clerk/(auth)': {
       id: '/clerk/(auth)'
-      path: '/'
-      fullPath: '/clerk/'
+      path: ''
+      fullPath: '/clerk'
       preLoaderRoute: typeof ClerkauthRouteRouteImport
       parentRoute: typeof ClerkRouteRoute
     }
@@ -1212,18 +1053,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/tests/': {
-      id: '/_authenticated/tests/'
-      path: '/tests'
-      fullPath: '/tests'
-      preLoaderRoute: typeof AuthenticatedTestsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/tasks/': {
       id: '/_authenticated/tasks/'
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof AuthenticatedTasksIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/suppliers/': {
+      id: '/_authenticated/suppliers/'
+      path: '/suppliers'
+      fullPath: '/suppliers'
+      preLoaderRoute: typeof AuthenticatedSuppliersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/settings/': {
@@ -1233,18 +1074,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
-    '/_authenticated/services/': {
-      id: '/_authenticated/services/'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof AuthenticatedServicesIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/roles/': {
       id: '/_authenticated/roles/'
       path: '/roles'
       fullPath: '/roles'
       preLoaderRoute: typeof AuthenticatedRolesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/products/': {
+      id: '/_authenticated/products/'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthenticatedProductsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/help/': {
+      id: '/_authenticated/help/'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof AuthenticatedHelpIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/help-center/': {
@@ -1254,25 +1102,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/due-collection/': {
-      id: '/_authenticated/due-collection/'
-      path: '/due-collection'
-      fullPath: '/due-collection'
-      preLoaderRoute: typeof AuthenticatedDueCollectionIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/doctors/': {
-      id: '/_authenticated/doctors/'
-      path: '/doctors'
-      fullPath: '/doctors'
-      preLoaderRoute: typeof AuthenticatedDoctorsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/departments/': {
-      id: '/_authenticated/departments/'
-      path: '/departments'
-      fullPath: '/departments'
-      preLoaderRoute: typeof AuthenticatedDepartmentsIndexRouteImport
+    '/_authenticated/customers/': {
+      id: '/_authenticated/customers/'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof AuthenticatedCustomersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats/': {
@@ -1282,18 +1116,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/categories/': {
-      id: '/_authenticated/categories/'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof AuthenticatedCategoriesIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/apps/': {
       id: '/_authenticated/apps/'
       path: '/apps'
       fullPath: '/apps'
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/accounting/': {
+      id: '/_authenticated/accounting/'
+      path: '/accounting'
+      fullPath: '/accounting'
+      preLoaderRoute: typeof AuthenticatedAccountingIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/clerk/_authenticated/user-management': {
@@ -1352,312 +1186,242 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/x-ray/all-reports/': {
-      id: '/_authenticated/x-ray/all-reports/'
-      path: '/x-ray/all-reports'
-      fullPath: '/x-ray/all-reports'
-      preLoaderRoute: typeof AuthenticatedXRayAllReportsIndexRouteImport
+    '/_authenticated/suppliers/create/': {
+      id: '/_authenticated/suppliers/create/'
+      path: '/suppliers/create'
+      fullPath: '/suppliers/create'
+      preLoaderRoute: typeof AuthenticatedSuppliersCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/ultrasonogram/all-reports/': {
-      id: '/_authenticated/ultrasonogram/all-reports/'
-      path: '/ultrasonogram/all-reports'
-      fullPath: '/ultrasonogram/all-reports'
-      preLoaderRoute: typeof AuthenticatedUltrasonogramAllReportsIndexRouteImport
+    '/_authenticated/suppliers/$id/': {
+      id: '/_authenticated/suppliers/$id/'
+      path: '/suppliers/$id'
+      fullPath: '/suppliers/$id'
+      preLoaderRoute: typeof AuthenticatedSuppliersIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/tests/create/': {
-      id: '/_authenticated/tests/create/'
-      path: '/tests/create'
-      fullPath: '/tests/create'
-      preLoaderRoute: typeof AuthenticatedTestsCreateIndexRouteImport
+    '/_authenticated/sales/orders/': {
+      id: '/_authenticated/sales/orders/'
+      path: '/sales/orders'
+      fullPath: '/sales/orders'
+      preLoaderRoute: typeof AuthenticatedSalesOrdersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/invoices/list/': {
-      id: '/_authenticated/invoices/list/'
-      path: '/invoices/list'
-      fullPath: '/invoices/list'
-      preLoaderRoute: typeof AuthenticatedInvoicesListIndexRouteImport
+    '/_authenticated/roles/create/': {
+      id: '/_authenticated/roles/create/'
+      path: '/roles/create'
+      fullPath: '/roles/create'
+      preLoaderRoute: typeof AuthenticatedRolesCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/invoices/create/': {
-      id: '/_authenticated/invoices/create/'
-      path: '/invoices/create'
-      fullPath: '/invoices/create'
-      preLoaderRoute: typeof AuthenticatedInvoicesCreateIndexRouteImport
+    '/_authenticated/purchase/payments/': {
+      id: '/_authenticated/purchase/payments/'
+      path: '/purchase/payments'
+      fullPath: '/purchase/payments'
+      preLoaderRoute: typeof AuthenticatedPurchasePaymentsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/ecg/all-reports/': {
-      id: '/_authenticated/ecg/all-reports/'
-      path: '/ecg/all-reports'
-      fullPath: '/ecg/all-reports'
-      preLoaderRoute: typeof AuthenticatedEcgAllReportsIndexRouteImport
+    '/_authenticated/purchase/order/': {
+      id: '/_authenticated/purchase/order/'
+      path: '/purchase/order'
+      fullPath: '/purchase/order'
+      preLoaderRoute: typeof AuthenticatedPurchaseOrderIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/tests/edit/$id/': {
-      id: '/_authenticated/tests/edit/$id/'
-      path: '/tests/edit/$id'
-      fullPath: '/tests/edit/$id'
-      preLoaderRoute: typeof AuthenticatedTestsEditIdIndexRouteImport
+    '/_authenticated/purchase/invoices/': {
+      id: '/_authenticated/purchase/invoices/'
+      path: '/purchase/invoices'
+      fullPath: '/purchase/invoices'
+      preLoaderRoute: typeof AuthenticatedPurchaseInvoicesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/urine/urine-for-sugar/': {
-      id: '/_authenticated/pathology/urine/urine-for-sugar/'
-      path: '/pathology/urine/urine-for-sugar'
-      fullPath: '/pathology/urine/urine-for-sugar'
-      preLoaderRoute: typeof AuthenticatedPathologyUrineUrineForSugarIndexRouteImport
+    '/_authenticated/products/units/': {
+      id: '/_authenticated/products/units/'
+      path: '/products/units'
+      fullPath: '/products/units'
+      preLoaderRoute: typeof AuthenticatedProductsUnitsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/urine/urine-for-re-full/': {
-      id: '/_authenticated/pathology/urine/urine-for-re-full/'
-      path: '/pathology/urine/urine-for-re-full'
-      fullPath: '/pathology/urine/urine-for-re-full'
-      preLoaderRoute: typeof AuthenticatedPathologyUrineUrineForReFullIndexRouteImport
+    '/_authenticated/products/create/': {
+      id: '/_authenticated/products/create/'
+      path: '/products/create'
+      fullPath: '/products/create'
+      preLoaderRoute: typeof AuthenticatedProductsCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/urine/urine-for-albumin/': {
-      id: '/_authenticated/pathology/urine/urine-for-albumin/'
-      path: '/pathology/urine/urine-for-albumin'
-      fullPath: '/pathology/urine/urine-for-albumin'
-      preLoaderRoute: typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRouteImport
+    '/_authenticated/products/categories/': {
+      id: '/_authenticated/products/categories/'
+      path: '/products/categories'
+      fullPath: '/products/categories'
+      preLoaderRoute: typeof AuthenticatedProductsCategoriesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/stool/stool-re/': {
-      id: '/_authenticated/pathology/stool/stool-re/'
-      path: '/pathology/stool/stool-re'
-      fullPath: '/pathology/stool/stool-re'
-      preLoaderRoute: typeof AuthenticatedPathologyStoolStoolReIndexRouteImport
+    '/_authenticated/products/$productId/': {
+      id: '/_authenticated/products/$productId/'
+      path: '/products/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof AuthenticatedProductsProductIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/stool/reducing-substance/': {
-      id: '/_authenticated/pathology/stool/reducing-substance/'
-      path: '/pathology/stool/reducing-substance'
-      fullPath: '/pathology/stool/reducing-substance'
-      preLoaderRoute: typeof AuthenticatedPathologyStoolReducingSubstanceIndexRouteImport
+    '/_authenticated/inventory/stocks/': {
+      id: '/_authenticated/inventory/stocks/'
+      path: '/inventory/stocks'
+      fullPath: '/inventory/stocks'
+      preLoaderRoute: typeof AuthenticatedInventoryStocksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/stool/ocult-blood-test/': {
-      id: '/_authenticated/pathology/stool/ocult-blood-test/'
-      path: '/pathology/stool/ocult-blood-test'
-      fullPath: '/pathology/stool/ocult-blood-test'
-      preLoaderRoute: typeof AuthenticatedPathologyStoolOcultBloodTestIndexRouteImport
+    '/_authenticated/customers/create/': {
+      id: '/_authenticated/customers/create/'
+      path: '/customers/create'
+      fullPath: '/customers/create'
+      preLoaderRoute: typeof AuthenticatedCustomersCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/t3t4tsh/': {
-      id: '/_authenticated/pathology/special/t3t4tsh/'
-      path: '/pathology/special/t3t4tsh'
-      fullPath: '/pathology/special/t3t4tsh'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialT3t4tshIndexRouteImport
+    '/_authenticated/customers/$id/': {
+      id: '/_authenticated/customers/$id/'
+      path: '/customers/$id'
+      fullPath: '/customers/$id'
+      preLoaderRoute: typeof AuthenticatedCustomersIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/sputum/': {
-      id: '/_authenticated/pathology/special/sputum/'
-      path: '/pathology/special/sputum'
-      fullPath: '/pathology/special/sputum'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialSputumIndexRouteImport
+    '/_authenticated/accounting/transactions/': {
+      id: '/_authenticated/accounting/transactions/'
+      path: '/accounting/transactions'
+      fullPath: '/accounting/transactions'
+      preLoaderRoute: typeof AuthenticatedAccountingTransactionsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/skin-scrapping-for-fungus/': {
-      id: '/_authenticated/pathology/special/skin-scrapping-for-fungus/'
-      path: '/pathology/special/skin-scrapping-for-fungus'
-      fullPath: '/pathology/special/skin-scrapping-for-fungus'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRouteImport
+    '/_authenticated/accounting/income/': {
+      id: '/_authenticated/accounting/income/'
+      path: '/accounting/income'
+      fullPath: '/accounting/income'
+      preLoaderRoute: typeof AuthenticatedAccountingIncomeIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/semen/': {
-      id: '/_authenticated/pathology/special/semen/'
-      path: '/pathology/special/semen'
-      fullPath: '/pathology/special/semen'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialSemenIndexRouteImport
+    '/_authenticated/accounting/expenses/': {
+      id: '/_authenticated/accounting/expenses/'
+      path: '/accounting/expenses'
+      fullPath: '/accounting/expenses'
+      preLoaderRoute: typeof AuthenticatedAccountingExpensesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/electrolytes/': {
-      id: '/_authenticated/pathology/special/electrolytes/'
-      path: '/pathology/special/electrolytes'
-      fullPath: '/pathology/special/electrolytes'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialElectrolytesIndexRouteImport
+    '/_authenticated/accounting/accounts/': {
+      id: '/_authenticated/accounting/accounts/'
+      path: '/accounting/accounts'
+      fullPath: '/accounting/accounts'
+      preLoaderRoute: typeof AuthenticatedAccountingAccountsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/special/all-hormones/': {
-      id: '/_authenticated/pathology/special/all-hormones/'
-      path: '/pathology/special/all-hormones'
-      fullPath: '/pathology/special/all-hormones'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialAllHormonesIndexRouteImport
+    '/_authenticated/roles/edit/$id': {
+      id: '/_authenticated/roles/edit/$id'
+      path: '/roles/edit/$id'
+      fullPath: '/roles/edit/$id'
+      preLoaderRoute: typeof AuthenticatedRolesEditIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/immunology/widal-test/': {
-      id: '/_authenticated/pathology/immunology/widal-test/'
-      path: '/pathology/immunology/widal-test'
-      fullPath: '/pathology/immunology/widal-test'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRouteImport
+    '/_authenticated/purchase/order/create': {
+      id: '/_authenticated/purchase/order/create'
+      path: '/purchase/order/create'
+      fullPath: '/purchase/order/create'
+      preLoaderRoute: typeof AuthenticatedPurchaseOrderCreateRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/immunology/reports/': {
-      id: '/_authenticated/pathology/immunology/reports/'
-      path: '/pathology/immunology/reports'
-      fullPath: '/pathology/immunology/reports'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyReportsIndexRouteImport
+    '/_authenticated/products/$productId/edit': {
+      id: '/_authenticated/products/$productId/edit'
+      path: '/products/$productId/edit'
+      fullPath: '/products/$productId/edit'
+      preLoaderRoute: typeof AuthenticatedProductsProductIdEditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/immunology/mt/': {
-      id: '/_authenticated/pathology/immunology/mt/'
-      path: '/pathology/immunology/mt'
-      fullPath: '/pathology/immunology/mt'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyMtIndexRouteImport
+    '/_authenticated/suppliers/$id/edit/': {
+      id: '/_authenticated/suppliers/$id/edit/'
+      path: '/suppliers/$id/edit'
+      fullPath: '/suppliers/$id/edit'
+      preLoaderRoute: typeof AuthenticatedSuppliersIdEditIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/immunology/blood-group/': {
-      id: '/_authenticated/pathology/immunology/blood-group/'
-      path: '/pathology/immunology/blood-group'
-      fullPath: '/pathology/immunology/blood-group'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyBloodGroupIndexRouteImport
+    '/_authenticated/purchase/payments/create/': {
+      id: '/_authenticated/purchase/payments/create/'
+      path: '/purchase/payments/create'
+      fullPath: '/purchase/payments/create'
+      preLoaderRoute: typeof AuthenticatedPurchasePaymentsCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/immunology/beta-hcg/': {
-      id: '/_authenticated/pathology/immunology/beta-hcg/'
-      path: '/pathology/immunology/beta-hcg'
-      fullPath: '/pathology/immunology/beta-hcg'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyBetaHcgIndexRouteImport
+    '/_authenticated/purchase/payments/$id/': {
+      id: '/_authenticated/purchase/payments/$id/'
+      path: '/purchase/payments/$id'
+      fullPath: '/purchase/payments/$id'
+      preLoaderRoute: typeof AuthenticatedPurchasePaymentsIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/reports/': {
-      id: '/_authenticated/pathology/hematology/reports/'
-      path: '/pathology/hematology/reports'
-      fullPath: '/pathology/hematology/reports'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsIndexRouteImport
+    '/_authenticated/purchase/order/$id/': {
+      id: '/_authenticated/purchase/order/$id/'
+      path: '/purchase/order/$id'
+      fullPath: '/purchase/order/$id'
+      preLoaderRoute: typeof AuthenticatedPurchaseOrderIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/prothom-bin-time-full/': {
-      id: '/_authenticated/pathology/hematology/prothom-bin-time-full/'
-      path: '/pathology/hematology/prothom-bin-time-full'
-      fullPath: '/pathology/hematology/prothom-bin-time-full'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRouteImport
+    '/_authenticated/purchase/invoices/$id/': {
+      id: '/_authenticated/purchase/invoices/$id/'
+      path: '/purchase/invoices/$id'
+      fullPath: '/purchase/invoices/$id'
+      preLoaderRoute: typeof AuthenticatedPurchaseInvoicesIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/peripheral-blood-film/': {
-      id: '/_authenticated/pathology/hematology/peripheral-blood-film/'
-      path: '/pathology/hematology/peripheral-blood-film'
-      fullPath: '/pathology/hematology/peripheral-blood-film'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRouteImport
+    '/_authenticated/customers/$id/edit/': {
+      id: '/_authenticated/customers/$id/edit/'
+      path: '/customers/$id/edit'
+      fullPath: '/customers/$id/edit'
+      preLoaderRoute: typeof AuthenticatedCustomersIdEditIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/cbc-with-pbf/': {
-      id: '/_authenticated/pathology/hematology/cbc-with-pbf/'
-      path: '/pathology/hematology/cbc-with-pbf'
-      fullPath: '/pathology/hematology/cbc-with-pbf'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRouteImport
+    '/_authenticated/accounting/reports/trial-balance/': {
+      id: '/_authenticated/accounting/reports/trial-balance/'
+      path: '/accounting/reports/trial-balance'
+      fullPath: '/accounting/reports/trial-balance'
+      preLoaderRoute: typeof AuthenticatedAccountingReportsTrialBalanceIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/cbc-short/': {
-      id: '/_authenticated/pathology/hematology/cbc-short/'
-      path: '/pathology/hematology/cbc-short'
-      fullPath: '/pathology/hematology/cbc-short'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyCbcShortIndexRouteImport
+    '/_authenticated/accounting/reports/profit-loss/': {
+      id: '/_authenticated/accounting/reports/profit-loss/'
+      path: '/accounting/reports/profit-loss'
+      fullPath: '/accounting/reports/profit-loss'
+      preLoaderRoute: typeof AuthenticatedAccountingReportsProfitLossIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/blood-for-tcdc/': {
-      id: '/_authenticated/pathology/hematology/blood-for-tcdc/'
-      path: '/pathology/hematology/blood-for-tcdc'
-      fullPath: '/pathology/hematology/blood-for-tcdc'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRouteImport
+    '/_authenticated/accounting/reports/profit-and-loss/': {
+      id: '/_authenticated/accounting/reports/profit-and-loss/'
+      path: '/accounting/reports/profit-and-loss'
+      fullPath: '/accounting/reports/profit-and-loss'
+      preLoaderRoute: typeof AuthenticatedAccountingReportsProfitAndLossIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/hematology/blood-for-bt-ct/': {
-      id: '/_authenticated/pathology/hematology/blood-for-bt-ct/'
-      path: '/pathology/hematology/blood-for-bt-ct'
-      fullPath: '/pathology/hematology/blood-for-bt-ct'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRouteImport
+    '/_authenticated/accounting/reports/ledger/': {
+      id: '/_authenticated/accounting/reports/ledger/'
+      path: '/accounting/reports/ledger'
+      fullPath: '/accounting/reports/ledger'
+      preLoaderRoute: typeof AuthenticatedAccountingReportsLedgerIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/biochemical/reports/': {
-      id: '/_authenticated/pathology/biochemical/reports/'
-      path: '/pathology/biochemical/reports'
-      fullPath: '/pathology/biochemical/reports'
-      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRouteImport
+    '/_authenticated/accounting/reports/journal/': {
+      id: '/_authenticated/accounting/reports/journal/'
+      path: '/accounting/reports/journal'
+      fullPath: '/accounting/reports/journal'
+      preLoaderRoute: typeof AuthenticatedAccountingReportsJournalIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/pathology/biochemical/lipid-profile/': {
-      id: '/_authenticated/pathology/biochemical/lipid-profile/'
-      path: '/pathology/biochemical/lipid-profile'
-      fullPath: '/pathology/biochemical/lipid-profile'
-      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRouteImport
+    '/_authenticated/purchase/order/$id/edit': {
+      id: '/_authenticated/purchase/order/$id/edit'
+      path: '/purchase/order/$id/edit'
+      fullPath: '/purchase/order/$id/edit'
+      preLoaderRoute: typeof AuthenticatedPurchaseOrderIdEditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/x-ray/all-reports/edit/$id': {
-      id: '/_authenticated/x-ray/all-reports/edit/$id'
-      path: '/x-ray/all-reports/edit/$id'
-      fullPath: '/x-ray/all-reports/edit/$id'
-      preLoaderRoute: typeof AuthenticatedXRayAllReportsEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/ultrasonogram/all-reports/edit/$id': {
-      id: '/_authenticated/ultrasonogram/all-reports/edit/$id'
-      path: '/ultrasonogram/all-reports/edit/$id'
-      fullPath: '/ultrasonogram/all-reports/edit/$id'
-      preLoaderRoute: typeof AuthenticatedUltrasonogramAllReportsEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/ecg/all-reports/edit/$id': {
-      id: '/_authenticated/ecg/all-reports/edit/$id'
-      path: '/ecg/all-reports/edit/$id'
-      fullPath: '/ecg/all-reports/edit/$id'
-      preLoaderRoute: typeof AuthenticatedEcgAllReportsEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/urine/urine-for-re-full/edit/$id': {
-      id: '/_authenticated/pathology/urine/urine-for-re-full/edit/$id'
-      path: '/pathology/urine/urine-for-re-full/edit/$id'
-      fullPath: '/pathology/urine/urine-for-re-full/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyUrineUrineForReFullEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/stool/stool-re/edit/$id': {
-      id: '/_authenticated/pathology/stool/stool-re/edit/$id'
-      path: '/pathology/stool/stool-re/edit/$id'
-      fullPath: '/pathology/stool/stool-re/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyStoolStoolReEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/special/semen/edit/$reportId': {
-      id: '/_authenticated/pathology/special/semen/edit/$reportId'
-      path: '/pathology/special/semen/edit/$reportId'
-      fullPath: '/pathology/special/semen/edit/$reportId'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialSemenEditReportIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/hematology/cbc-short/edit/$id': {
-      id: '/_authenticated/pathology/hematology/cbc-short/edit/$id'
-      path: '/pathology/hematology/cbc-short/edit/$id'
-      fullPath: '/pathology/hematology/cbc-short/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyCbcShortEditIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/biochemical/reports/edit/$reportId': {
-      id: '/_authenticated/pathology/biochemical/reports/edit/$reportId'
-      path: '/pathology/biochemical/reports/edit/$reportId'
-      fullPath: '/pathology/biochemical/reports/edit/$reportId'
-      preLoaderRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/special/all-hormones/edit/$id/': {
-      id: '/_authenticated/pathology/special/all-hormones/edit/$id/'
-      path: '/pathology/special/all-hormones/edit/$id'
-      fullPath: '/pathology/special/all-hormones/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/immunology/reports/edit/$id/': {
-      id: '/_authenticated/pathology/immunology/reports/edit/$id/'
-      path: '/pathology/immunology/reports/edit/$id'
-      fullPath: '/pathology/immunology/reports/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pathology/hematology/reports/edit/$id/': {
-      id: '/_authenticated/pathology/hematology/reports/edit/$id/'
-      path: '/pathology/hematology/reports/edit/$id'
-      fullPath: '/pathology/hematology/reports/edit/$id'
-      preLoaderRoute: typeof AuthenticatedPathologyHematologyReportsEditIdIndexRouteImport
+    '/_authenticated/purchase/invoices/$id/preview/': {
+      id: '/_authenticated/purchase/invoices/$id/preview/'
+      path: '/purchase/invoices/$id/preview'
+      fullPath: '/purchase/invoices/$id/preview'
+      preLoaderRoute: typeof AuthenticatedPurchaseInvoicesIdPreviewIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -1688,165 +1452,128 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
-  AuthenticatedLayoutRoute: typeof AuthenticatedLayoutRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
+  AuthenticatedAccountingIndexRoute: typeof AuthenticatedAccountingIndexRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
-  AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
-  AuthenticatedDepartmentsIndexRoute: typeof AuthenticatedDepartmentsIndexRoute
-  AuthenticatedDoctorsIndexRoute: typeof AuthenticatedDoctorsIndexRoute
-  AuthenticatedDueCollectionIndexRoute: typeof AuthenticatedDueCollectionIndexRoute
+  AuthenticatedCustomersIndexRoute: typeof AuthenticatedCustomersIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
+  AuthenticatedHelpIndexRoute: typeof AuthenticatedHelpIndexRoute
+  AuthenticatedProductsIndexRoute: typeof AuthenticatedProductsIndexRoute
   AuthenticatedRolesIndexRoute: typeof AuthenticatedRolesIndexRoute
-  AuthenticatedServicesIndexRoute: typeof AuthenticatedServicesIndexRoute
+  AuthenticatedSuppliersIndexRoute: typeof AuthenticatedSuppliersIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
-  AuthenticatedTestsIndexRoute: typeof AuthenticatedTestsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
-  AuthenticatedEcgAllReportsIndexRoute: typeof AuthenticatedEcgAllReportsIndexRoute
-  AuthenticatedInvoicesCreateIndexRoute: typeof AuthenticatedInvoicesCreateIndexRoute
-  AuthenticatedInvoicesListIndexRoute: typeof AuthenticatedInvoicesListIndexRoute
-  AuthenticatedTestsCreateIndexRoute: typeof AuthenticatedTestsCreateIndexRoute
-  AuthenticatedUltrasonogramAllReportsIndexRoute: typeof AuthenticatedUltrasonogramAllReportsIndexRoute
-  AuthenticatedXRayAllReportsIndexRoute: typeof AuthenticatedXRayAllReportsIndexRoute
-  AuthenticatedEcgAllReportsEditIdRoute: typeof AuthenticatedEcgAllReportsEditIdRoute
-  AuthenticatedUltrasonogramAllReportsEditIdRoute: typeof AuthenticatedUltrasonogramAllReportsEditIdRoute
-  AuthenticatedXRayAllReportsEditIdRoute: typeof AuthenticatedXRayAllReportsEditIdRoute
-  AuthenticatedPathologyBiochemicalLipidProfileIndexRoute: typeof AuthenticatedPathologyBiochemicalLipidProfileIndexRoute
-  AuthenticatedPathologyBiochemicalReportsIndexRoute: typeof AuthenticatedPathologyBiochemicalReportsIndexRoute
-  AuthenticatedPathologyHematologyBloodForBtCtIndexRoute: typeof AuthenticatedPathologyHematologyBloodForBtCtIndexRoute
-  AuthenticatedPathologyHematologyBloodForTcdcIndexRoute: typeof AuthenticatedPathologyHematologyBloodForTcdcIndexRoute
-  AuthenticatedPathologyHematologyCbcShortIndexRoute: typeof AuthenticatedPathologyHematologyCbcShortIndexRoute
-  AuthenticatedPathologyHematologyCbcWithPbfIndexRoute: typeof AuthenticatedPathologyHematologyCbcWithPbfIndexRoute
-  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute: typeof AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute
-  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute: typeof AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute
-  AuthenticatedPathologyHematologyReportsIndexRoute: typeof AuthenticatedPathologyHematologyReportsIndexRoute
-  AuthenticatedPathologyImmunologyBetaHcgIndexRoute: typeof AuthenticatedPathologyImmunologyBetaHcgIndexRoute
-  AuthenticatedPathologyImmunologyBloodGroupIndexRoute: typeof AuthenticatedPathologyImmunologyBloodGroupIndexRoute
-  AuthenticatedPathologyImmunologyMtIndexRoute: typeof AuthenticatedPathologyImmunologyMtIndexRoute
-  AuthenticatedPathologyImmunologyReportsIndexRoute: typeof AuthenticatedPathologyImmunologyReportsIndexRoute
-  AuthenticatedPathologyImmunologyWidalTestIndexRoute: typeof AuthenticatedPathologyImmunologyWidalTestIndexRoute
-  AuthenticatedPathologySpecialAllHormonesIndexRoute: typeof AuthenticatedPathologySpecialAllHormonesIndexRoute
-  AuthenticatedPathologySpecialElectrolytesIndexRoute: typeof AuthenticatedPathologySpecialElectrolytesIndexRoute
-  AuthenticatedPathologySpecialSemenIndexRoute: typeof AuthenticatedPathologySpecialSemenIndexRoute
-  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute: typeof AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute
-  AuthenticatedPathologySpecialSputumIndexRoute: typeof AuthenticatedPathologySpecialSputumIndexRoute
-  AuthenticatedPathologySpecialT3t4tshIndexRoute: typeof AuthenticatedPathologySpecialT3t4tshIndexRoute
-  AuthenticatedPathologyStoolOcultBloodTestIndexRoute: typeof AuthenticatedPathologyStoolOcultBloodTestIndexRoute
-  AuthenticatedPathologyStoolReducingSubstanceIndexRoute: typeof AuthenticatedPathologyStoolReducingSubstanceIndexRoute
-  AuthenticatedPathologyStoolStoolReIndexRoute: typeof AuthenticatedPathologyStoolStoolReIndexRoute
-  AuthenticatedPathologyUrineUrineForAlbuminIndexRoute: typeof AuthenticatedPathologyUrineUrineForAlbuminIndexRoute
-  AuthenticatedPathologyUrineUrineForReFullIndexRoute: typeof AuthenticatedPathologyUrineUrineForReFullIndexRoute
-  AuthenticatedPathologyUrineUrineForSugarIndexRoute: typeof AuthenticatedPathologyUrineUrineForSugarIndexRoute
-  AuthenticatedTestsEditIdIndexRoute: typeof AuthenticatedTestsEditIdIndexRoute
-  AuthenticatedPathologyBiochemicalReportsEditReportIdRoute: typeof AuthenticatedPathologyBiochemicalReportsEditReportIdRoute
-  AuthenticatedPathologyHematologyCbcShortEditIdRoute: typeof AuthenticatedPathologyHematologyCbcShortEditIdRoute
-  AuthenticatedPathologySpecialSemenEditReportIdRoute: typeof AuthenticatedPathologySpecialSemenEditReportIdRoute
-  AuthenticatedPathologyStoolStoolReEditIdRoute: typeof AuthenticatedPathologyStoolStoolReEditIdRoute
-  AuthenticatedPathologyUrineUrineForReFullEditIdRoute: typeof AuthenticatedPathologyUrineUrineForReFullEditIdRoute
-  AuthenticatedPathologyHematologyReportsEditIdIndexRoute: typeof AuthenticatedPathologyHematologyReportsEditIdIndexRoute
-  AuthenticatedPathologyImmunologyReportsEditIdIndexRoute: typeof AuthenticatedPathologyImmunologyReportsEditIdIndexRoute
-  AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute: typeof AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute
+  AuthenticatedProductsProductIdEditRoute: typeof AuthenticatedProductsProductIdEditRoute
+  AuthenticatedPurchaseOrderCreateRoute: typeof AuthenticatedPurchaseOrderCreateRoute
+  AuthenticatedRolesEditIdRoute: typeof AuthenticatedRolesEditIdRoute
+  AuthenticatedAccountingAccountsIndexRoute: typeof AuthenticatedAccountingAccountsIndexRoute
+  AuthenticatedAccountingExpensesIndexRoute: typeof AuthenticatedAccountingExpensesIndexRoute
+  AuthenticatedAccountingIncomeIndexRoute: typeof AuthenticatedAccountingIncomeIndexRoute
+  AuthenticatedAccountingTransactionsIndexRoute: typeof AuthenticatedAccountingTransactionsIndexRoute
+  AuthenticatedCustomersIdIndexRoute: typeof AuthenticatedCustomersIdIndexRoute
+  AuthenticatedCustomersCreateIndexRoute: typeof AuthenticatedCustomersCreateIndexRoute
+  AuthenticatedInventoryStocksIndexRoute: typeof AuthenticatedInventoryStocksIndexRoute
+  AuthenticatedProductsProductIdIndexRoute: typeof AuthenticatedProductsProductIdIndexRoute
+  AuthenticatedProductsCategoriesIndexRoute: typeof AuthenticatedProductsCategoriesIndexRoute
+  AuthenticatedProductsCreateIndexRoute: typeof AuthenticatedProductsCreateIndexRoute
+  AuthenticatedProductsUnitsIndexRoute: typeof AuthenticatedProductsUnitsIndexRoute
+  AuthenticatedPurchaseInvoicesIndexRoute: typeof AuthenticatedPurchaseInvoicesIndexRoute
+  AuthenticatedPurchaseOrderIndexRoute: typeof AuthenticatedPurchaseOrderIndexRoute
+  AuthenticatedPurchasePaymentsIndexRoute: typeof AuthenticatedPurchasePaymentsIndexRoute
+  AuthenticatedRolesCreateIndexRoute: typeof AuthenticatedRolesCreateIndexRoute
+  AuthenticatedSalesOrdersIndexRoute: typeof AuthenticatedSalesOrdersIndexRoute
+  AuthenticatedSuppliersIdIndexRoute: typeof AuthenticatedSuppliersIdIndexRoute
+  AuthenticatedSuppliersCreateIndexRoute: typeof AuthenticatedSuppliersCreateIndexRoute
+  AuthenticatedPurchaseOrderIdEditRoute: typeof AuthenticatedPurchaseOrderIdEditRoute
+  AuthenticatedAccountingReportsJournalIndexRoute: typeof AuthenticatedAccountingReportsJournalIndexRoute
+  AuthenticatedAccountingReportsLedgerIndexRoute: typeof AuthenticatedAccountingReportsLedgerIndexRoute
+  AuthenticatedAccountingReportsProfitAndLossIndexRoute: typeof AuthenticatedAccountingReportsProfitAndLossIndexRoute
+  AuthenticatedAccountingReportsProfitLossIndexRoute: typeof AuthenticatedAccountingReportsProfitLossIndexRoute
+  AuthenticatedAccountingReportsTrialBalanceIndexRoute: typeof AuthenticatedAccountingReportsTrialBalanceIndexRoute
+  AuthenticatedCustomersIdEditIndexRoute: typeof AuthenticatedCustomersIdEditIndexRoute
+  AuthenticatedPurchaseInvoicesIdIndexRoute: typeof AuthenticatedPurchaseInvoicesIdIndexRoute
+  AuthenticatedPurchaseOrderIdIndexRoute: typeof AuthenticatedPurchaseOrderIdIndexRoute
+  AuthenticatedPurchasePaymentsIdIndexRoute: typeof AuthenticatedPurchasePaymentsIdIndexRoute
+  AuthenticatedPurchasePaymentsCreateIndexRoute: typeof AuthenticatedPurchasePaymentsCreateIndexRoute
+  AuthenticatedSuppliersIdEditIndexRoute: typeof AuthenticatedSuppliersIdEditIndexRoute
+  AuthenticatedPurchaseInvoicesIdPreviewIndexRoute: typeof AuthenticatedPurchaseInvoicesIdPreviewIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
-  AuthenticatedLayoutRoute: AuthenticatedLayoutRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
+  AuthenticatedAccountingIndexRoute: AuthenticatedAccountingIndexRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
-  AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
-  AuthenticatedDepartmentsIndexRoute: AuthenticatedDepartmentsIndexRoute,
-  AuthenticatedDoctorsIndexRoute: AuthenticatedDoctorsIndexRoute,
-  AuthenticatedDueCollectionIndexRoute: AuthenticatedDueCollectionIndexRoute,
+  AuthenticatedCustomersIndexRoute: AuthenticatedCustomersIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
+  AuthenticatedHelpIndexRoute: AuthenticatedHelpIndexRoute,
+  AuthenticatedProductsIndexRoute: AuthenticatedProductsIndexRoute,
   AuthenticatedRolesIndexRoute: AuthenticatedRolesIndexRoute,
-  AuthenticatedServicesIndexRoute: AuthenticatedServicesIndexRoute,
+  AuthenticatedSuppliersIndexRoute: AuthenticatedSuppliersIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
-  AuthenticatedTestsIndexRoute: AuthenticatedTestsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
-  AuthenticatedEcgAllReportsIndexRoute: AuthenticatedEcgAllReportsIndexRoute,
-  AuthenticatedInvoicesCreateIndexRoute: AuthenticatedInvoicesCreateIndexRoute,
-  AuthenticatedInvoicesListIndexRoute: AuthenticatedInvoicesListIndexRoute,
-  AuthenticatedTestsCreateIndexRoute: AuthenticatedTestsCreateIndexRoute,
-  AuthenticatedUltrasonogramAllReportsIndexRoute:
-    AuthenticatedUltrasonogramAllReportsIndexRoute,
-  AuthenticatedXRayAllReportsIndexRoute: AuthenticatedXRayAllReportsIndexRoute,
-  AuthenticatedEcgAllReportsEditIdRoute: AuthenticatedEcgAllReportsEditIdRoute,
-  AuthenticatedUltrasonogramAllReportsEditIdRoute:
-    AuthenticatedUltrasonogramAllReportsEditIdRoute,
-  AuthenticatedXRayAllReportsEditIdRoute:
-    AuthenticatedXRayAllReportsEditIdRoute,
-  AuthenticatedPathologyBiochemicalLipidProfileIndexRoute:
-    AuthenticatedPathologyBiochemicalLipidProfileIndexRoute,
-  AuthenticatedPathologyBiochemicalReportsIndexRoute:
-    AuthenticatedPathologyBiochemicalReportsIndexRoute,
-  AuthenticatedPathologyHematologyBloodForBtCtIndexRoute:
-    AuthenticatedPathologyHematologyBloodForBtCtIndexRoute,
-  AuthenticatedPathologyHematologyBloodForTcdcIndexRoute:
-    AuthenticatedPathologyHematologyBloodForTcdcIndexRoute,
-  AuthenticatedPathologyHematologyCbcShortIndexRoute:
-    AuthenticatedPathologyHematologyCbcShortIndexRoute,
-  AuthenticatedPathologyHematologyCbcWithPbfIndexRoute:
-    AuthenticatedPathologyHematologyCbcWithPbfIndexRoute,
-  AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute:
-    AuthenticatedPathologyHematologyPeripheralBloodFilmIndexRoute,
-  AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute:
-    AuthenticatedPathologyHematologyProthomBinTimeFullIndexRoute,
-  AuthenticatedPathologyHematologyReportsIndexRoute:
-    AuthenticatedPathologyHematologyReportsIndexRoute,
-  AuthenticatedPathologyImmunologyBetaHcgIndexRoute:
-    AuthenticatedPathologyImmunologyBetaHcgIndexRoute,
-  AuthenticatedPathologyImmunologyBloodGroupIndexRoute:
-    AuthenticatedPathologyImmunologyBloodGroupIndexRoute,
-  AuthenticatedPathologyImmunologyMtIndexRoute:
-    AuthenticatedPathologyImmunologyMtIndexRoute,
-  AuthenticatedPathologyImmunologyReportsIndexRoute:
-    AuthenticatedPathologyImmunologyReportsIndexRoute,
-  AuthenticatedPathologyImmunologyWidalTestIndexRoute:
-    AuthenticatedPathologyImmunologyWidalTestIndexRoute,
-  AuthenticatedPathologySpecialAllHormonesIndexRoute:
-    AuthenticatedPathologySpecialAllHormonesIndexRoute,
-  AuthenticatedPathologySpecialElectrolytesIndexRoute:
-    AuthenticatedPathologySpecialElectrolytesIndexRoute,
-  AuthenticatedPathologySpecialSemenIndexRoute:
-    AuthenticatedPathologySpecialSemenIndexRoute,
-  AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute:
-    AuthenticatedPathologySpecialSkinScrappingForFungusIndexRoute,
-  AuthenticatedPathologySpecialSputumIndexRoute:
-    AuthenticatedPathologySpecialSputumIndexRoute,
-  AuthenticatedPathologySpecialT3t4tshIndexRoute:
-    AuthenticatedPathologySpecialT3t4tshIndexRoute,
-  AuthenticatedPathologyStoolOcultBloodTestIndexRoute:
-    AuthenticatedPathologyStoolOcultBloodTestIndexRoute,
-  AuthenticatedPathologyStoolReducingSubstanceIndexRoute:
-    AuthenticatedPathologyStoolReducingSubstanceIndexRoute,
-  AuthenticatedPathologyStoolStoolReIndexRoute:
-    AuthenticatedPathologyStoolStoolReIndexRoute,
-  AuthenticatedPathologyUrineUrineForAlbuminIndexRoute:
-    AuthenticatedPathologyUrineUrineForAlbuminIndexRoute,
-  AuthenticatedPathologyUrineUrineForReFullIndexRoute:
-    AuthenticatedPathologyUrineUrineForReFullIndexRoute,
-  AuthenticatedPathologyUrineUrineForSugarIndexRoute:
-    AuthenticatedPathologyUrineUrineForSugarIndexRoute,
-  AuthenticatedTestsEditIdIndexRoute: AuthenticatedTestsEditIdIndexRoute,
-  AuthenticatedPathologyBiochemicalReportsEditReportIdRoute:
-    AuthenticatedPathologyBiochemicalReportsEditReportIdRoute,
-  AuthenticatedPathologyHematologyCbcShortEditIdRoute:
-    AuthenticatedPathologyHematologyCbcShortEditIdRoute,
-  AuthenticatedPathologySpecialSemenEditReportIdRoute:
-    AuthenticatedPathologySpecialSemenEditReportIdRoute,
-  AuthenticatedPathologyStoolStoolReEditIdRoute:
-    AuthenticatedPathologyStoolStoolReEditIdRoute,
-  AuthenticatedPathologyUrineUrineForReFullEditIdRoute:
-    AuthenticatedPathologyUrineUrineForReFullEditIdRoute,
-  AuthenticatedPathologyHematologyReportsEditIdIndexRoute:
-    AuthenticatedPathologyHematologyReportsEditIdIndexRoute,
-  AuthenticatedPathologyImmunologyReportsEditIdIndexRoute:
-    AuthenticatedPathologyImmunologyReportsEditIdIndexRoute,
-  AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute:
-    AuthenticatedPathologySpecialAllHormonesEditIdIndexRoute,
+  AuthenticatedProductsProductIdEditRoute:
+    AuthenticatedProductsProductIdEditRoute,
+  AuthenticatedPurchaseOrderCreateRoute: AuthenticatedPurchaseOrderCreateRoute,
+  AuthenticatedRolesEditIdRoute: AuthenticatedRolesEditIdRoute,
+  AuthenticatedAccountingAccountsIndexRoute:
+    AuthenticatedAccountingAccountsIndexRoute,
+  AuthenticatedAccountingExpensesIndexRoute:
+    AuthenticatedAccountingExpensesIndexRoute,
+  AuthenticatedAccountingIncomeIndexRoute:
+    AuthenticatedAccountingIncomeIndexRoute,
+  AuthenticatedAccountingTransactionsIndexRoute:
+    AuthenticatedAccountingTransactionsIndexRoute,
+  AuthenticatedCustomersIdIndexRoute: AuthenticatedCustomersIdIndexRoute,
+  AuthenticatedCustomersCreateIndexRoute:
+    AuthenticatedCustomersCreateIndexRoute,
+  AuthenticatedInventoryStocksIndexRoute:
+    AuthenticatedInventoryStocksIndexRoute,
+  AuthenticatedProductsProductIdIndexRoute:
+    AuthenticatedProductsProductIdIndexRoute,
+  AuthenticatedProductsCategoriesIndexRoute:
+    AuthenticatedProductsCategoriesIndexRoute,
+  AuthenticatedProductsCreateIndexRoute: AuthenticatedProductsCreateIndexRoute,
+  AuthenticatedProductsUnitsIndexRoute: AuthenticatedProductsUnitsIndexRoute,
+  AuthenticatedPurchaseInvoicesIndexRoute:
+    AuthenticatedPurchaseInvoicesIndexRoute,
+  AuthenticatedPurchaseOrderIndexRoute: AuthenticatedPurchaseOrderIndexRoute,
+  AuthenticatedPurchasePaymentsIndexRoute:
+    AuthenticatedPurchasePaymentsIndexRoute,
+  AuthenticatedRolesCreateIndexRoute: AuthenticatedRolesCreateIndexRoute,
+  AuthenticatedSalesOrdersIndexRoute: AuthenticatedSalesOrdersIndexRoute,
+  AuthenticatedSuppliersIdIndexRoute: AuthenticatedSuppliersIdIndexRoute,
+  AuthenticatedSuppliersCreateIndexRoute:
+    AuthenticatedSuppliersCreateIndexRoute,
+  AuthenticatedPurchaseOrderIdEditRoute: AuthenticatedPurchaseOrderIdEditRoute,
+  AuthenticatedAccountingReportsJournalIndexRoute:
+    AuthenticatedAccountingReportsJournalIndexRoute,
+  AuthenticatedAccountingReportsLedgerIndexRoute:
+    AuthenticatedAccountingReportsLedgerIndexRoute,
+  AuthenticatedAccountingReportsProfitAndLossIndexRoute:
+    AuthenticatedAccountingReportsProfitAndLossIndexRoute,
+  AuthenticatedAccountingReportsProfitLossIndexRoute:
+    AuthenticatedAccountingReportsProfitLossIndexRoute,
+  AuthenticatedAccountingReportsTrialBalanceIndexRoute:
+    AuthenticatedAccountingReportsTrialBalanceIndexRoute,
+  AuthenticatedCustomersIdEditIndexRoute:
+    AuthenticatedCustomersIdEditIndexRoute,
+  AuthenticatedPurchaseInvoicesIdIndexRoute:
+    AuthenticatedPurchaseInvoicesIdIndexRoute,
+  AuthenticatedPurchaseOrderIdIndexRoute:
+    AuthenticatedPurchaseOrderIdIndexRoute,
+  AuthenticatedPurchasePaymentsIdIndexRoute:
+    AuthenticatedPurchasePaymentsIdIndexRoute,
+  AuthenticatedPurchasePaymentsCreateIndexRoute:
+    AuthenticatedPurchasePaymentsCreateIndexRoute,
+  AuthenticatedSuppliersIdEditIndexRoute:
+    AuthenticatedSuppliersIdEditIndexRoute,
+  AuthenticatedPurchaseInvoicesIdPreviewIndexRoute:
+    AuthenticatedPurchaseInvoicesIdPreviewIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

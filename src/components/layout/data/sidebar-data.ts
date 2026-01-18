@@ -1,6 +1,5 @@
 import {
   LayoutDashboard,
-  Bell,
   Settings,
   Users,
   MessagesSquare,
@@ -8,6 +7,16 @@ import {
   Command,
   GalleryVerticalEnd,
   LineChart,
+  HandCoins,
+  FileText,
+  List,
+  Scale,
+  PieChart,
+  VaultIcon,
+  Car,
+  PlusCircle,
+  User,
+  ShoppingCart,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -61,14 +70,6 @@ export const sidebarData: SidebarData = {
               title: '- List of Roles',
               url: "/roles",
             },
-            {
-              title: '- User Wise Themes',
-              url: "#",
-            },
-            {
-              title: '- User Wise Menus',
-              url: "#",
-            },
           ]
         },
         {
@@ -90,410 +91,162 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Outdoor:Masters',
-          icon: Settings,
+          title: "Customers",
+          icon: User,
           items: [
             {
-              title: '- List of Test',
-              url: '/tests',
+              title: "List of Customers",
+              url: "/customers",
+              icon: List,
             },
             {
-              title: '- List of Department',
-              url: '/departments',
-            },
-            {
-              title: '- List of Category',
-              url: '/categories',
-            },
-            {
-              title: '- List of Doctor',
-              url: '/doctors',
+              title: "Add New Customer",
+              url: "/customers/create",
+              icon: PlusCircle,
             },
           ],
         },
         {
-          title: 'Outdoor:Reception',
-          icon: Settings,
+          title: "Suppliers",
+          icon: User,
           items: [
             {
-              title: '- Create Invoice',
-              url: '/invoices/create',
+              title: "List of Suppliers",
+              url: "/suppliers",
+              icon: List,
             },
             {
-              title: '- Due Collection',
-              url: '/due-collection',
-            },
-            {
-              title: '- List of Patients',
-              url: '/patients',
-            },
-            {
-              title: '- List of Invoices',
-              url: '/invoices/list',
+              title: "Add New Supplier",
+              url: "/suppliers/create",
+              icon: PlusCircle,
             },
           ],
         },
         {
-          title: 'Indoor:Master',
-          icon: Settings,
+          title: "Products",
+          icon: Car,
           items: [
             {
-              title: '- Services',
-              url: '/services',
+              title: "List of Products",
+              url: "/products",
+              icon: FileText,
             },
             {
-              title: '- Service Categories',
-              url: '/services-category',
+              title: "Add New Product",
+              url: "/products/create",
+              icon: List,
             },
             {
-              title: '- Treatment Outcomes',
-              url: '/treatment-outcome-list',
+              title: "Categories",
+              url: "/products/categories",
+              icon: FileText,
             },
             {
-              title: '- Operation Type List',
-              url: '/operation-type-list',
+              title: "Units",
+              url: "/products/units",
+              icon: PieChart,
+            },
+          ],
+        },
+
+        {
+          title: "Purchase",
+          icon: VaultIcon,
+          items: [
+            {
+              title: "Purchase Orders",
+              url: "/purchase/order",
+              icon: FileText,
+            },
+            {
+              title: "Add New Purchase Order",
+              url: "/purchase/order/create",
+              icon: PlusCircle,
+            },
+            {
+              title: "Purchase Invoices",
+              url: "/purchase/invoices",
+              icon: FileText,
+            },
+            {
+              title: "Purchase Payments",
+              url: "/purchase/payments",
+              icon: FileText,
             },
           ],
         },
         {
-          title: 'Admission',
-          icon: Settings,
+          title: "Inventory",
+          icon: ShoppingCart,
           items: [
             {
-              title: '- New Admission',
-              url: '#',
-            },
-            {
-              title: '- Advance Payment',
-              url: '#',
-            },
-            {
-              title: '- First Time Service',
-              url: '#',
-            },
-            {
-              title: '- Finalise Services',
-              url: '#',
-            },
-            {
-              title: '- First Time Bill',
-              url: '#',
-            },
-            {
-              title: '- Second Time Bill',
-              url: '#',
-            },
-            {
-              title: '- Create Invoice',
-              url: '#',
-            },
-            {
-              title: '- Due Collection',
-              url: '#',
-            },
-            {
-              title: '- Bed/Cabin Change',
-              url: '#',
+              title: "Stocks",
+              url: "/inventory/stocks",
+              icon: FileText,
             },
           ],
         },
         {
-          title: 'Service Bill',
-          icon: Settings,
+          title: "Sales & Orders",
+          icon: ShoppingCart,
           items: [
             {
-              title: '- Bill Distribute',
-              url: '#',
+              title: "Sales Orders",
+              url: "/sales/order",
+              icon: FileText,
             },
             {
-              title: '- Account Balance',
-              url: '#',
+              title: "Add New Sales Order",
+              url: "/sales/order/create",
+              icon: PlusCircle,
             },
             {
-              title: '- Balance Distribute',
-              url: '#',
+              title: "Sales Invoices",
+              url: "/sales/invoices",
+              icon: FileText,
             },
           ],
         },
         {
-          title: 'Path:Biochemical',
-          icon: Settings,
+          title: "Accounting",
+          icon: HandCoins,
           items: [
             {
-              title: '- All Reports',
-              url: '/pathology/biochemical/reports',
+              title: "Dashboard",
+              url: "/accounting",
+              icon: LayoutDashboard,
             },
             {
-              title: '- Lipid Profile',
-              url: '/pathology/biochemical/lipid-profile',
+              title: "Transactions",
+              url: "/accounting/transactions",
+              icon: FileText,
+            },
+            {
+              title: "Chart of Accounts",
+              url: "/accounting/accounts",
+              icon: List,
+            },
+            {
+              title: "Journal Report",
+              url: "/accounting/reports/journal",
+              icon: FileText,
+            },
+            {
+              title: "Ledger Report",
+              url: "/accounting/reports/ledger",
+              icon: FileText,
+            },
+            {
+              title: "Trial Balance",
+              url: "/accounting/reports/trial-balance",
+              icon: Scale,
+            },
+            {
+              title: "Profit & Loss",
+              url: "/accounting/reports/profit-loss",
+              icon: PieChart,
             },
           ],
-        },
-        {
-          title: 'Path:Hematology',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Reports',
-              url: '/pathology/hematology/reports',
-            },
-            {
-              title: '- Blood For TCDC',
-              url: '/pathology/hematology/blood-for-tcdc',
-            },
-            {
-              title: '- Blood For BT & CT',
-              url: '/pathology/hematology/blood-for-bt-ct',
-            },
-            {
-              title: '- CBC Short',
-              url: '/pathology/hematology/cbc-short',
-            },
-            {
-              title: '- CBC Detail',
-              url: '/pathology/hematology/cbc-detail',
-            },
-            {
-              title: '- Prothom Bin Time Short',
-              url: '#',
-            },
-            {
-              title: '- Peripheral Blood Film',
-              url: '/pathology/hematology/peripheral-blood-film',
-            },
-            {
-              title: '- CBC With PBF',
-              url: '#',
-            },
-            {
-              title: '- Prothom Bin Time Full',
-              url: '/pathology/hematology/prothom-bin-time-full',
-            },
-          ],
-        },
-        {
-          title: 'Path:Immunology',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Reports',
-              url: '/pathology/immunology/reports',
-            },
-            {
-              title: '- Widal Test',
-              url: '/pathology/immunology/widal-test',
-            },
-            {
-              title: '- Blood Group',
-              url: '/pathology/immunology/blood-group',
-            },
-            {
-              title: '- MT',
-              url: '/pathology/immunology/mt',
-            },
-            {
-              title: '- Beta HCG',
-              url: '/pathology/immunology/beta-hcg',
-            },
-          ],
-        },
-        {
-          title: 'Path:Urine',
-          icon: Settings,
-          items: [
-            {
-              title: '- Urine For R/E Short',
-              url: '#',
-            },
-            {
-              title: '- Urine For R/E Full',
-              url: '/pathology/urine/urine-for-re-full',
-            },
-            {
-              title: '- Urine For Sugar',
-              url: '/pathology/urine/urine-for-sugar',
-            },
-            {
-              title: '- Urine For Albumin',
-              url: '/pathology/urine/urine-for-albumin',
-            },
-          ],
-        },
-        {
-          title: 'Path:Stool',
-          icon: Settings,
-          items: [
-            {
-              title: '- Stool For R/E',
-              url: '/pathology/stool/stool-re',
-            },
-            {
-              title: '- Ocult Blood Test(O.B.T)',
-              url: '/pathology/stool/ocult-blood-test',
-            },
-            {
-              title: '- Reducing Substance',
-              url: '/pathology/stool/reducing-substance',
-            },
-          ],
-        },
-        {
-          title: 'Path:Special',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Hormones',
-              url: '/pathology/special/all-hormones',
-            },
-            {
-              title: '- Sputum',
-              url: '/pathology/special/sputum',
-            },
-            {
-              title: '- Semen',
-              url: '/pathology/special/semen',
-            },
-            {
-              title: '- Electrolytes',
-              url: '/pathology/special/electrolytes',
-            },
-            {
-              title: '- Skin Scrapping For Fungus',
-              url: '/pathology/special/skin-scrapping-for-fungus',
-            },
-            {
-              title: '- T3T4TSH',
-              url: '/pathology/special/t3t4tsh',
-            },
-          ],
-        },
-        {
-          title: 'X-Ray',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Reports',
-              url: '/x-ray/all-reports',
-            },
-          ],
-        },
-        {
-          title: 'Ultrasonogram',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Reports',
-              url: '/ultrasonogram/all-reports',
-            },
-          ],
-        },
-        {
-          title: 'ECG',
-          icon: Settings,
-          items: [
-            {
-              title: '- All Reports',
-              url: '/ecg/all-reports',
-            },
-          ],
-        },
-        {
-          title: 'Accounts',
-          icon: Settings,
-          items: [
-            {
-              title: '- Daily Debit',
-              url: '#',
-            },
-            {
-              title: '- Daily Credit',
-              url: '#',
-            },
-            {
-              title: '- Payment to Surgeon',
-              url: '#',
-            },
-            {
-              title: '- Payment to Anaesthetist',
-              url: '#',
-            },
-            {
-              title: '- Payment to Assistant',
-              url: '#',
-            },
-            {
-              title: '- Payment to Consultant',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Banks',
-          icon: Settings,
-          items: [
-            {
-              title: '- Bank Accounts',
-              url: '#',
-            },
-            {
-              title: '- Bank Transactions',
-              url: '#',
-            },
-            {
-              title: '- Bank Deposits',
-              url: '#',
-            },
-            {
-              title: '- Bank Withdrawals',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Payroll',
-          icon: Settings,
-          items: [
-            {
-              title: '- View Salary Slips',
-              url: '#',
-            },
-            {
-              title: '- Create Payroll',
-              url: '#',
-            },
-            {
-              title: '- Manage Deductions',
-              url: '#',
-            },
-            {
-              title: '- Bonuses & Allowances',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Notifications',
-          icon: Bell,
-          items: [
-            {
-              title: '- Email Notifications',
-              url: '#',
-            },
-            {
-              title: '- Push Notifications',
-              url: '#',
-            },
-            {
-              title: '- SMS Settings',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Chats',
-          url: '/chats',
-          badge: '3',
-          icon: MessagesSquare,
         },
         {
           title: 'Reports',
@@ -512,6 +265,11 @@ export const sidebarData: SidebarData = {
               url: "#",
             },
           ]
+        },
+        {
+          title: 'Help',
+          url: '/help',
+          icon: MessagesSquare,
         },
       ],
     },
