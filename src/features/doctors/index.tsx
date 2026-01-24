@@ -1,6 +1,5 @@
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
@@ -10,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
 import { CreateDoctorForm } from './components/CreateDoctorForm'
 import { EditDoctorForm } from './components/EditDoctorForm'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { getCookie } from '@/lib/cookies'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Stethoscope, Award, Globe, MapPin } from 'lucide-react'
 
 
 type DoctorItem = {
@@ -70,6 +70,55 @@ export default function Doctors() {
                     },
                 },
     });
+
+    // Calculate stats
+    const stats = useMemo(() => {
+        const doctors = data?.data?.rows || data?.data?.items || [];
+        const totalDoctors = data?.data?.meta?.total || data?.data?.total || 0;
+
+        // Get unique specialties
+        const uniqueSpecialties = new Set(doctors.map((d: DoctorItem) => d.speciality).filter(Boolean));
+        const totalSpecialties = uniqueSpecialties.size;
+
+        // Get unique countries
+        const uniqueCountries = new Set(doctors.map((d: DoctorItem) => d.country).filter(Boolean));
+        const totalCountries = uniqueCountries.size;
+
+        // Get unique cities
+        const uniqueCities = new Set(doctors.map((d: DoctorItem) => d.city).filter(Boolean));
+        const totalCities = uniqueCities.size;
+
+        return [
+            {
+                label: "Total Doctors",
+                value: totalDoctors,
+                gradient: "from-blue-600 to-blue-400",
+                shadow: "shadow-blue-500/30",
+                icon: <Stethoscope className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Specialties",
+                value: totalSpecialties,
+                gradient: "from-purple-600 to-purple-400",
+                shadow: "shadow-purple-500/30",
+                icon: <Award className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Countries",
+                value: totalCountries,
+                gradient: "from-emerald-600 to-emerald-400",
+                shadow: "shadow-emerald-500/30",
+                icon: <Globe className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Cities",
+                value: totalCities,
+                gradient: "from-amber-600 to-amber-400",
+                shadow: "shadow-amber-500/30",
+                icon: <MapPin className="w-6 h-6 text-white" />,
+            },
+        ];
+    }, [data]);
 
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
@@ -192,7 +241,7 @@ export default function Doctors() {
         },
     ];
     return <>
-        <Header>
+        <Header fixed>
             <Search />
             <div className='ms-auto flex items-center space-x-4'>
                 <ThemeSwitch />
@@ -201,11 +250,43 @@ export default function Doctors() {
             </div>
         </Header>
 
-        <Main>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <main className='p-6 lg:p-10'>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
                 <h1 className="text-2xl font-bold tracking-tight">List of Doctor</h1>
                 <CreateDoctorForm />
             </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                {stats.map((item, idx) => (
+                    <div
+                        key={idx}
+                        className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} p-6 shadow-lg ${item.shadow} transition-all duration-300 hover:scale-[1.02] hover:translate-y-[-2px]`}
+                    >
+                        {/* Background Pattern */}
+                        <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+                        <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-black/10 blur-2xl" />
+
+                        <div className="relative flex items-start justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-white/90">{item.label}</p>
+                                <h3 className="mt-2 text-3xl font-bold text-white">
+                                    {item.value || 0}
+                                </h3>
+                            </div>
+                            <div className="rounded-xl bg-white/20 p-2.5 backdrop-blur-sm">
+                                {item.icon}
+                            </div>
+                        </div>
+
+                        {/* Progress/Indicator line */}
+                        <div className="mt-4 h-1 w-full rounded-full bg-black/10">
+                            <div className="h-full w-2/3 rounded-full bg-white/40" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
             <DataTable
                 columns={columns}
                 data={data?.data?.rows || data?.data?.items || []}
@@ -215,6 +296,6 @@ export default function Doctors() {
                 onSearchChange={setSearch}
             />
             <EditDoctorForm open={open} setOpen={setOpen} doctorId={selectedDoctorId} />
-        </Main>
+        </main>
     </>
 }

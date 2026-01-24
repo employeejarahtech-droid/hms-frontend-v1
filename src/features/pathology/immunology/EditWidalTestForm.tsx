@@ -22,13 +22,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCookie } from "@/lib/cookies";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 // --- Schema ---
 const widalSchema = z.object({
-    typhiO: z.string().min(1, { message: "Required" }),
-    typhiH: z.string().min(1, { message: "Required" }),
-    paratyphiAH: z.string().min(1, { message: "Required" }),
-    paratyphiBH: z.string().min(1, { message: "Required" }),
+    s_typhi_o: z.string().min(1, { message: "Required" }),
+    s_typhi_h: z.string().min(1, { message: "Required" }),
+    s_paratyphi_a: z.string().min(1, { message: "Required" }),
+    s_paratyphi_b: z.string().min(1, { message: "Required" }),
+    s_paratyphi_c: z.string().min(1, { message: "Required" }),
+    remarks: z.string().optional(),
 });
 
 type WidalFormValues = z.infer<typeof widalSchema>;
@@ -36,26 +44,110 @@ type WidalFormValues = z.infer<typeof widalSchema>;
 interface WidalTestFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
 }
 
 
-export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
+export function WidalTestForm({ open, setOpen, reportId, invoiceId }: WidalTestFormProps) {
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const token = getCookie('accessToken');
+
     const form = useForm<WidalFormValues>({
         resolver: zodResolver(widalSchema),
         defaultValues: {
-            typhiO: "",
-            typhiH: "",
-            paratyphiAH: "",
-            paratyphiBH: "",
+            s_typhi_o: "",
+            s_typhi_h: "",
+            s_paratyphi_a: "",
+            s_paratyphi_b: "",
+            s_paratyphi_c: "",
+            remarks: "",
+        },
+    });
+
+    // Fetching existing data
+    const { data: widalTestData } = useQuery({
+        queryKey: ["widal", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/widal/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch Widal Test report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    console.log('tcdc', widalTestData);
+
+    useEffect(() => {
+        if (widalTestData) {
+            form.reset({
+                s_typhi_o: widalTestData.s_typhi_o || '',
+                s_typhi_h: widalTestData.s_typhi_h || '',
+                s_paratyphi_a: widalTestData.s_paratyphi_a || '',
+                s_paratyphi_b: widalTestData.s_paratyphi_b || '',
+                s_paratyphi_c: widalTestData.s_paratyphi_c || '',
+                remarks: widalTestData.remarks || '',
+            })
+        }
+    }, [widalTestData]);
+
+
+    //PUT api call
+
+    const updateWidalTestMutation = useMutation({
+        mutationFn: async (payload: WidalFormValues) => {
+            console.log("Payload:", payload);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/widal/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    ...payload
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to update Widal Test report");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            toast.success("Test created successfully!");
+            console.log("API Response:", data);
+            navigate({ to: "/pathology/immunology/widal-test" });
+            // optional:
+            queryClient.invalidateQueries({
+                queryKey: ["widal", reportId],
+            });
+
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
         },
     });
 
     function onSubmit(values: WidalFormValues) {
         console.log("Widal Test Report:", values);
+        updateWidalTestMutation.mutate(values);
         setOpen(false);
     }
 
-    const handlePrint = () => alert("Print triggered.");
     const handleView = () => alert("View triggered.");
 
     return (
@@ -85,7 +177,7 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                         {/* S. Typhi O */}
                         <FormField
                             control={form.control}
-                            name="typhiO"
+                            name="s_typhi_o"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>S. Typhi O (titer)</FormLabel>
@@ -100,7 +192,7 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                         {/* S. Typhi H */}
                         <FormField
                             control={form.control}
-                            name="typhiH"
+                            name="s_typhi_h"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>S. Typhi H (titer)</FormLabel>
@@ -115,7 +207,7 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                         {/* S. Paratyphi A (AH) */}
                         <FormField
                             control={form.control}
-                            name="paratyphiAH"
+                            name="s_paratyphi_a"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>S. Paratyphi A (AH) (titer)</FormLabel>
@@ -130,7 +222,7 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                         {/* S. Paratyphi B (BH) */}
                         <FormField
                             control={form.control}
-                            name="paratyphiBH"
+                            name="s_paratyphi_b"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>S. Paratyphi B (BH) (titer)</FormLabel>
@@ -142,6 +234,35 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                             )}
                         />
 
+
+                        <FormField
+                            control={form.control}
+                            name="s_paratyphi_c"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>S. Paratyphi C (CH) (titer)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., 1:40" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        
+                        <FormField
+                            control={form.control}
+                            name="remarks"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Remarks</FormLabel>
+                                    <FormControl>
+                                        <Textarea placeholder="Comments" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         {/* Buttons */}
                         <div className="flex justify-center gap-2 pt-4">
                             <Button
@@ -152,9 +273,11 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to="/pathology/immunology/widal-test/report/$reportId" params={{ reportId: reportId.toString() }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
 
                             <Button type="button" variant="info" onClick={handleView}>
                                 View

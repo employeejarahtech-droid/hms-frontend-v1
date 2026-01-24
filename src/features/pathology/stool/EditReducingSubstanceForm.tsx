@@ -22,6 +22,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { getCookie } from "@/lib/cookies";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { Textarea } from "@/components/ui/textarea";
 
 // --- Schema ---
 const reducingSubstanceSchema = z.object({
@@ -34,9 +40,16 @@ type UrineReducingSubstanceFormValues = z.infer<typeof reducingSubstanceSchema>;
 interface UrineReducingSubstanceFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
 }
 
-export function EditStoolReducingSubstanceForm({ open, setOpen }: UrineReducingSubstanceFormProps) {
+export function EditStoolReducingSubstanceForm({ open, setOpen, reportId, invoiceId }: UrineReducingSubstanceFormProps) {
+    const navigate = useNavigate();
+
+    const token = getCookie('accessToken');
+    const queryClient = useQueryClient();
+
     const form = useForm<UrineReducingSubstanceFormValues>({
         resolver: zodResolver(reducingSubstanceSchema),
         defaultValues: {
@@ -45,12 +58,83 @@ export function EditStoolReducingSubstanceForm({ open, setOpen }: UrineReducingS
         },
     });
 
+
+    // Fetching existing data
+    const { data: reducingSubstanceData } = useQuery({
+        queryKey: ["reducing-substance", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/reducing-substance/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch reducing substance test report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    useEffect(() => {
+        if (reducingSubstanceData) {
+            form.reset({
+                result: reducingSubstanceData.test_result || '',
+                comments: reducingSubstanceData.remarks || '',
+            })
+        }
+    }, [reducingSubstanceData, form]);
+
+    //PUT api call
+
+    const updateReducingSubstanceMutation = useMutation({
+        mutationFn: async (payload: UrineReducingSubstanceFormValues) => {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reducing-substance/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    test_result: payload.result,
+                    remarks: payload.comments
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to update reducing substance test");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            toast.success(data.message || "Test created successfully!");
+            console.log("API Response:", data);
+            navigate({ to: "/pathology/stool/reducing-substance" });
+            // optional:
+            // form.reset();
+            queryClient.invalidateQueries({
+                queryKey: ["reducing-substance", reportId],
+            });
+
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
+        },
+    });
+
+
     function onSubmit(values: UrineReducingSubstanceFormValues) {
         console.log("Urine Reducing Substance Report:", values);
+        updateReducingSubstanceMutation.mutate(values);
         setOpen(false);
     }
 
-    const handlePrint = () => alert("Print triggered.");
     const handleView = () => alert("View triggered.");
 
     return (
@@ -100,7 +184,7 @@ export function EditStoolReducingSubstanceForm({ open, setOpen }: UrineReducingS
                                 <FormItem>
                                     <FormLabel>Comments / Remarks (Optional)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Additional notes..." {...field} />
+                                        <Textarea placeholder="Additional notes..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -117,9 +201,11 @@ export function EditStoolReducingSubstanceForm({ open, setOpen }: UrineReducingS
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to={`/pathology/stool/reducing-substance/report/$reportId`} params={{ reportId: reportId.toString() }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
 
                             <Button type="button" variant="info" onClick={handleView}>
                                 View

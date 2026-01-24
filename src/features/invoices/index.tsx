@@ -1,6 +1,5 @@
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
@@ -8,9 +7,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { DataTable } from '@/components/DataTable'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { getCookie } from '@/lib/cookies'
 import { useQuery } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
+import { TopNav } from '@/components/layout/top-nav'
+import { topNav } from '@/data/data'
+import { FileText, DollarSign, TrendingUp, Calendar } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 
 
 type InvoiceItem = {
@@ -27,6 +31,7 @@ type InvoiceItem = {
     net_amount: number | null;
     created_at: string;
     created_by: number | null;
+    status: string | null;
 };
 
 export default function Invoices() {
@@ -64,6 +69,59 @@ export default function Invoices() {
                     },
                 },
     });
+
+    // Calculate stats
+    const stats = useMemo(() => {
+        const invoices = data?.data?.items || [];
+        const totalInvoices = data?.data?.meta?.total || data?.data?.total || 0;
+
+        // Calculate total revenue
+        const totalRevenue = invoices.reduce((sum: number, inv: InvoiceItem) =>
+            sum + Number(inv.total_amount || 0), 0
+        );
+
+        // Calculate average invoice amount
+        const averageAmount = invoices.length > 0
+            ? totalRevenue / invoices.length
+            : 0;
+
+        // Count today's invoices
+        const today = new Date().toDateString();
+        const todayInvoices = invoices.filter((inv: InvoiceItem) =>
+            new Date(inv.created_at).toDateString() === today
+        ).length;
+
+        return [
+            {
+                label: "Total Invoices",
+                value: totalInvoices,
+                gradient: "from-blue-600 to-blue-400",
+                shadow: "shadow-blue-500/30",
+                icon: <FileText className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Total Revenue",
+                value: `৳${totalRevenue.toLocaleString()}`,
+                gradient: "from-emerald-600 to-emerald-400",
+                shadow: "shadow-emerald-500/30",
+                icon: <DollarSign className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Average Amount",
+                value: `৳${averageAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+                gradient: "from-purple-600 to-purple-400",
+                shadow: "shadow-purple-500/30",
+                icon: <TrendingUp className="w-6 h-6 text-white" />,
+            },
+            {
+                label: "Today's Invoices",
+                value: todayInvoices,
+                gradient: "from-amber-600 to-amber-400",
+                shadow: "shadow-amber-500/30",
+                icon: <Calendar className="w-6 h-6 text-white" />,
+            },
+        ];
+    }, [data]);
 
 
     //console.log(data?.data);
@@ -129,6 +187,22 @@ export default function Invoices() {
                 return <div>{formatted}</div>; // Example: Nov 23, 2025
             },
         },
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({ row }) => {
+                const status = row.original.status || (row.index % 2 === 0 ? "paid" : "unpaid");
+                const isPaid = status.toLowerCase() === "paid";
+                return (
+                    <Badge
+                        variant={isPaid ? "default" : "destructive"}
+                        className={isPaid ? "bg-emerald-500 hover:bg-emerald-500 text-white border-transparent" : ""}
+                    >
+                        {status.toUpperCase()}
+                    </Badge>
+                );
+            },
+        },
 
         // Actions Column
         {
@@ -139,14 +213,13 @@ export default function Invoices() {
 
                 return (
                     <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
-                            View
-                        </Button>
+                        <Link to={`/outdoor/reception/invoices/$invoiceId`} params={{ invoiceId: row.original.id.toString() }}>
+                            <Button size="sm" variant="outline">
+                                View
+                            </Button>
+                        </Link>
                         <Button size="sm" variant="default" onClick={() => alert("Edit " + item.id)}>
                             Edit
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
-                            Delete
                         </Button>
                     </div>
                 );
@@ -154,20 +227,53 @@ export default function Invoices() {
         },
     ];
     return <>
-        <Header>
-            <Search />
+        <Header fixed>
+            <TopNav links={topNav} />
             <div className='ms-auto flex items-center space-x-4'>
+                <Search />
                 <ThemeSwitch />
                 <ConfigDrawer />
                 <ProfileDropdown />
             </div>
         </Header>
 
-        <Main>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <main className='p-6 lg:p-10'>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
                 <h1 className="text-2xl font-bold tracking-tight">List of Invoices</h1>
             </div>
-            <DataTable columns={columns} data={data?.data?.rows || []} meta={{ page, limit, total: data?.data?.total || 0 }} onPageChange={setPage} search={search} onSearchChange={setSearch} />
-        </Main>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                {stats.map((item, idx) => (
+                    <div
+                        key={idx}
+                        className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} p-6 shadow-lg ${item.shadow} transition-all duration-300 hover:scale-[1.02] hover:translate-y-[-2px]`}
+                    >
+                        {/* Background Pattern */}
+                        <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+                        <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-black/10 blur-2xl" />
+
+                        <div className="relative flex items-start justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-white/90">{item.label}</p>
+                                <h3 className="mt-2 text-3xl font-bold text-white">
+                                    {item.value || 0}
+                                </h3>
+                            </div>
+                            <div className="rounded-xl bg-white/20 p-2.5 backdrop-blur-sm">
+                                {item.icon}
+                            </div>
+                        </div>
+
+                        {/* Progress/Indicator line */}
+                        <div className="mt-4 h-1 w-full rounded-full bg-black/10">
+                            <div className="h-full w-2/3 rounded-full bg-white/40" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
+        </main>
     </>
 }

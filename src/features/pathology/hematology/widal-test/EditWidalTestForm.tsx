@@ -61,7 +61,7 @@ export function WidalTestForm({ open, setOpen }: WidalTestFormProps) {
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="max-w-[450px] w-full overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Edit Widal Test</SheetTitle>
+                    <SheetTitle>Edit Widal Tests</SheetTitle>
                 </SheetHeader>
  
                 <PatientInvoiceInfo

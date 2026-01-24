@@ -1,5 +1,5 @@
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Form,
   FormControl,
@@ -83,12 +83,12 @@ type UrineFormValues = z.infer<typeof urineSchema>;
 // COMPONENT
 // --------------------------------------------------
 function EditUrineForReFull() {
+  const {id} = Route.useParams();
   const form = useForm<UrineFormValues>({
     resolver: zodResolver(urineSchema),
     defaultValues: {},
   });
 
-  const handlePrint = () => alert("Print triggered.");
   const handleView = () => alert("View triggered.");
 
   const onSubmit = (values: UrineFormValues) => {
@@ -358,9 +358,11 @@ function EditUrineForReFull() {
                   <Button type="submit" variant="success" className="flex-1">
                     Save Report
                   </Button>
-                  <Button type="button" variant="warning" className="flex-1" onClick={handlePrint}>
-                    Print
-                  </Button>
+                  <Link to="/pathology/urine/urine-for-re-full/report/$reportId" params={{ reportId: id }}>
+                      <Button type="button" variant="warning" className="flex-1">
+                      Print Preview
+                    </Button>
+                  </Link>
                   <Button type="button" variant="info" className="flex-1" onClick={handleView}>
                     View
                   </Button>

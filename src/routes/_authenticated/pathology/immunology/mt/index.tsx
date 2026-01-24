@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { EditMTForm } from '@/features/pathology/immunology/EditMTForm';
 import { getCookie } from '@/lib/cookies';
 import { useQuery } from '@tanstack/react-query';
+import { topNav } from '@/data/data';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/immunology/mt/',
@@ -22,36 +23,10 @@ export const Route = createFileRoute(
   component: MT,
 })
 
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-    disabled: true,
-  },
-]
-
 type ReportsItem = {
-  id: string;
+  id: number;
   receiptId: string;
+  invoice_id: number;
   patientName: string;
   tests: string[];
   date: string;
@@ -59,6 +34,8 @@ type ReportsItem = {
 
 function MT() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [reportId, setReportId] = useState<number>(0);
+  const [invoiceId, setInvoiceId] = useState<number>(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const limit = 10;
@@ -176,7 +153,14 @@ function MT() {
               View
             </Button>
 
-            <Button size="sm" variant="default" onClick={() => setIsDrawerOpen(true)}>Edit</Button>
+            <Button size="sm" variant="default"
+              onClick={() => {
+                setIsDrawerOpen(true);
+                setReportId(Number(item.id));
+                setInvoiceId(Number(item.invoice_id));
+              }}>
+              Edit
+            </Button>
 
             <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
               Delete
@@ -184,7 +168,7 @@ function MT() {
           </div>
         );
       },
-    },
+    }
 
   ];
 
@@ -204,7 +188,7 @@ function MT() {
           <h1 className='text-2xl font-bold tracking-tight'>Tuberculin (MT)</h1>
         </div>
         <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
-        <EditMTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} />
+        <EditMTForm open={isDrawerOpen} setOpen={setIsDrawerOpen} reportId={reportId} invoiceId={invoiceId} />
       </Main>
     </>
 

@@ -23,16 +23,21 @@ import { Button } from "@/components/ui/button";
 
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCookie } from "@/lib/cookies";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 // --- Schema ---
 const formSchema = z.object({
-    tc: z.string().min(1, { message: "Required" }),
-    neutrophil: z.string().min(1, { message: "Required" }),
-    lymphocyte: z.string().min(1, { message: "Required" }),
-    monocyte: z.string().min(1, { message: "Required" }),
-    eosinophil: z.string().min(1, { message: "Required" }),
-    basophil: z.string().min(1, { message: "Required" }),
-    testCarriedOutBy: z.string().min(1, "Select a machine"),
+    total_count: z.string().min(1, { message: "Required" }),
+    neutrophils: z.string().min(1, { message: "Required" }),
+    lymphocytes: z.string().min(1, { message: "Required" }),
+    monocytes: z.string().min(1, { message: "Required" }),
+    eosinophils: z.string().min(1, { message: "Required" }),
+    basophils: z.string().min(1, { message: "Required" }),
+    testCarriedOutBy: z.string().optional(),
 });
 
 type TCDCFormValues = z.infer<typeof formSchema>;
@@ -40,27 +45,109 @@ type TCDCFormValues = z.infer<typeof formSchema>;
 interface BloodForTCDCFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
 }
 
-export function EditBloodForTcDcForm({ open, setOpen }: BloodForTCDCFormProps) {
+export function EditBloodForTcDcForm({ open, setOpen, reportId, invoiceId }: BloodForTCDCFormProps) {
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const token = getCookie('accessToken');
+
     const form = useForm<TCDCFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            tc: "",
-            neutrophil: "",
-            lymphocyte: "",
-            monocyte: "",
-            eosinophil: "",
-            basophil: "",
+            total_count: "",
+            neutrophils: "",
+            lymphocytes: "",
+            monocytes: "",
+            eosinophils: "",
+            basophils: "",
+            testCarriedOutBy: "",
+        },
+    });
+
+
+    // Fetching existing data
+    const { data: bloodForTcdcData } = useQuery({
+        queryKey: ["tcdc", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/tcdc/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch lipid-profile report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    console.log('tcdc', bloodForTcdcData);
+
+    useEffect(() => {
+        if (bloodForTcdcData) {
+            form.reset({
+                total_count: bloodForTcdcData.total_count || '',
+                neutrophils: bloodForTcdcData.neutrophils || '',
+                lymphocytes: bloodForTcdcData.lymphocytes || '',
+                monocytes: bloodForTcdcData.monocytes || '',
+                eosinophils: bloodForTcdcData.eosinophils || '',
+                basophils: bloodForTcdcData.basophils || '',
+            })
+        }
+    }, [bloodForTcdcData]);
+
+
+
+    const updateBloodForTcDcMutation = useMutation({
+        mutationFn: async (payload: TCDCFormValues) => {
+            console.log("Payload:", payload);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tcdc/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    ...payload
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to create test");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            toast.success("Test created successfully!");
+            console.log("API Response:", data);
+            navigate({ to: "/pathology/hematology/blood-for-tcdc" });
+            // optional:
+            queryClient.invalidateQueries({ queryKey: ["tcdc", reportId]});
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
         },
     });
 
     function onSubmit(values: TCDCFormValues) {
         console.log("TCDC Data:", values);
+        updateBloodForTcDcMutation.mutate(values);
         setOpen(false);
+        form.reset();
+
     }
 
-    const handlePrint = () => alert("Print action triggered.");
     const handleView = () => alert("View action triggered.");
 
     const machineList = [
@@ -89,12 +176,12 @@ export function EditBloodForTcDcForm({ open, setOpen }: BloodForTCDCFormProps) {
 
                         {/* Fields */}
                         {[
-                            { name: "tc", label: "Total Count (TC)" },
-                            { name: "neutrophil", label: "Neutrophil (%)" },
-                            { name: "lymphocyte", label: "Lymphocyte (%)" },
-                            { name: "monocyte", label: "Monocyte (%)" },
-                            { name: "eosinophil", label: "Eosinophil (%)" },
-                            { name: "basophil", label: "Basophil (%)" },
+                            { name: "total_count", label: "Total Count (TC)" },
+                            { name: "neutrophils", label: "Neutrophil (%)" },
+                            { name: "lymphocytes", label: "Lymphocyte (%)" },
+                            { name: "monocytes", label: "Monocyte (%)" },
+                            { name: "eosinophils", label: "Eosinophil (%)" },
+                            { name: "basophils", label: "Basophil (%)" },
                         ].map((f) => (
                             <FormField
                                 key={f.name}
@@ -148,9 +235,11 @@ export function EditBloodForTcDcForm({ open, setOpen }: BloodForTCDCFormProps) {
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to="/pathology/hematology/blood-for-tcdc/report/$reportId" params={{ reportId: reportId.toString() }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
 
                             <Button type="button" variant="info" onClick={handleView}>
                                 View

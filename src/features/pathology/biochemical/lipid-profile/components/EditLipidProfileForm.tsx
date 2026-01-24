@@ -19,6 +19,12 @@ import { Input } from "@/components/ui/input"; // Adjust import path as needed
 import { Button } from "@/components/ui/button"; // Assuming Button is available
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCookie } from "@/lib/cookies";
+import { toast } from "sonner";
+import { useEffect } from "react";
+//import { outdoorInvoices } from "@/data/data";
 
 // --- 1. Define the Schema using Zod ---
 // This schema defines the shape and validation rules for your form data.
@@ -28,7 +34,9 @@ const formSchema = z.object({
     ldl: z.string().min(1, { message: "Required" }),
     hdl: z.string().min(1, { message: "Required" }),
     triglycerides: z.string().min(1, { message: "Required" }),
-    testCarriedOutBy: z.string().min(1, "Select a machine"),
+    vldl: z.string().min(1, { message: "Required" }),
+    cholesterol_ratio: z.string().min(1, { message: "Required" }),
+    testCarriedOutBy: z.string().optional(),
 });
 
 // Infer the TypeScript type from the Zod schema
@@ -38,22 +46,107 @@ type LipidProfileFormValues = z.infer<typeof formSchema>;
 interface EditLipidProfileFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
     // Optionally, you might pass initial data here:
     // initialData?: LipidProfileFormValues;
 }
 
-export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProps) {
+export function EditLipidProfileForm({ open, setOpen, reportId, invoiceId }: EditLipidProfileFormProps) {
+
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const token = getCookie('accessToken');
     // --- 2. Initialize the form using useForm ---
     const form = useForm<LipidProfileFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            cholesterol: "",
-            ldl: "",
-            hdl: "",
-            triglycerides: "",
+            cholesterol: '',
+            ldl: '',
+            hdl: '',
+            triglycerides: '',
+            vldl: '',
+            cholesterol_ratio: '',
+            testCarriedOutBy: "",
         },
         // You could set initial data here if passed via props
         // values: initialData,
+    });
+
+    // Fetching existing data
+    const { data: lipidProfileData } = useQuery({
+        queryKey: ["lipid-profile", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/lipid-profile/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch lipid-profile report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    console.log('lipid-profile', lipidProfileData);
+
+    useEffect(() => {
+        if (lipidProfileData) {
+            form.reset({
+                cholesterol: lipidProfileData.total_cholesterol || '',
+                hdl: lipidProfileData.hdl || '',
+                ldl: lipidProfileData.ldl || '',
+                triglycerides: lipidProfileData.triglycerides || '',
+                vldl: lipidProfileData.vldl || '',
+                cholesterol_ratio: lipidProfileData.cholesterol_ratio || '',
+            })
+        }
+    }, [lipidProfileData]);
+
+    //POST api call
+
+    const updateLipidProfileMutation = useMutation({
+        mutationFn: async (payload: LipidProfileFormValues) => {
+            console.log("Payload:", payload);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/lipid-profile/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    total_cholesterol:payload.cholesterol,
+                    hdl: payload.hdl,
+                    ldl:payload.ldl,
+                    triglycerides: payload.triglycerides,
+                    vldl: payload.vldl,
+                    cholesterol_ratio: payload.cholesterol_ratio,
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to create test");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            console.log("Updated API Response:", data);
+            queryClient.invalidateQueries({ queryKey: ["lipid-profile", reportId] });
+            toast.success(data.message || "lipid-profile created successfully!");
+            navigate({ to: "/pathology/biochemical/lipid-profile" });
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
+        },
     });
 
     // --- 3. Define the submission handler ---
@@ -61,13 +154,11 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
         // The 'values' object is guaranteed to be validated against formSchema
         console.log("Form submitted with validated data:", values);
 
-        // TODO: Implement your actual API call here (e.g., fetch('/api/lipid-profile', { method: 'POST', body: JSON.stringify(values) }))
-
+        updateLipidProfileMutation.mutate(values);
         setOpen(false); // close drawer on successful submission
     }
 
     // Helper to handle the other button actions
-    const handlePrint = () => alert("Print action triggered.");
     const handleView = () => alert("View action triggered.");
 
 
@@ -78,6 +169,8 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
         "Abbott CELL-DYN Ruby",
         "Nihon Kohden MEK-9100",
     ];
+
+    //const invoice = outdoorInvoices.find((item) => item.id === reportId);
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -102,7 +195,7 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                     <FormLabel>Total Cholesterol (mg/dL)</FormLabel>
                                     <FormControl>
                                         {/* The {...field} spreads value, onChange, onBlur */}
-                                        <Input placeholder="Enter value" {...field} />
+                                        <Input type="number" placeholder="Enter value" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -117,7 +210,7 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                 <FormItem>
                                     <FormLabel>LDL Cholesterol (mg/dL)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter value" {...field} />
+                                        <Input type="number" placeholder="Enter value" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -132,7 +225,7 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                 <FormItem>
                                     <FormLabel>HDL Cholesterol (mg/dL)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter value" {...field} />
+                                        <Input type="number" placeholder="Enter value" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -147,12 +240,42 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                 <FormItem>
                                     <FormLabel>Triglycerides (mg/dL)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter value" {...field} />
+                                        <Input type="number" placeholder="Enter value" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+
+                         <FormField
+                            control={form.control}
+                            name="vldl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>VLDL Cholesterol (mg/dL)</FormLabel>
+                                    <FormControl>
+                                        <Input type="number" placeholder="Enter value" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        
+                         <FormField
+                            control={form.control}
+                            name="cholesterol_ratio"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Cholesterol Ratio</FormLabel>
+                                    <FormControl>
+                                        <Input type="number" placeholder="Enter value" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
 
 
                         {/* TEST CARRIED OUT BY */}
@@ -190,9 +313,11 @@ export function EditLipidProfileForm({ open, setOpen }: EditLipidProfileFormProp
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to="/pathology/biochemical/lipid-profile/report/$reportId" params={{ reportId: String(reportId) }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
                             <Button type="button" variant="info" onClick={handleView}>
                                 View
                             </Button>

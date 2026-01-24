@@ -27,17 +27,18 @@ export default function Categories() {
     const [openEditForm, setOpenEditForm] = useState<boolean>(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
     const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("");
     const limit = 10;
 
     const queryClient = useQueryClient();
     const token = getCookie('accessToken');
 
     const { data } = useQuery({
-        queryKey: ["category", page],
+        queryKey: ["category", page, search],
 
         queryFn: async () => {
             const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/test-category?page=${page}&limit=${limit}`,
+                `${import.meta.env.VITE_API_URL}/api/test-category?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -63,6 +64,8 @@ export default function Categories() {
                     },
                 },
     });
+
+    console.log('data', data);
 
     // Delete mutation
     const deleteMutation = useMutation({
@@ -177,7 +180,7 @@ export default function Categories() {
                 <h1 className="text-2xl font-bold tracking-tight mb-4">List of Categories</h1>
                 <CreateCategoryForm />
             </div>
-            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} />
+            <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
             <EditCategoryForm open={openEditForm} setOpen={setOpenEditForm} categoryId={selectedCategoryId} />
         </Main>
     </>

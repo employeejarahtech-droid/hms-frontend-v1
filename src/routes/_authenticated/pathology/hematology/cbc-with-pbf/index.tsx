@@ -14,6 +14,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { getCookie } from '@/lib/cookies';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { topNav } from '@/data/data';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/hematology/cbc-with-pbf/',
@@ -21,33 +22,6 @@ export const Route = createFileRoute(
   component: CBCWithPBF,
 })
 
-
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-    disabled: true,
-  },
-]
 
 type CBCItem = {
   id: string;
@@ -175,15 +149,11 @@ function CBCWithPBF() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-            <Link to="/pathology/hematology/cbc-short/edit/$id" params={{ id: item.id }}>
+            <Link to="/pathology/hematology/cbc-with-pbf/edit/$id" params={{ id: item.id }}>
               <Button size="sm" variant="default">
                 Edit
               </Button>
             </Link>
-
-            <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
-              Delete
-            </Button>
           </div>
         );
       },

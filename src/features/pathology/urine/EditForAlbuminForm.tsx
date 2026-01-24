@@ -22,6 +22,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { getCookie } from "@/lib/cookies";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 // --- Schema ---
 const urineAlbuminSchema = z.object({
@@ -34,9 +40,16 @@ type UrineAlbuminFormValues = z.infer<typeof urineAlbuminSchema>;
 interface UrineAlbuminFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
 }
 
-export function EditUrineForAlbuminForm({ open, setOpen }: UrineAlbuminFormProps) {
+export function EditUrineForAlbuminForm({ open, setOpen, reportId, invoiceId }: UrineAlbuminFormProps) {
+    const navigate = useNavigate();
+
+    const token = getCookie('accessToken');
+    const queryClient = useQueryClient();
+
     const form = useForm<UrineAlbuminFormValues>({
         resolver: zodResolver(urineAlbuminSchema),
         defaultValues: {
@@ -45,12 +58,83 @@ export function EditUrineForAlbuminForm({ open, setOpen }: UrineAlbuminFormProps
         },
     });
 
+    // Fetching existing data
+    const { data: urineAlbuminData } = useQuery({
+        queryKey: ["urine-albumin", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/urine-albumin/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch Urine Albumin Test report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    useEffect(() => {
+        if (urineAlbuminData) {
+            form.reset({
+                albuminLevel: urineAlbuminData.albumin || '',
+                comments: urineAlbuminData.remarks || '',
+            })
+        }
+    }, [urineAlbuminData, form]);
+
+    //PUT api call
+
+    const updateUrineAlbuminMutation = useMutation({
+        mutationFn: async (payload: UrineAlbuminFormValues) => {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/urine-albumin/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    albumin: payload.albuminLevel,
+                    remarks: payload.comments
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to update Urine Albumin test");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            toast.success(data.message || "Test created successfully!");
+            console.log("API Response:", data);
+            navigate({ to: "/pathology/urine/urine-for-albumin" });
+            // optional:
+            // form.reset();
+            queryClient.invalidateQueries({
+                queryKey: ["urine-albumin", reportId],
+            });
+
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
+        },
+    });
+
+
+
     function onSubmit(values: UrineAlbuminFormValues) {
         console.log("Urine for Albumin Report:", values);
+        updateUrineAlbuminMutation.mutate(values);
         setOpen(false);
     }
 
-    const handlePrint = () => alert("Print triggered.");
     const handleView = () => alert("View triggered.");
 
     return (
@@ -100,7 +184,7 @@ export function EditUrineForAlbuminForm({ open, setOpen }: UrineAlbuminFormProps
                                 <FormItem>
                                     <FormLabel>Comments / Remarks (Optional)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Additional notes..." {...field} />
+                                        <Textarea placeholder="Additional notes..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -117,9 +201,11 @@ export function EditUrineForAlbuminForm({ open, setOpen }: UrineAlbuminFormProps
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to={`/pathology/urine/urine-for-albumin/report/$reportId`} params={{ reportId: reportId?.toString() }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
 
                             <Button type="button" variant="info" onClick={handleView}>
                                 View

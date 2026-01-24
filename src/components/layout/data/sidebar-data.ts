@@ -8,6 +8,11 @@ import {
   Command,
   GalleryVerticalEnd,
   LineChart,
+  HandCoins,
+  FileText,
+  List,
+  Scale,
+  PieChart,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -90,24 +95,28 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Outdoor:Masters',
+          title: 'Outdoor:Master',
           icon: Settings,
           items: [
             {
               title: '- List of Test',
-              url: '/tests',
+              url: '/outdoor/master/tests',
+            },
+            {
+              title: '- List of Test Tables',
+              url: '/outdoor/master/test-tables',
             },
             {
               title: '- List of Department',
-              url: '/departments',
+              url: '/outdoor/master/departments',
             },
             {
               title: '- List of Category',
-              url: '/categories',
+              url: '/outdoor/master/categories',
             },
             {
               title: '- List of Doctor',
-              url: '/doctors',
+              url: '/outdoor/master/doctors',
             },
           ],
         },
@@ -117,19 +126,19 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- Create Invoice',
-              url: '/invoices/create',
+              url: '/outdoor/reception/invoices/create',
             },
             {
               title: '- Due Collection',
-              url: '/due-collection',
+              url: '/outdoor/reception/due-collection',
             },
             {
               title: '- List of Patients',
-              url: '/patients',
+              url: '/outdoor/reception/patients',
             },
             {
               title: '- List of Invoices',
-              url: '/invoices/list',
+              url: '/outdoor/reception/invoices/list',
             },
           ],
         },
@@ -139,61 +148,65 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- Services',
-              url: '/services',
+              url: '/indoor/master/services',
             },
             {
               title: '- Service Categories',
-              url: '/services-category',
+              url: '/indoor/master/service-categories',
             },
             {
               title: '- Treatment Outcomes',
-              url: '/treatment-outcome-list',
+              url: '/indoor/master/treatment-outcomes',
             },
             {
-              title: '- Operation Type List',
-              url: '/operation-type-list',
+              title: '- Operation Types',
+              url: '/indoor/master/operation-types',
+            },
+            {
+              title: '- Anasthesia Types',
+              url: '/indoor/master/anasthesia-types',
             },
           ],
         },
         {
-          title: 'Admission',
+          title: 'Indoor:Admission',
           icon: Settings,
           items: [
             {
               title: '- New Admission',
-              url: '#',
+              url: '/admission/new-admission',
             },
             {
               title: '- Advance Payment',
-              url: '#',
+              url: '/admission/advance-payment',
             },
             {
               title: '- First Time Service',
-              url: '#',
+              url: '/admission/first-time-service',
             },
             {
               title: '- Finalise Services',
-              url: '#',
+              url: '/admission/finalise-services',
             },
             {
               title: '- First Time Bill',
-              url: '#',
+              url: '/admission/first-time-bill',
             },
             {
               title: '- Second Time Bill',
-              url: '#',
+              url: '/admission/second-time-bill',
             },
             {
               title: '- Create Invoice',
-              url: '#',
+              url: '/admission/invoice/create',
             },
             {
               title: '- Due Collection',
-              url: '#',
+              url: '/admission/due-collection',
             },
             {
               title: '- Bed/Cabin Change',
-              url: '#',
+              url: '/admission/bed-cabin-charge',
             },
           ],
         },
@@ -221,7 +234,7 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/pathology/biochemical/reports',
+              url: '/pathology/biochemical/all',
             },
             {
               title: '- Lipid Profile',
@@ -235,7 +248,7 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/pathology/hematology/reports',
+              url: '/pathology/hematology/all',
             },
             {
               title: '- Blood For TCDC',
@@ -249,21 +262,21 @@ export const sidebarData: SidebarData = {
               title: '- CBC Short',
               url: '/pathology/hematology/cbc-short',
             },
-            {
-              title: '- CBC Detail',
-              url: '/pathology/hematology/cbc-detail',
-            },
-            {
-              title: '- Prothom Bin Time Short',
-              url: '#',
-            },
+            // {
+            //   title: '- CBC Detail',
+            //   url: '/pathology/hematology/cbc-detail',
+            // },
+            // {
+            //   title: '- Prothom Bin Time Short',
+            //   url: '#',
+            // },
             {
               title: '- Peripheral Blood Film',
               url: '/pathology/hematology/peripheral-blood-film',
             },
             {
               title: '- CBC With PBF',
-              url: '#',
+              url: '/pathology/hematology/cbc-with-pbf',
             },
             {
               title: '- Prothom Bin Time Full',
@@ -277,7 +290,7 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/pathology/immunology/reports',
+              url: '/pathology/immunology/all',
             },
             {
               title: '- Widal Test',
@@ -301,10 +314,10 @@ export const sidebarData: SidebarData = {
           title: 'Path:Urine',
           icon: Settings,
           items: [
-            {
-              title: '- Urine For R/E Short',
-              url: '#',
-            },
+            // {
+            //   title: '- Urine For R/E Short',
+            //   url: '#',
+            // },
             {
               title: '- Urine For R/E Full',
               url: '/pathology/urine/urine-for-re-full',
@@ -338,32 +351,32 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Path:Special',
+          title: 'Path:Hormone',
           icon: Settings,
           items: [
             {
-              title: '- All Hormones',
-              url: '/pathology/special/all-hormones',
+              title: '- All Reports',
+              url: '/pathology/hormone/all',
             },
             {
               title: '- Sputum',
-              url: '/pathology/special/sputum',
+              url: '/pathology/hormone/sputum',
             },
             {
               title: '- Semen',
-              url: '/pathology/special/semen',
+              url: '/pathology/hormone/semen',
             },
             {
               title: '- Electrolytes',
-              url: '/pathology/special/electrolytes',
+              url: '/pathology/hormone/electrolytes',
             },
             {
               title: '- Skin Scrapping For Fungus',
-              url: '/pathology/special/skin-scrapping-for-fungus',
+              url: '/pathology/hormone/skin-scrapping-for-fungus',
             },
             {
               title: '- T3T4TSH',
-              url: '/pathology/special/t3t4tsh',
+              url: '/pathology/hormone/t3t4tsh',
             },
           ],
         },
@@ -373,7 +386,7 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/x-ray/all-reports',
+              url: '/x-ray/all',
             },
           ],
         },
@@ -383,7 +396,7 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/ultrasonogram/all-reports',
+              url: '/ultrasonogram/all',
             },
           ],
         },
@@ -393,37 +406,82 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- All Reports',
-              url: '/ecg/all-reports',
+              url: '/ecg/all',
             },
           ],
         },
+        // {
+        //   title: 'Accounts',
+        //   icon: Settings,
+        //   items: [
+        //     {
+        //       title: '- Daily Debit',
+        //       url: '/accounts/daily-debit',
+        //     },
+        //     {
+        //       title: '- Daily Credit',
+        //       url: '/accounts/daily-credit',
+        //     },
+        //     {
+        //       title: '- Journal',
+        //       url: '/accounts/journal',
+        //     },
+        //     {
+        //       title: '- Payment to Surgeon',
+        //       url: '/accounts/pay-to-surgeon',
+        //     },
+        //     {
+        //       title: '- Payment to Anaesthetist',
+        //       url: '/accounts/pay-to-anaesthetist',
+        //     },
+        //     {
+        //       title: '- Payment to Assistant',
+        //       url: '/accounts/pay-to-assistant',
+        //     },
+        //     {
+        //       title: '- Payment to Consultant',
+        //       url: '/accounts/pay-to-consultant',
+        //     },
+        //   ],
+        // },
         {
-          title: 'Accounts',
-          icon: Settings,
+          title: "Accounting",
+          icon: HandCoins,
           items: [
             {
-              title: '- Daily Debit',
-              url: '#',
+              title: "Dashboard",
+              url: "/accounting",
+              icon: LayoutDashboard,
             },
             {
-              title: '- Daily Credit',
-              url: '#',
+              title: "Transactions",
+              url: "/accounting/transactions",
+              icon: FileText,
             },
             {
-              title: '- Payment to Surgeon',
-              url: '#',
+              title: "Chart of Accounts",
+              url: "/accounting/accounts",
+              icon: List,
             },
             {
-              title: '- Payment to Anaesthetist',
-              url: '#',
+              title: "Journal Report",
+              url: "/accounting/reports/journal",
+              icon: FileText,
             },
             {
-              title: '- Payment to Assistant',
-              url: '#',
+              title: "Ledger Report",
+              url: "/accounting/reports/ledger",
+              icon: FileText,
             },
             {
-              title: '- Payment to Consultant',
-              url: '#',
+              title: "Trial Balance",
+              url: "/accounting/reports/trial-balance",
+              icon: Scale,
+            },
+            {
+              title: "Profit & Loss",
+              url: "/accounting/reports/profit-and-loss",
+              icon: PieChart,
             },
           ],
         },
@@ -433,19 +491,19 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: '- Bank Accounts',
-              url: '#',
+              url: '/banks/bank-accounts',
             },
             {
               title: '- Bank Transactions',
-              url: '#',
+              url: '/banks/bank-transactions',
             },
             {
               title: '- Bank Deposits',
-              url: '#',
+              url: '/banks/bank-deposits',
             },
             {
               title: '- Bank Withdrawals',
-              url: '#',
+              url: '/banks/bank-withdrawals',
             },
           ],
         },
@@ -454,8 +512,12 @@ export const sidebarData: SidebarData = {
           icon: Settings,
           items: [
             {
+              title: '- Overview',
+              url: '/payroll/overview',
+            },
+            {
               title: '- View Salary Slips',
-              url: '#',
+              url: '/payroll/view-salary-slips',
             },
             {
               title: '- Create Payroll',
@@ -512,6 +574,11 @@ export const sidebarData: SidebarData = {
               url: "#",
             },
           ]
+        },
+        {
+          title: 'Help',
+          url: '/help',
+          icon: MessagesSquare,
         },
       ],
     },

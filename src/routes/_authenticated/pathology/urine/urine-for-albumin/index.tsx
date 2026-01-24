@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { ConfigDrawer } from "@/components/config-drawer";
 import { DataTable } from "@/components/DataTable";
 import { Header } from "@/components/layout/header";
@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { EditUrineForAlbuminForm } from '@/features/pathology/urine/EditForAlbuminForm';
 import { getCookie } from '@/lib/cookies';
 import { useQuery } from '@tanstack/react-query';
-
+import { topNav } from '@/data/data';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/urine/urine-for-albumin/',
@@ -24,36 +24,10 @@ export const Route = createFileRoute(
 })
 
 
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-    disabled: true,
-  },
-]
-
 type ReportsItem = {
   id: string;
   receiptId: string;
+  invoice_id: number;
   patientName: string;
   tests: string[];
   date: string;
@@ -61,6 +35,8 @@ type ReportsItem = {
 
 function UrineForAlbumin() {
   const [open, setOpen] = useState<boolean>(false);
+  const [reportId, setReportId] = useState<number>(0);
+  const [invoiceId, setInvoiceId] = useState<number>(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const limit = 10;
@@ -175,15 +151,12 @@ function UrineForAlbumin() {
 
         return (
           <div className="flex gap-2">
-            <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
-              View
-            </Button>
-
-            <Button size="sm" variant="default" onClick={() => setOpen(true)}>Edit</Button>
-
-            <Button size="sm" variant="destructive" onClick={() => alert("Delete " + item.id)}>
-              Delete
-            </Button>
+            <Button size="sm" variant="outline" onClick={() => { setOpen(true); setReportId(Number(item.id)); setInvoiceId(Number(item.invoice_id)); }}>Edit</Button>
+            <Link to="/pathology/urine/urine-for-albumin/report/$reportId" params={{ reportId: item.id.toString() }}>
+              <Button size="sm" variant="outline-info">
+                View
+              </Button>
+            </Link>
           </div>
         );
       },
@@ -207,7 +180,7 @@ function UrineForAlbumin() {
           <h1 className='text-2xl font-bold tracking-tight'>Urine For Albumin</h1>
         </div>
         <DataTable columns={columns} data={data?.data?.items || []} meta={data?.data?.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
-        <EditUrineForAlbuminForm open={open} setOpen={setOpen} />
+        <EditUrineForAlbuminForm open={open} setOpen={setOpen} reportId={reportId} invoiceId={invoiceId} />
       </Main>
     </>
 

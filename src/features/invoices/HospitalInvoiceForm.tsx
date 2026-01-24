@@ -29,7 +29,7 @@ type TestItem = {
 
 type TestsResponse = {
   data: {
-    rows: TestItem[]
+    items: TestItem[]
     meta: {
       page: number
       total: number
@@ -43,7 +43,7 @@ export default function HospitalInvoiceForm() {
   //const [deliveryDate, setDeliveryDate] = useState(new Date());
   // const [open, setOpen] = useState(false)
   // const [date, setDate] = useState<Date | undefined>(undefined)
-  const [selectedTests, setSelectedTests] = useState<number[]>([]);
+  const [selectedTests, setSelectedTests] = useState<TestItem[]>([]);
 
   const [page] = useState(1);
   const [search, setSearch] = useState("");
@@ -73,7 +73,7 @@ export default function HospitalInvoiceForm() {
     placeholderData: (prev) =>
       prev ?? {
         data: {
-          rows: [],
+          items: [],
           meta: {
             page,
             total: 0,
@@ -86,19 +86,23 @@ export default function HospitalInvoiceForm() {
   console.log(data);
 
 
-  const toggleTest = (id: number) => {
-    setSelectedTests((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-    );
+  const toggleTest = (test: TestItem) => {
+    setSelectedTests((prev) => {
+      const exists = prev.some((t) => t.id === test.id);
+      return exists
+        ? prev.filter((t) => t.id !== test.id)
+        : [...prev, test];
+    });
   };
+
 
 
   // console.log('selectedTests', selectedTests);
 
-  const totalCharge = selectedTests.reduce((sum, id) => {
-    const test = data?.data?.rows?.find((t) => t.id === id);
-    return sum + (test ? Number(test.price) : 0);
-  }, 0);
+    const totalCharge = selectedTests.reduce(
+      (sum, test) => sum + Number(test?.price ?? 0),
+      0
+    );
 
 
   const form = useForm({
@@ -391,11 +395,10 @@ export default function HospitalInvoiceForm() {
                           placeholder="Select test..."
                           children={
                             selectedTests.length
-                              ? selectedTests
-                                .map((id) => data?.data?.rows?.find((t) => t.id === id)?.name)
-                                .join(", ")
+                              ? selectedTests.map((t) => t.name).join(", ")
                               : "Select test..."
                           }
+
                         />
                       </SelectTrigger>
 
@@ -411,18 +414,18 @@ export default function HospitalInvoiceForm() {
                         </div>
 
                         {/* Test list */}
-                        {data?.data?.rows?.length === 0 ? (
+                        {data?.data?.items?.length === 0 ? (
                           <div className="px-2 py-2 text-sm text-muted-foreground">
                             No tests found.
                           </div>
                         ) : (
-                          data?.data?.rows?.map((test) => (
+                          data?.data?.items?.map((test) => (
                             <div
                               key={test.id}
                               className="flex items-center gap-2 px-2 py-1 cursor-pointer"
-                              onClick={() => toggleTest(test.id)}
+                              onClick={() => toggleTest(test)}
                             >
-                              <Checkbox checked={selectedTests.includes(test?.id)} />
+                              <Checkbox checked={selectedTests.some((t) => t.id === test.id)} />
                               <span>{test.name}</span>
                               <span>({test.price})</span>
                             </div>
@@ -445,25 +448,23 @@ export default function HospitalInvoiceForm() {
                         </tr>
                       </thead>
                       <tbody>
-                        {selectedTests.map((id, index) => {
-                          const test = data?.data?.rows?.find((t) => t.id === id);
-                          return (
-                            <tr key={id} className="text-center">
-                              <td className="p-2 border w-12">{index + 1}</td>
-                              <td className="p-2 border text-left">{test?.name}</td>
-                              <td className="p-2 border w-30">{test?.price}</td>
-                              <td className="p-2 border w-10">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => toggleTest(id)}
-                                >
-                                  <Trash2Icon className="w-4 h-4 text-red-500" />
-                                </Button>
-                              </td>
-                            </tr>
-                          );
-                        })}
+                        {selectedTests.map((test, index) => (
+                          <tr key={test.id} className="text-center">
+                            <td className="p-2 border w-12">{index + 1}</td>
+                            <td className="p-2 border text-left">{test.name}</td>
+                            <td className="p-2 border w-30">{test.price}</td>
+                            <td className="p-2 border w-10">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => toggleTest(test)}
+                              >
+                                <Trash2Icon className="w-4 h-4 text-red-500" />
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+
 
                         {selectedTests.length === 0 && (
                           <tr>
@@ -673,7 +674,7 @@ export default function HospitalInvoiceForm() {
                     </div>
                   </div>
                   <div className="flex items-center justify-center gap-4">
-                    <Link to="/invoices/create">
+                    <Link to="/outdoor/reception/invoices/create">
                       <Button variant="default" className="px-10 py-6 text-lg">New</Button>
                     </Link>
                     <Button variant="default" className="px-10 py-6 text-lg" disabled={errors && Object.keys(errors).length > 0 || totalCharge === 0}>Save</Button>

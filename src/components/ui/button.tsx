@@ -38,6 +38,14 @@ const buttonVariants = cva(
           "bg-yellow-500 text-black shadow hover:bg-yellow-600 dark:bg-yellow-600/80",
         neon:
           "text-white bg-black border border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.7)] hover:shadow-[0_0_15px_rgba(168,85,247,1)]",
+        "outline-info":
+          "bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white",
+        "outline-success":
+          "bg-transparent border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white",
+        "outline-warning":
+          "bg-transparent border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white",
+        "outline-danger":
+          "bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-white",
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

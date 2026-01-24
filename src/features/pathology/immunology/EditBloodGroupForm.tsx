@@ -22,6 +22,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import PatientInvoiceInfo from "@/components/pathology/PatientInvoiceInfo";
+import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCookie } from "@/lib/cookies";
+import { useNavigate } from "@tanstack/react-router";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect } from "react";
 
 // --- Schema ---
 const bloodGroupSchema = z.object({
@@ -35,9 +42,16 @@ type BloodGroupFormValues = z.infer<typeof bloodGroupSchema>;
 interface BloodGroupFormProps {
     open: boolean;
     setOpen: (open: boolean) => void;
+    reportId: number;
+    invoiceId: number;
 }
 
-export function EditBloodGroupForm({ open, setOpen }: BloodGroupFormProps) {
+export function EditBloodGroupForm({ open, setOpen, reportId, invoiceId }: BloodGroupFormProps) {
+    const navigate = useNavigate();
+
+    const token = getCookie('accessToken');
+    const queryClient = useQueryClient();
+
     const form = useForm<BloodGroupFormValues>({
         resolver: zodResolver(bloodGroupSchema),
         defaultValues: {
@@ -47,13 +61,85 @@ export function EditBloodGroupForm({ open, setOpen }: BloodGroupFormProps) {
         },
     });
 
+
+    // Fetching existing data
+    const { data: bloodGroupData } = useQuery({
+        queryKey: ["blood-group", reportId],
+        queryFn: async () => {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/blood-group/${reportId}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            if (!res.ok) throw new Error("Failed to fetch Blood Group Test report");
+            const result = await res.json();
+            return result.data;
+        },
+        enabled: !!token && !!reportId,
+    });
+
+    useEffect(() => {
+        if (bloodGroupData) {
+            form.reset({
+                aboGroup: bloodGroupData.blood_group || '',
+                rhFactor: bloodGroupData.rh_factor || '',
+                comments: bloodGroupData.remarks || '',
+            })
+        }
+    }, [bloodGroupData]);
+
+
+    //PUT api call
+
+    const updateBloodGroupMutation = useMutation({
+        mutationFn: async (payload: BloodGroupFormValues) => {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blood-group/${reportId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    invoice_id: invoiceId,
+                    blood_group: payload.aboGroup,
+                    rh_factor: payload.rhFactor,
+                    remarks: payload.comments,
+                }),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Failed to update Blood Group test");
+            }
+
+            return res.json();
+        },
+
+        onSuccess: (data) => {
+            toast.success(data.message || "Test created successfully!");
+            console.log("API Response:", data);
+            navigate({ to: "/pathology/immunology/blood-group" });
+            // optional:
+            // form.reset();
+            queryClient.invalidateQueries({
+                queryKey: ["blood-group", reportId],
+            });
+
+        },
+
+        onError: (error: any) => {
+            toast.error(error.message || "Something went wrong");
+        },
+    });
+
+
     function onSubmit(values: BloodGroupFormValues) {
         console.log("Blood Group Report:", values);
+        updateBloodGroupMutation.mutate(values);
         setOpen(false);
     }
-
-    const handlePrint = () => alert("Print triggered.");
-    const handleView = () => alert("View triggered.");
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -117,7 +203,7 @@ export function EditBloodGroupForm({ open, setOpen }: BloodGroupFormProps) {
                                 <FormItem>
                                     <FormLabel>Comments / Remarks (Optional)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Additional notes..." {...field} />
+                                        <Textarea placeholder="Additional notes..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -134,11 +220,13 @@ export function EditBloodGroupForm({ open, setOpen }: BloodGroupFormProps) {
                                 {form.formState.isSubmitting ? "Saving..." : "Save"}
                             </Button>
 
-                            <Button type="button" variant="warning" onClick={handlePrint}>
-                                Print
-                            </Button>
+                            <Link to={`/pathology/immunology/blood-group/report/$reportId`} params={{ reportId: reportId.toString() }}>
+                                <Button type="button" variant="warning">
+                                    Print Preview
+                                </Button>
+                            </Link>
 
-                            <Button type="button" variant="info" onClick={handleView}>
+                            <Button type="button" variant="info">
                                 View
                             </Button>
                         </div>

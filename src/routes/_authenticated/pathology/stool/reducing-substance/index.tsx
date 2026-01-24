@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { EditStoolReducingSubstanceForm } from '@/features/pathology/stool/EditReducingSubstanceForm';
 import { getCookie } from '@/lib/cookies';
 import { useQuery } from '@tanstack/react-query';
+import { topNav } from '@/data/data';
 
 export const Route = createFileRoute(
   '/_authenticated/pathology/stool/reducing-substance/',
@@ -24,43 +25,18 @@ export const Route = createFileRoute(
 })
 
 
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-    disabled: true,
-  },
-]
-
 type ReportsItem = {
   id: string;
   receiptId: string;
+  invoice_id: string;
   patientName: string;
   tests: string[];
   date: string;
 };
 
 function ReducingSubstance() {
-
+  const [reportId, setReportId] = useState<number>(1);
+  const [invoiceId, setInvoiceId] = useState<number>(1);
   const [open, setOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -179,7 +155,7 @@ function ReducingSubstance() {
             <Button size="sm" variant="outline" onClick={() => alert("View " + item.id)}>
               View
             </Button>
-            <Button size="sm" variant="default" onClick={() => setOpen(true)}>
+            <Button size="sm" variant="default" onClick={() => { setOpen(true); setReportId(Number(item.id)); setInvoiceId(Number(item.invoice_id)); }}>
               Edit
             </Button>
 
@@ -208,7 +184,7 @@ function ReducingSubstance() {
           <h1 className='text-2xl font-bold tracking-tight'>Reducing Substance</h1>
         </div>
         <DataTable columns={columns} data={data?.data.items} meta={data?.data.meta} onPageChange={setPage} search={search} onSearchChange={setSearch} />
-        <EditStoolReducingSubstanceForm open={open} setOpen={setOpen} />
+        <EditStoolReducingSubstanceForm open={open} setOpen={setOpen} reportId={reportId} invoiceId={invoiceId} />
       </Main>
     </>
 
