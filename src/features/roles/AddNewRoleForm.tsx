@@ -27,8 +27,12 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+<<<<<<< HEAD
 import { ShieldAlert, PlusCircle, Loader2 } from "lucide-react";
 import { useAddRoleMutation } from "./roleQueries";
+=======
+import { ShieldAlert, PlusCircle } from "lucide-react";
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
 const statusOptions = [
     { value: "active", label: "Active" },
@@ -44,6 +48,21 @@ const roleSchema = z.object({
 
 });
 
+<<<<<<< HEAD
+=======
+// Mock mutation hook
+const useAddRoleMutation = () => {
+    const createRole = async (values: any) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log("Mock role created:", values);
+                resolve({ status: true, message: "Role created successfully." });
+            }, 1000);
+        });
+    };
+    return [createRole];
+};
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
 export default function AddNewRoleForm({
     open,
@@ -56,7 +75,11 @@ export default function AddNewRoleForm({
     // For dummy purposes, allow if user exists or just default to true
     const canCreateRole = true;
 
+<<<<<<< HEAD
     const { mutateAsync: createRole, isPending } = useAddRoleMutation();
+=======
+    const [createRole] = useAddRoleMutation()
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
     const form = useForm({
         resolver: zodResolver(roleSchema),
@@ -71,10 +94,17 @@ export default function AddNewRoleForm({
 
     const handleAddRole = async (values: z.infer<typeof roleSchema>) => {
         try {
+<<<<<<< HEAD
             const res = await createRole(values);
 
             if (res.status) {
                 toast.success(res.message || "Role created successfully.")
+=======
+            const res: any = await createRole(values);
+
+            if (res.status) {
+                toast.success(res.message || "Role create successfully.")
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
                 setOpen(false)
                 form.reset()
             }
@@ -82,6 +112,10 @@ export default function AddNewRoleForm({
             console.log('Error: ==>', error)
             toast.error("Something went wrong!")
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
     };
 
     return (
@@ -198,10 +232,14 @@ export default function AddNewRoleForm({
                                     </FormItem>
                                 )}
                             />
+<<<<<<< HEAD
                             <Button type="submit" disabled={isPending}>
                                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                 Add Role
                             </Button>
+=======
+                            <Button type="submit">Add Role</Button>
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
                         </form>
                     </Form>)}
                 </div>

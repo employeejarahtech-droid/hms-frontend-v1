@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 // -------------------- OVERVIEW --------------------
 export type Overview = {
@@ -92,10 +93,14 @@ export type Payroll = {
 
 // -------------------- Credit Head --------------------
 export type CreditHead = {
+=======
+export interface ChartOfAccount {
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
     id: number;
     name: string;
     code: string;
     type: string;
+<<<<<<< HEAD
     parent_id: number | null;
     description?: string;
     is_active?: boolean;
@@ -204,11 +209,21 @@ export type ListResponse<T> = {
 };
 
 export type JournalEntry = {
+=======
+    balance?: number;
+    description?: string;
+    is_active?: boolean;
+    parent_id?: number | null;
+}
+
+export interface LedgerEntry {
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
     id: number;
     date: string;
     narration: string;
     debit: number;
     credit: number;
+<<<<<<< HEAD
 };
 
 export type JournalReportResponse = {
@@ -256,3 +271,27 @@ export type DebitHeadByIdResponse = {
 export type PayrollResponse = {
     data: Payroll[];
 };
+=======
+    balance: number;
+}
+
+export interface Transaction {
+    id: number;
+    date: string;
+    description: string;
+    amount: number;
+    type: string; // 'Sales' | 'Purchase' | 'Expense' | 'Income' | 'Journal'
+    mode: string; // 'Cash' | 'Bank' | 'Due'
+    debit_account?: string;
+    credit_account?: string;
+    reference?: string;
+}
+
+export interface CreateTransactionInput {
+    type: 'SALES' | 'PURCHASE' | 'EXPENSE' | 'INCOME' | 'JOURNAL' | undefined;
+    amount: number | undefined;
+    payment_mode: 'CASH' | 'BANK' | 'DUE' | undefined;
+    date: string;
+    description: string;
+}
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b

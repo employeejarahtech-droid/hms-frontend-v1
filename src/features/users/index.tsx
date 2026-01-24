@@ -6,6 +6,7 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { UsersDialogs } from './components/users-dialogs'
 import { UsersPrimaryButtons } from './components/users-primary-buttons'
+<<<<<<< HEAD
 import { UsersProvider, useUsers } from './components/users-provider'
 import { useGetUsersQuery } from './userQueries'
 import { useGetRolesQuery } from '@/features/roles/roleQueries'
@@ -16,6 +17,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useState, useMemo } from 'react'
+=======
+import { UsersProvider } from './components/users-provider'
+import { UsersTable } from './components/users-table'
+import { users } from './data/users'
+import { Users as UsersIcon, UserCheck, UserX, Mail } from 'lucide-react'
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
 function UsersContent() {
   const [search, setSearch] = useState('')
@@ -198,6 +205,43 @@ function UsersContent() {
     )
   }
 
+  // Calculate stats
+  const totalUsers = users.length
+  const activeUsers = users.filter(u => u.status === 'active').length
+  const inactiveUsers = users.filter(u => u.status === 'inactive' || u.status === 'suspended').length
+  const invitedUsers = users.filter(u => u.status === 'invited').length
+
+  const stats = [
+    {
+      label: "Total Users",
+      value: totalUsers,
+      gradient: "from-blue-600 to-blue-400",
+      shadow: "shadow-blue-500/30",
+      icon: <UsersIcon className="w-6 h-6 text-white" />,
+    },
+    {
+      label: "Active Users",
+      value: activeUsers,
+      gradient: "from-emerald-600 to-emerald-400",
+      shadow: "shadow-emerald-500/30",
+      icon: <UserCheck className="w-6 h-6 text-white" />,
+    },
+    {
+      label: "Inactive/Suspended",
+      value: inactiveUsers,
+      gradient: "from-rose-600 to-rose-400",
+      shadow: "shadow-rose-500/30",
+      icon: <UserX className="w-6 h-6 text-white" />,
+    },
+    {
+      label: "Invited",
+      value: invitedUsers,
+      gradient: "from-amber-600 to-amber-400",
+      shadow: "shadow-amber-500/30",
+      icon: <Mail className="w-6 h-6 text-white" />,
+    },
+  ]
+
   return (
     <>
       <Header fixed>
@@ -235,11 +279,15 @@ function UsersContent() {
                 <div>
                   <p className="text-sm font-medium text-white/90">{item.label}</p>
                   <h3 className="mt-2 text-3xl font-bold text-white">
+<<<<<<< HEAD
                     {isLoading ? (
                       <Loader2 className="h-8 w-8 animate-spin" />
                     ) : (
                       item.value || 0
                     )}
+=======
+                    {item.value || 0}
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
                   </h3>
                 </div>
                 <div className="rounded-xl bg-white/20 p-2.5 backdrop-blur-sm">
@@ -255,6 +303,7 @@ function UsersContent() {
           ))}
         </div>
 
+<<<<<<< HEAD
         {/* Users Table */}
         <Card className="border overflow-hidden pt-0 pb-2">
           <CardHeader className="bg-muted/50 border-b-1 py-4 gap-0">
@@ -280,6 +329,9 @@ function UsersContent() {
             )}
           </CardContent>
         </Card>
+=======
+        <UsersTable data={users} search={search} navigate={navigate} />
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
       </main>
 
       <UsersDialogs />

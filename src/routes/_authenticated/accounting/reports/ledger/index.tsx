@@ -2,26 +2,45 @@
 "use client";
 
 import { useState } from "react";
+<<<<<<< HEAD
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, FileText, Printer } from "lucide-react";
+=======
+import { FileText, Printer } from "lucide-react";
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 import { cn } from "@/lib/utils";
 import { createFileRoute } from '@tanstack/react-router';
 
 // UI Components
 import { Button } from "@/components/ui/button";
+<<<<<<< HEAD
 import { Calendar } from "@/components/ui/calendar";
+=======
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
+<<<<<<< HEAD
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+=======
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Check, ChevronDown, CornerDownRight } from "lucide-react";
+
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 import {
   Table,
   TableBody,
@@ -42,8 +61,15 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { topNav } from '@/data/data'
 
 // Data
+<<<<<<< HEAD
 import { useGetAccountingAccountsQuery } from "@/features/accounting/accountingQueries";
 import { ChartOfAccount } from "@/types/accounting.types";
+=======
+import { useAccounts } from "@/features/accounting/api/queries";
+import { ChartOfAccount } from "../../../../../types/accounting.types";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { DateRange } from "react-day-picker";
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
 export const Route = createFileRoute('/_authenticated/accounting/reports/ledger/')({
   component: LedgerReport,
@@ -58,11 +84,20 @@ const ledgerData = [
 ];
 
 function LedgerReport() {
+<<<<<<< HEAD
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedAccount, setSelectedAccount] = useState<string>("");
 
   const { data: accountsData } = useGetAccountingAccountsQuery({ limit: 1000 });
   // @ts-ignore
+=======
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [selectedAccount, setSelectedAccount] = useState<string>("");
+  const [openAccount, setOpenAccount] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const { data: accountsData } = useAccounts({ limit: 1000 });
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
   const accounts: ChartOfAccount[] = accountsData?.data || [];
   const currency = '৳';
 
@@ -92,6 +127,7 @@ function LedgerReport() {
           <CardContent className="p-6">
             <div className="grid md:grid-cols-3 gap-6 items-end">
               <div className="space-y-2">
+<<<<<<< HEAD
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Select Account</label>
                 <Select value={selectedAccount} onValueChange={setSelectedAccount}>
                   <SelectTrigger className="md:w-full">
@@ -131,6 +167,85 @@ function LedgerReport() {
                   </PopoverContent>
                 </Popover>
               </div>
+=======
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 inline-block">Select Account</label>
+                <Popover open={openAccount} onOpenChange={setOpenAccount} modal={true}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openAccount}
+                      className="w-full justify-between"
+                    >
+                      {selectedAccount
+                        ? (accounts.find((acc) => String(acc.id) === selectedAccount)?.name || "Unknown")
+                        : "Select account..."}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[450px] p-0" align="start">
+                    <Command>
+                      <CommandInput
+                        placeholder="Search account..."
+                        className="h-9"
+                        value={search}
+                        onValueChange={setSearch}
+                      />
+                      <CommandList className="max-h-[300px] overflow-y-auto overflow-x-hidden">
+                        <CommandEmpty>No account found.</CommandEmpty>
+                        <CommandGroup>
+                          {accounts.map((acc) => {
+                            const level = acc.parent_id ? 1 : 0;
+                            return (
+                              <CommandItem
+                                key={acc.id}
+                                value={`${acc.name}-${acc.id}`}
+                                onSelect={() => {
+                                  setSelectedAccount(String(acc.id));
+                                  setOpenAccount(false);
+                                }}
+                                className="flex items-center gap-2"
+                                style={{ paddingLeft: `${level === 0 ? 12 : (level * 20) + 12}px` }}
+                              >
+                                <div className="flex items-center flex-1 gap-2">
+                                  <div className="flex items-center gap-1">
+                                    {level > 0 && (
+                                      <CornerDownRight className="h-3 w-3 text-muted-foreground stroke-[1.5]" />
+                                    )}
+                                    <div className="flex flex-col">
+                                      <span className={cn(
+                                        level === 0 ? "font-semibold text-foreground" : "text-muted-foreground"
+                                      )}>
+                                        {acc.name}
+                                      </span>
+                                      <span className="text-[10px] text-muted-foreground/70">{acc.code}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <Check
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    selectedAccount === String(acc.id) ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            );
+                          })}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 inline-block">Date Range</label>
+                <DateRangePicker
+                  dateRange={dateRange}
+                  onDateRangeChange={setDateRange}
+                  className="w-full"
+                />
+              </div>
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
               <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
                 <FileText className="mr-2 h-4 w-4" /> Generate Report
               </Button>

@@ -19,8 +19,63 @@ export const Route = createFileRoute('/_authenticated/roles/')({
   component: ListOfRoles,
 })
 
+<<<<<<< HEAD
 import { useGetRolesQuery } from '@/features/roles/roleQueries'
 import { Role } from '@/types/role.types'
+=======
+interface Role {
+  id: string
+  role: string
+  display_name: string
+  description: string
+  status: 'active' | 'inactive'
+}
+
+const DUMMY_ROLES: Role[] = [
+  {
+    id: '1',
+    role: 'superadmin',
+    display_name: 'Super Admin',
+    description: 'Full system access with all permissions.',
+    status: 'active',
+  },
+  {
+    id: '2',
+    role: 'admin',
+    display_name: 'Administrator',
+    description: 'General administrative access to the system.',
+    status: 'active',
+  },
+  {
+    id: '3',
+    role: 'doctor',
+    display_name: 'Doctor',
+    description: 'Access to patient records and medical modules.',
+    status: 'active',
+  },
+  {
+    id: '4',
+    role: 'receptionist',
+    display_name: 'Receptionist',
+    description: 'Access to billing, appointments, and registration.',
+    status: 'active',
+  },
+  {
+    id: '5',
+    role: 'accountant',
+    display_name: 'Accountant',
+    description: 'Access to financial reports and accounting modules.',
+    status: 'active',
+  },
+  {
+    id: '6',
+    role: 'pharmacist',
+    display_name: 'Pharmacist',
+    description: 'Access to pharmacy and inventory management.',
+    status: 'inactive',
+  },
+]
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
 function ListOfRoles() {
   const [search, setSearch] = useState('')
@@ -28,6 +83,7 @@ function ListOfRoles() {
   const [open, setOpen] = useState(false)
   const limit = 10
 
+<<<<<<< HEAD
   const { data: rolesData } = useGetRolesQuery({
     page,
     limit,
@@ -45,6 +101,20 @@ function ListOfRoles() {
     // For now, let's keep it consistent with the UI.
     const active = roles.filter((r) => r.status === 'active').length
     const inactive = roles.filter((r) => r.status === 'inactive').length
+=======
+  const filteredRoles = useMemo(() => {
+    return DUMMY_ROLES.filter((r) =>
+      r.display_name.toLowerCase().includes(search.toLowerCase()) ||
+      r.role.toLowerCase().includes(search.toLowerCase()) ||
+      r.description.toLowerCase().includes(search.toLowerCase())
+    )
+  }, [search])
+
+  const stats = useMemo(() => {
+    const total = DUMMY_ROLES.length
+    const active = DUMMY_ROLES.filter((r) => r.status === 'active').length
+    const inactive = DUMMY_ROLES.filter((r) => r.status === 'inactive').length
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
     return [
       {
@@ -69,7 +139,11 @@ function ListOfRoles() {
         icon: <XCircle className="w-6 h-6 text-white" />,
       },
     ]
+<<<<<<< HEAD
   }, [roles, pagination])
+=======
+  }, [])
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
 
   const columns: ColumnDef<Role>[] = [
     {
@@ -109,7 +183,11 @@ function ListOfRoles() {
         const role = row.original
         return (
           <div className="flex gap-2">
+<<<<<<< HEAD
             <Link to={'/roles/permissions/$id/edit' as any} params={{ id: role.id } as any}>
+=======
+            <Link to={'/roles/edit/$id' as any} params={{ id: role.id } as any}>
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
               <Button size="sm" variant="outline">
                 Edit
               </Button>
@@ -176,16 +254,27 @@ function ListOfRoles() {
           <CardContent className="pt-6">
             <DataTable
               columns={columns}
+<<<<<<< HEAD
               data={roles}
               meta={{
                 page: Number(pagination?.page) || page,
                 limit: Number(pagination?.limit) || limit,
                 total: pagination?.total || 0,
+=======
+              data={filteredRoles}
+              meta={{
+                page,
+                limit,
+                total: filteredRoles.length,
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
               }}
               onPageChange={setPage}
               search={search}
               onSearchChange={setSearch}
+<<<<<<< HEAD
             //isFetching={isFetching}
+=======
+>>>>>>> 7679d0545d77a1d38f37d42b927a31e47b0d1d8b
             />
           </CardContent>
         </Card>
