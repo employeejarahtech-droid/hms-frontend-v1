@@ -1,31 +1,32 @@
 import {
   LayoutDashboard,
-  Bell,
-  Palette,
   Settings,
-  Wrench,
-  UserCog,
   Users,
   MessagesSquare,
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
   LineChart,
+  HandCoins,
+  FileText,
   List,
+  Scale,
+  PieChart,
+  VaultIcon,
+  Car,
+  PlusCircle,
+  User,
+  ShoppingCart,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
-  user: {
-    name: 'satnaing',
-    email: 'satnaingdev@gmail.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   teams: [
     {
       name: 'Super Admin',
       logo: Command,
-      plan: 'Role',},
+      plan: 'Role',
+    },
     {
       name: 'Manager',
       logo: GalleryVerticalEnd,
@@ -57,298 +58,195 @@ export const sidebarData: SidebarData = {
           icon: LayoutDashboard,
         },
         {
-          title: 'Settings',
-          icon: Settings,
-          items: [
-            {
-              title: 'App Configuration',
-              url: '/settings',
-              icon: UserCog,
-            },
-            {
-              title: 'System Preferences',
-              url: '/settings/appearance',
-              icon: Wrench,
-            },
-            {
-              title: 'Language Settings',
-              url: '/settings/display',
-              icon: Palette,
-            },
-          ],
-        },
-        {
-          title: 'Outdoor:Masters',
-          icon: Settings,
-          items: [
-            {
-              title: 'List of Test',
-              url: '/tests',
-              icon: UserCog,
-            },
-            {
-              title: 'List of Department',
-              url: '/departments',
-              icon: Wrench,
-            },
-            {
-              title: 'List of Category',
-              url: '/categories',
-              icon: Palette,
-            },
-            {
-              title: 'List of Doctor',
-              url: '/doctors',
-              icon: List,
-            },
-          ],
-        },
-        {
-          title: 'Outdoor:Reception',
-          icon: Settings,
-          items: [
-            {
-              title: 'Profile',
-              url: '/settings',
-              icon: UserCog,
-            },
-          ],
-        },
-        {
-          title: 'Indoor:Master',
-          icon: Settings,
-          items: [
-            {
-              title: 'List of Services',
-              url: '#',
-              icon: UserCog,
-            },
-          ],
-        },
-        {
-          title: 'Admission',
-          icon: Settings,
-          items: [
-            {
-              title: 'New Admission',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Advance Payment',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'First Time Service',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Finalise Services',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'First Time Create Bill',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Second Time Create Bill',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Create Invoice',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Due Collection',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Bed/Cabin Change',
-              url: '#',
-              icon: UserCog,
-            },
-          ],
-        },
-        {
-          title: 'Service Bill Distribution',
-          icon: Settings,
-          items: [
-            {
-              title: 'Bill Distribute',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Account Balance',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Balance Distribute',
-              url: '#',
-              icon: UserCog,
-            },
-          ],
-        },
-        {
-          title: 'Pathology',
-          icon: Settings,
-          items: [
-            {
-              title: 'Profile',
-              url: '/settings',
-              icon: UserCog,
-            },
-          ],
-        },
-        {
-          title: 'Accounts',
-          icon: Settings,
-          items: [
-            {
-              title: 'Daily Debit',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Daily Credit',
-              url: '#',
-              icon: Wrench,
-            },
-            {
-              title: 'Payment to Surgeon',
-              url: '#',
-              icon: Palette,
-            },
-            {
-              title: 'Payment to Anaesthetist',
-              url: '#',
-              icon: Palette,
-            },
-            {
-              title: 'Payment to Assistant',
-              url: '#',
-              icon: Palette,
-            },
-            {
-              title: 'Payment to Consultant',
-              url: '#',
-              icon: Palette,
-            },
-          ],
-        },
-        {
-          title: 'Banks',
-          icon: Settings,
-          items: [
-            {
-              title: 'Bank Accounts',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Bank Transactions',
-              url: '#',
-              icon: Wrench,
-            },
-            {
-              title: 'Bank Deposits',
-              url: '#',
-              icon: Palette,
-            },
-            {
-              title: 'Bank Withdrawals',
-              url: '#',
-              icon: Palette,
-            },
-          ],
-        },
-        {
-          title: 'Payroll',
-          icon: Settings,
-          items: [
-            {
-              title: 'View Salary Slips',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Create Payroll',
-              url: '#',
-              icon: Wrench,
-            },
-            {
-              title: 'Manage Deductions',
-              url: '#',
-              icon: Palette,
-            },
-            {
-              title: 'Bonuses & Allowances',
-              url: '#',
-              icon: Bell,
-            },
-          ],
-        },
-        {
-          title: 'Notifications',
-          icon: Bell,
-          items: [
-            {
-              title: 'Email Notifications',
-              url: '#',
-              icon: UserCog,
-            },
-            {
-              title: 'Push Notifications',
-              url: '#',
-              icon: Wrench,
-            },
-            {
-              title: 'SMS Settings',
-              url: '#',
-              icon: Palette,
-            },
-          ],
-        },
-        {
-          title: 'Chats',
-          url: '/chats',
-          badge: '3',
-          icon: MessagesSquare,
-        },
-        {
           title: 'Users',
           url: '/users',
           icon: Users,
           items: [
             {
-              title: 'Add New User',
-              url: "#",
+              title: '- List of Users',
+              url: "/users",
             },
             {
-              title: 'View All Users',
-              url: "#",
-            },
-            {
-              title: 'Edit User Profile',
-              url: "#",
-            },
-            {
-              title: 'User Activity Log',
-              url: "#",
-            },
-            {
-              title: 'Deactivated Users',
-              url: "#",
+              title: '- List of Roles',
+              url: "/roles",
             },
           ]
+        },
+        {
+          title: 'Settings',
+          icon: Settings,
+          items: [
+            {
+              title: '- App Configuration',
+              url: '/settings',
+            },
+            {
+              title: '- System Preferences',
+              url: '/settings/appearance',
+            },
+            {
+              title: '- Language Settings',
+              url: '/settings/display',
+            },
+          ],
+        },
+        {
+          title: "Customers",
+          icon: User,
+          items: [
+            {
+              title: "List of Customers",
+              url: "/customers",
+              icon: List,
+            },
+            {
+              title: "Add New Customer",
+              url: "/customers/create",
+              icon: PlusCircle,
+            },
+          ],
+        },
+        {
+          title: "Suppliers",
+          icon: User,
+          items: [
+            {
+              title: "List of Suppliers",
+              url: "/suppliers",
+              icon: List,
+            },
+            {
+              title: "Add New Supplier",
+              url: "/suppliers/create",
+              icon: PlusCircle,
+            },
+          ],
+        },
+        {
+          title: "Products",
+          icon: Car,
+          items: [
+            {
+              title: "List of Products",
+              url: "/products",
+              icon: FileText,
+            },
+            {
+              title: "Add New Product",
+              url: "/products/create",
+              icon: List,
+            },
+            {
+              title: "Categories",
+              url: "/products/categories",
+              icon: FileText,
+            },
+            {
+              title: "Units",
+              url: "/products/units",
+              icon: PieChart,
+            },
+          ],
+        },
+
+        {
+          title: "Purchase",
+          icon: VaultIcon,
+          items: [
+            {
+              title: "Purchase Orders",
+              url: "/purchase/order",
+              icon: FileText,
+            },
+            {
+              title: "Add New Purchase Order",
+              url: "/purchase/order/create",
+              icon: PlusCircle,
+            },
+            {
+              title: "Purchase Invoices",
+              url: "/purchase/invoices",
+              icon: FileText,
+            },
+            {
+              title: "Purchase Payments",
+              url: "/purchase/payments",
+              icon: FileText,
+            },
+          ],
+        },
+        {
+          title: "Inventory",
+          icon: ShoppingCart,
+          items: [
+            {
+              title: "Stocks",
+              url: "/inventory/stocks",
+              icon: FileText,
+            },
+          ],
+        },
+        {
+          title: "Sales & Orders",
+          icon: ShoppingCart,
+          items: [
+            {
+              title: "Sales Orders",
+              url: "/sales/order",
+              icon: FileText,
+            },
+            {
+              title: "Add New Sales Order",
+              url: "/sales/order/create",
+              icon: PlusCircle,
+            },
+            {
+              title: "Sales Invoices",
+              url: "/sales/invoices",
+              icon: FileText,
+            },
+          ],
+        },
+        {
+          title: "Accounting",
+          icon: HandCoins,
+          items: [
+            {
+              title: "Dashboard",
+              url: "/accounting",
+              icon: LayoutDashboard,
+            },
+            {
+              title: "Transactions",
+              url: "/accounting/transactions",
+              icon: FileText,
+            },
+            {
+              title: "Chart of Accounts",
+              url: "/accounting/accounts",
+              icon: List,
+            },
+            {
+              title: "Journal Report",
+              url: "/accounting/reports/journal",
+              icon: FileText,
+            },
+            {
+              title: "Ledger Report",
+              url: "/accounting/reports/ledger",
+              icon: FileText,
+            },
+            {
+              title: "Trial Balance",
+              url: "/accounting/reports/trial-balance",
+              icon: Scale,
+            },
+            {
+              title: "Profit & Loss",
+              url: "/accounting/reports/profit-loss",
+              icon: PieChart,
+            },
+          ],
         },
         {
           title: 'Reports',
@@ -368,24 +266,11 @@ export const sidebarData: SidebarData = {
             },
           ]
         },
-        // {
-        //   title: 'Secured by Clerk',
-        //   icon: ClerkLogo,
-        //   items: [
-        //     {
-        //       title: 'Sign In',
-        //       url: '/clerk/sign-in',
-        //     },
-        //     {
-        //       title: 'Sign Up',
-        //       url: '/clerk/sign-up',
-        //     },
-        //     {
-        //       title: 'User Management',
-        //       url: '/clerk/user-management',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Help',
+          url: '/help',
+          icon: MessagesSquare,
+        },
       ],
     },
   ],

@@ -3,7 +3,6 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { showSubmittedData } from '@/lib/show-submitted-data'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -24,8 +23,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
 import { SelectDropdown } from '@/components/select-dropdown'
-import { roles } from '../data/data'
+import { useGetRolesQuery } from '@/features/roles/roleQueries'
 import { type User } from '../data/schema'
+import { useAddUserMutation, useUpdateUserMutation } from '../userQueries'
+import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z
   .object({
@@ -105,32 +107,85 @@ export function UsersActionDialog({
   onOpenChange,
 }: UserActionDialogProps) {
   const isEdit = !!currentRow
+  const { mutateAsync: addUser, isPending: isAdding } = useAddUserMutation()
+  const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUserMutation()
+
+  // Fetch roles from API
+  const { data: rolesData } = useGetRolesQuery({ page: 1, limit: 100 })
+  const roles = rolesData?.data || []
+
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
     defaultValues: isEdit
       ? {
-          ...currentRow,
-          password: '',
-          confirmPassword: '',
-          isEdit,
-        }
+        ...currentRow,
+        password: '',
+        confirmPassword: '',
+        isEdit,
+      }
       : {
-          firstName: '',
-          lastName: '',
-          username: '',
-          email: '',
-          role: '',
-          phoneNumber: '',
-          password: '',
-          confirmPassword: '',
-          isEdit,
-        },
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        role: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
+        isEdit,
+      },
   })
 
-  const onSubmit = (values: UserForm) => {
-    form.reset()
-    showSubmittedData(values)
-    onOpenChange(false)
+  const onSubmit = async (values: UserForm) => {
+    try {
+      // Transform form data to API format
+      const name = `${values.firstName} ${values.lastName}`.trim()
+
+      // Role is now the ID from API (as string), convert to number
+      const role_id = parseInt(values.role)
+
+      if (isEdit && currentRow) {
+        // Update existing user
+        const updateData: any = {
+          name,
+          email: values.email,
+          role_id,
+        }
+
+        // Only include password if it was changed
+        if (values.password) {
+          updateData.password = values.password
+        }
+
+        const res = await updateUser({
+          userId: currentRow.id,
+          body: updateData,
+        })
+
+        if (res.status) {
+          toast.success(res.message || 'User updated successfully.')
+          form.reset()
+          onOpenChange(false)
+        }
+      } else {
+        // Create new user
+        const res = await addUser({
+          name,
+          email: values.email,
+          password: values.password,
+          role_id,
+        })
+
+        if (res.status) {
+          toast.success(res.message || 'User created successfully.')
+          form.reset()
+          onOpenChange(false)
+        }
+      }
+    } catch (error) {
+      console.error('Error saving user:', error)
+      toast.error('Something went wrong!')
+    }
   }
 
   const isPasswordTouched = !!form.formState.dirtyFields.password
@@ -264,9 +319,9 @@ export function UsersActionDialog({
                       onValueChange={field.onChange}
                       placeholder='Select a role'
                       className='col-span-4'
-                      items={roles.map(({ label, value }) => ({
-                        label,
-                        value,
+                      items={roles.map((role) => ({
+                        label: role.display_name,
+                        value: role.id.toString(),
                       }))}
                     />
                     <FormMessage className='col-span-4 col-start-3' />
@@ -316,7 +371,8 @@ export function UsersActionDialog({
           </Form>
         </div>
         <DialogFooter>
-          <Button type='submit' form='user-form'>
+          <Button type='submit' form='user-form' disabled={isAdding || isUpdating}>
+            {(isAdding || isUpdating) && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
             Save changes
           </Button>
         </DialogFooter>

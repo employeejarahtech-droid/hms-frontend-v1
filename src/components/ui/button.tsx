@@ -18,7 +18,34 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost:
           'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
-        link: 'text-primary underline-offset-4 hover:underline',
+        link:
+          'text-primary underline-offset-4 hover:underline',
+
+        // ✨ NEW VARIANTS
+        gradient:
+          "text-white bg-gradient-to-r from-primary to-pink-500 shadow-md hover:opacity-90 dark:from-primary/90 dark:to-pink-600",
+        glass:
+          "bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-sm hover:bg-white/15 dark:bg-black/20 dark:border-white/10",
+        subtle:
+          "bg-muted text-foreground hover:bg-muted/70 border border-border shadow-sm",
+        pastel:
+          "bg-purple-200 text-purple-900 hover:bg-purple-300 dark:bg-purple-900 dark:text-purple-100 dark:hover:bg-purple-800",
+        info:
+          "bg-blue-500/90 text-white shadow hover:bg-blue-600 dark:bg-blue-600/80",
+        success:
+          "bg-emerald-600 text-white shadow hover:bg-emerald-700 dark:bg-emerald-700/90",
+        warning:
+          "bg-yellow-500 text-black shadow hover:bg-yellow-600 dark:bg-yellow-600/80",
+        neon:
+          "text-white bg-black border border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.7)] hover:shadow-[0_0_15px_rgba(168,85,247,1)]",
+        "outline-info":
+          "bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white",
+        "outline-success":
+          "bg-transparent border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white",
+        "outline-warning":
+          "bg-transparent border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white",
+        "outline-danger":
+          "bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-white",
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

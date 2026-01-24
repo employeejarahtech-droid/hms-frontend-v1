@@ -11,5 +11,6 @@ export function showSubmittedData(
         <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
       </pre>
     ),
+    position: 'bottom-right',
   })
 }

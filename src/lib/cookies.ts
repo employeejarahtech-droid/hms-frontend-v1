@@ -28,16 +28,18 @@ export function setCookie(
   value: string,
   maxAge: number = DEFAULT_MAX_AGE
 ): void {
-  if (typeof document === 'undefined') return
+  if (typeof document === "undefined") return;
 
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}`
+  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
 }
 
 /**
  * Remove a cookie by setting its max age to 0
  */
 export function removeCookie(name: string): void {
-  if (typeof document === 'undefined') return
+  if (typeof document === "undefined") return;
 
-  document.cookie = `${name}=; path=/; max-age=0`
+  // Must match the same options as setCookie
+  document.cookie = `${name}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
 }
+

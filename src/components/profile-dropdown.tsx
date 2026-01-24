@@ -60,7 +60,7 @@ export function ProfileDropdown() {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>
+          <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)} className='cursor-pointer'>
             Sign out
             <DropdownMenuShortcut className='text-current'>
               ⇧⌘Q
